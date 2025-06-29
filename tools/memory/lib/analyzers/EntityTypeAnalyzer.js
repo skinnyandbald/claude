@@ -25,10 +25,13 @@ class EntityTypeAnalyzer {
    * Creates a new EntityTypeAnalyzer instance
    * 
    * @param {string} profilesDirectory - Path to profiles directory
+   * @param {number} maxCacheSize - Maximum number of items in cache (default: 50)
    */
-  constructor(profilesDirectory = 'profiles') {
+  constructor(profilesDirectory = 'profiles', maxCacheSize = 50) {
     this.profilesDirectory = profilesDirectory;
     this.profileCache = new Map();
+    this.cacheAccessTimes = new Map();
+    this.maxCacheSize = maxCacheSize;
   }
 
   /**
@@ -238,6 +241,8 @@ class EntityTypeAnalyzer {
 
     // Check cache first
     if (this.profileCache.has(profileKey)) {
+      // Update access time for LRU tracking
+      this.cacheAccessTimes.set(profileKey, Date.now());
       return this.profileCache.get(profileKey);
     }
 
@@ -272,13 +277,47 @@ class EntityTypeAnalyzer {
       const yamlContent = fs.readFileSync(profilePath, 'utf8');
       const profileStructure = yaml.load(yamlContent);
 
-      // Cache the structure
+      // Check if cache needs eviction before adding new item
+      if (this.profileCache.size >= this.maxCacheSize) {
+        this.evictLeastRecentlyUsed();
+      }
+
+      // Cache the structure with current access time
       this.profileCache.set(profileKey, profileStructure);
+      this.cacheAccessTimes.set(profileKey, Date.now());
 
       return profileStructure;
     } catch (error) {
       console.warn(`Warning: Could not parse profile ${profileKey}: ${error.message}`);
       return null;
+    }
+  }
+
+  /**
+   * Evicts the least recently used item from cache
+   * 
+   * @private
+   * @returns {void}
+   */
+  evictLeastRecentlyUsed() {
+    if (this.cacheAccessTimes.size === 0) {
+      return;
+    }
+
+    // Find the key with the oldest access time
+    let oldestKey = null;
+    let oldestTime = Infinity;
+
+    for (const [key, accessTime] of this.cacheAccessTimes.entries()) {
+      if (accessTime < oldestTime) {
+        oldestTime = accessTime;
+        oldestKey = key;
+      }
+    }
+
+    if (oldestKey) {
+      this.profileCache.delete(oldestKey);
+      this.cacheAccessTimes.delete(oldestKey);
     }
   }
 
@@ -391,6 +430,7 @@ class EntityTypeAnalyzer {
    */
   clearCache() {
     this.profileCache.clear();
+    this.cacheAccessTimes.clear();
   }
 }
 
