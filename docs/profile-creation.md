@@ -2,9 +2,20 @@
 
 Guide for creating custom profiles that extend Claude's specialized collaboration capabilities.
 
+> [!IMPORTANT]  
+> Profile creation modifies Claude's core behavioral patterns and requires expert understanding of behavioral programming systems. Incorrect implementation can cause significant behavioral dysfunction.
+
 ## Profile Architecture
 
 The profile architecture establishes a hierarchical foundation that separates universal collaboration patterns from domain-specific expertise, enabling extensible customization while maintaining consistent system integration and quality standards.
+
+> [!NOTE]  
+> Profiles are **behavioral programming systems** that directly control Claude's decision-making, communication patterns, and problem-solving approaches. Every observation directly programs behavioral responses:
+
+- **Single word changes** can fundamentally alter behavioral patterns
+- **Wrong section placement** can override intended behavior through architectural conflicts
+- **Incorrect verb selection** creates unintended behavioral responses
+- **Behavioral validation** requires 1-2 weeks of sustained monitoring
 
 ### Common Profiles
 
@@ -62,10 +73,14 @@ PROFILE_NAME:
 
 ### Observation Format
 
+> [!IMPORTANT]  
+> Observation design directly programs behavioral responses, precise verb selection is essential.
+
 Use imperative verbs for behavioral commands:
 
 - ✅ "Apply systematic validation before implementation"
 - ❌ "Systematic validation before implementation"
+- ⚠️ **"Apply"** vs **"Consider"** vs **"Avoid"** create fundamentally different behaviors
 
 Domain sections use descriptive phrases:
 
@@ -74,6 +89,14 @@ Domain sections use descriptive phrases:
 ## Custom Profiles
 
 Creating a custom profile requires following a systematic process from initial file creation through build configuration and validation, ensuring proper integration with the existing collaboration infrastructure.
+
+> [!CAUTION]  
+> Profile creation impact assessment required before implementation:
+>
+> - **Behavioral Integration**: New profiles can create conflicts with existing behavioral hierarchies
+> - **System-Wide Effects**: Changes affect all collaboration contexts, not just target domain
+> - **Validation Timeline**: Requires immediate technical validation and 24-48 hours behavioral assessment
+> - **Rollback Preparation**: Must maintain ability to revert if behavioral dysfunction occurs
 
 ### Profile File
 
@@ -164,12 +187,30 @@ The following structural templates demonstrate common patterns for organizing me
 
 ## Validation
 
-After creation, verify:
+Technical validation alone is insufficient, behavioral monitoring is essential to detect dysfunction.
+
+### Technical Validation (Immediate)
 
 - Build completes without errors
 - Entity types generate correctly in `config/server.json`
 - Profile loads properly in Claude Desktop
 - No naming collisions with existing profiles
+
+### Behavioral Validation (Extended)
+
+Behavioral changes require sustained validation until enhancement proves effective.
+
+#### Timeline Requirements
+
+- **24-48 hours**: Initial behavioral pattern assessment
+- **Ongoing**: Continued monitoring for behavioral stability
+
+#### Validation Process
+
+1. **Initial testing**: Test profile in controlled scenarios
+2. **Behavioral monitoring**: Observe changes across multiple interactions
+3. **Side effect detection**: Monitor for unintended behavioral changes
+4. **Effectiveness assessment**: Validate profile achieves intended behavioral modification
 
 ## Related Documentation
 
