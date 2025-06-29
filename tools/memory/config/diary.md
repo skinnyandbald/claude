@@ -42,7 +42,7 @@ Before writing a diary entry:
 1. Verify if `YYYY-MM-DD.md` file exists for current date
 2. If file exists: Read current content and append new entry
 3. If file does not exist: Create new file with first entry
-4. Never use direct write operations on existing files
+4. Avoid using direct write operations on existing files
 
 ## Diary Entry Template
 
