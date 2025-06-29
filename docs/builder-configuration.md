@@ -58,39 +58,20 @@ output:
 
 Output is `jsonl` format with one entity per line.
 
-## Validation Settings
-
-Configures quality assurance and error checking during builds.
-
-```yaml
-validation:
-  strictMode: false
-  requireEntityTypes: true
-  allowEmptyProfiles: false
-  validateYamlStructure: true
-```
-
-Validation modes:
-
-- **`strictMode`** - When `true`, fails build on any validation warning
-- **`requireEntityTypes`** - When `true`, ensures all entities have valid `entityType` properties
-
 ## Performance Configuration
 
-Controls build performance monitoring and resource limits.
+Controls build performance monitoring.
 
 ```yaml
 performance:
   showStatistics: true
   showBuildTime: true
-  maxEntitiesPerSecond: 1000
-  timeoutMs: 30000
 ```
 
 Monitoring options:
 
 - **`showStatistics`** - Displays entity type counts and profile breakdown
-- **`maxEntitiesPerSecond`** - Performance limit for entity processing rate
+- **`showBuildTime`** - Shows build duration and entities per second
 
 ## Logging Configuration
 
@@ -98,18 +79,14 @@ Controls console output verbosity and progress reporting.
 
 ```yaml
 logging:
-  level: info
   showProgress: true
   showFileDetails: true
-  showStatistics: true
 ```
 
-Log levels:
+Logging options:
 
-- `error` - Only critical errors
-- `warn` - Errors and warnings  
-- `info` - General information (default)
-- `debug` - Detailed processing information
+- **`showProgress`** - Displays build progress messages
+- **`showFileDetails`** - Shows individual file processing status
 
 ## Configuration Examples
 
@@ -119,10 +96,8 @@ Development build:
 build:
   autoDetectProfiles: true
   stopOnCriticalError: false
-validation:
-  strictMode: true
 logging:
-  level: debug
+  showFileDetails: true
 ```
 
 Production build:
@@ -131,12 +106,9 @@ Production build:
 build:
   autoDetectProfiles: false
   stopOnCriticalError: true
-validation:
-  strictMode: true
-  requireEntityTypes: true
 logging:
-  level: warn
   showProgress: false
+  showFileDetails: false
 ```
 
 ## File Processing Order
@@ -147,8 +119,6 @@ logging:
 
 ## Error Handling Strategy
 
-The combination of `stopOnCriticalError` and `strictMode` determines build behavior:
-- **Both true:** Fail fast on any issue
-- **stopOnCriticalError true, strictMode false:** Stop on file errors, allow validation warnings
-- **stopOnCriticalError false, strictMode true:** Continue processing with strict validation
-- **Both false:** Permissive processing with maximum tolerance
+The `stopOnCriticalError` setting determines build behavior:
+- **true:** Stop immediately on file processing errors
+- **false:** Continue processing remaining files, skip failed ones

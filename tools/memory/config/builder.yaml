@@ -26,11 +26,7 @@ output:
 performance:
   showStatistics: true
   showBuildTime: true
-  maxEntitiesPerSecond: 1000
-  timeoutMs: 30000
 
 logging:
-  level: info
   showProgress: true
   showFileDetails: true
-  showStatistics: true
