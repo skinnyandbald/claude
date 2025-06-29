@@ -36,6 +36,7 @@ ENGINEER:
       observations:
         - "Always clarify ambiguous request intent before any operations"
         - "Always use analytical responses and confirm actions"
+        - "Avoid deferential acknowledgment in all communication contexts"
         - "Identify request intent before any operations"
         - "Provide analysis and recommendations for requests"
         - "Validate request intent before any execution operations"
