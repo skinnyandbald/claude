@@ -44,21 +44,21 @@ class EntityTypeAnalyzer {
    * @returns {string} Determined entity type classification
    */
   determineEntityType(profileKey, subCategoryKey, itemKey, parentContext = null) {
-    const profileStructure = this.getProfileStructure(profileKey);
+    const profileStructure = this.#getProfileStructure(profileKey);
 
     if (!profileStructure) {
-      return this.generateFallbackType(profileKey, subCategoryKey);
+      return this.#generateFallbackType(profileKey, subCategoryKey);
     }
 
     // Get the profile type from YAML (common vs standard)
-    const profileType = this.getProfileType(profileStructure, profileKey);
+    const profileType = this.#getProfileType(profileStructure, profileKey);
 
     if (!profileType) {
-      return this.generateFallbackType(profileKey, subCategoryKey);
+      return this.#generateFallbackType(profileKey, subCategoryKey);
     }
 
     // Generate entity type based on binary classification
-    return this.generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext);
+    return this.#generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext);
   }
 
   /**
@@ -69,7 +69,7 @@ class EntityTypeAnalyzer {
    * @param {string} profileKey - Profile identifier
    * @returns {string|null} Profile type ('common' or 'standard') or null
    */
-  getProfileType(profileStructure, profileKey) {
+  #getProfileType(profileStructure, profileKey) {
     // Look for the type field in the main profile section
     const profileSection = profileStructure[profileKey.toUpperCase()];
 
@@ -91,12 +91,12 @@ class EntityTypeAnalyzer {
    * @param {string} parentContext - Parent context
    * @returns {string} Generated entity type
    */
-  generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext) {
+  #generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext) {
     const normalizedProfileKey = profileKey.toLowerCase();
     const normalizedSubCategory = subCategoryKey.toLowerCase();
 
     // Profile header entity
-    if (this.isProfileHeader(subCategoryKey, profileKey)) {
+    if (this.#isProfileHeader(subCategoryKey, profileKey)) {
       if (profileType === 'common') {
         return `common_${normalizedProfileKey}`;
       }
@@ -106,19 +106,19 @@ class EntityTypeAnalyzer {
     }
 
     // Section header entity
-    if (this.isSectionHeader(subCategoryKey, profileKey)) {
+    if (this.#isSectionHeader(subCategoryKey, profileKey)) {
       return 'section';
     }
 
     // Content entity (item with observations)
     if (profileType === 'common') {
       // Special handling for documentation within infrastructure
-      if (normalizedProfileKey === 'infrastructure' && this.isDocumentationType(subCategoryKey)) {
+      if (normalizedProfileKey === 'infrastructure' && this.#isDocumentationType(subCategoryKey)) {
         return 'common_documentation';
       }
       // Use parent context for nested entities to maintain hierarchy
       if (parentContext) {
-        const semanticType = this.extractSemanticType(parentContext);
+        const semanticType = this.#extractSemanticType(parentContext);
         return `common_${semanticType}`;  // common_methodology, common_context
       } else {
         return `common_${normalizedProfileKey}`;  // common_collaboration, common_infrastructure
@@ -128,15 +128,15 @@ class EntityTypeAnalyzer {
     if (profileType === 'standard') {
       // Use parent context for nested entities to maintain hierarchy
       if (parentContext) {
-        const semanticType = this.extractSemanticType(parentContext);
+        const semanticType = this.#extractSemanticType(parentContext);
         return `${normalizedProfileKey}_${semanticType}`;
       } else {
-        const semanticType = this.extractSemanticType(subCategoryKey);
+        const semanticType = this.#extractSemanticType(subCategoryKey);
         return `${normalizedProfileKey}_${semanticType}`;
       }
     }
 
-    return this.generateFallbackType(profileKey, subCategoryKey);
+    return this.#generateFallbackType(profileKey, subCategoryKey);
   }
 
   /**
@@ -147,7 +147,7 @@ class EntityTypeAnalyzer {
    * @param {string} profileKey - Profile key
    * @returns {boolean} True if this is a profile header
    */
-  isProfileHeader(subCategoryKey, profileKey) {
+  #isProfileHeader(subCategoryKey, profileKey) {
     return subCategoryKey.toLowerCase() === profileKey.toLowerCase();
   }
 
@@ -159,9 +159,9 @@ class EntityTypeAnalyzer {
    * @param {string} profileKey - Profile key
    * @returns {boolean} True if this is a section header
    */
-  isSectionHeader(subCategoryKey, profileKey) {
+  #isSectionHeader(subCategoryKey, profileKey) {
     // Section headers are direct children of the profile that aren't the profile itself
-    const profileStructure = this.getProfileStructure(profileKey);
+    const profileStructure = this.#getProfileStructure(profileKey);
     if (!profileStructure) return false;
 
     const profileSection = profileStructure[profileKey.toUpperCase()];
@@ -182,7 +182,7 @@ class EntityTypeAnalyzer {
    * @param {string} subCategoryKey - Subcategory to check
    * @returns {boolean} True if documentation-related
    */
-  isDocumentationType(subCategoryKey) {
+  #isDocumentationType(subCategoryKey) {
     const docKeywords = ['logging', 'documentation', 'docs', 'log'];
     const normalizedKey = subCategoryKey.toLowerCase();
     return docKeywords.some(keyword => normalizedKey.includes(keyword));
@@ -195,7 +195,7 @@ class EntityTypeAnalyzer {
    * @param {string} subCategory - Subcategory name
    * @returns {string} Extracted semantic type
    */
-  extractSemanticType(subCategory) {
+  #extractSemanticType(subCategory) {
     // Clean input and split by underscores
     const words = subCategory.split('_').filter(word => word.length >= 1);
 
@@ -212,8 +212,8 @@ class EntityTypeAnalyzer {
    * @param {string} subCategoryKey - Subcategory identifier
    * @returns {string} Fallback entity type
    */
-  generateFallbackType(profileKey, subCategoryKey) {
-    if (this.isProfileHeader(subCategoryKey, profileKey)) {
+  #generateFallbackType(profileKey, subCategoryKey) {
+    if (this.#isProfileHeader(subCategoryKey, profileKey)) {
       return `${profileKey.toLowerCase()}_description`;
     }
     return 'section';
@@ -226,7 +226,7 @@ class EntityTypeAnalyzer {
    * @param {string} profileKey - Profile name to load
    * @returns {Object|null} Parsed profile structure or null if not found
    */
-  getProfileStructure(profileKey) {
+  #getProfileStructure(profileKey) {
     // Security: Validate profileKey input
     if (!profileKey || typeof profileKey !== 'string') {
       return null;
@@ -279,7 +279,7 @@ class EntityTypeAnalyzer {
 
       // Check if cache needs eviction before adding new item
       if (this.profileCache.size >= this.maxCacheSize) {
-        this.evictLeastRecentlyUsed();
+        this.#evictLeastRecentlyUsed();
       }
 
       // Cache the structure with current access time
@@ -299,7 +299,7 @@ class EntityTypeAnalyzer {
    * @private
    * @returns {void}
    */
-  evictLeastRecentlyUsed() {
+  #evictLeastRecentlyUsed() {
     if (this.cacheAccessTimes.size === 0) {
       return;
     }
@@ -328,13 +328,13 @@ class EntityTypeAnalyzer {
    * @returns {Array<string>} Available entity types for the category
    */
   getAvailableEntityTypes(categoryKey) {
-    const profileStructure = this.getProfileStructure(categoryKey);
+    const profileStructure = this.#getProfileStructure(categoryKey);
 
     if (!profileStructure) {
       return ['section', `${categoryKey}_description`];
     }
 
-    const profileType = this.getProfileType(profileStructure, categoryKey);
+    const profileType = this.#getProfileType(profileStructure, categoryKey);
     const entityTypes = new Set();
 
     if (profileType === 'common') {
@@ -343,7 +343,7 @@ class EntityTypeAnalyzer {
     } else if (profileType === 'standard') {
       entityTypes.add(`${categoryKey.toLowerCase()}_description`);
       // Add semantic types based on actual structure
-      this.collectSemanticTypes(profileStructure, categoryKey, entityTypes);
+      this.#collectSemanticTypes(profileStructure, categoryKey, entityTypes);
     }
 
     entityTypes.add('section'); // Universal section type
@@ -359,7 +359,7 @@ class EntityTypeAnalyzer {
    * @param {string} categoryKey - Category key
    * @param {Set} entityTypes - Set to collect types
    */
-  collectSemanticTypes(profileStructure, categoryKey, entityTypes) {
+  #collectSemanticTypes(profileStructure, categoryKey, entityTypes) {
     const profileSection = profileStructure[categoryKey.toUpperCase()];
     if (!profileSection) return;
 
@@ -370,7 +370,7 @@ class EntityTypeAnalyzer {
 
       if (typeof value === 'object' && value !== null) {
         for (const [subKey] of Object.entries(value)) {
-          const semanticType = this.extractSemanticType(subKey);
+          const semanticType = this.#extractSemanticType(subKey);
           entityTypes.add(`${normalizedCategoryKey}_${semanticType}`);
         }
       }

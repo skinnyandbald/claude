@@ -87,7 +87,7 @@ class ProfileProcessor {
           continue;
         }
 
-        const subEntities = await this.processSection(
+        const subEntities = await this.#processSection(
           profileKey,
           sectionKey,
           sectionData,
@@ -126,7 +126,7 @@ class ProfileProcessor {
    * @param {Object} entityProcessor - Entity processor instance
    * @returns {Promise<Array>} Array of entities created from the section
    */
-  async processSection(profileKey, sectionKey, sectionData, sourceFile, entityTypeAnalyzer, entityProcessor) {
+  async #processSection(profileKey, sectionKey, sectionData, sourceFile, entityTypeAnalyzer, entityProcessor) {
     const entities = [];
 
     try {
@@ -148,7 +148,7 @@ class ProfileProcessor {
         // Handle string properties as individual entities
         if (typeof itemData === 'string') {
           const entityType = entityTypeAnalyzer.determineEntityType(profileKey, sectionKey, itemKey);
-          const entity = await entityProcessor.createEntity(itemKey, entityType, [this.substitutePaths(itemData)]);
+          const entity = await entityProcessor.createEntity(itemKey, entityType, [this.#substitutePaths(itemData)]);
           entities.push(entity);
           continue;
         }
@@ -158,7 +158,7 @@ class ProfileProcessor {
           continue;
         }
 
-        const itemEntities = await this.processSectionItem(
+        const itemEntities = await this.#processSectionItem(
           profileKey,
           sectionKey,
           itemKey,
@@ -193,7 +193,7 @@ class ProfileProcessor {
    * @param {Object} entityProcessor - Entity processor instance
    * @returns {Promise<Array>} Array of created entities (parent + any nested entities)
    */
-  async processSectionItem(profileKey, sectionKey, itemKey, itemData, entityTypeAnalyzer, entityProcessor) {
+  async #processSectionItem(profileKey, sectionKey, itemKey, itemData, entityTypeAnalyzer, entityProcessor) {
     try {
       const entities = [];
 
@@ -201,7 +201,7 @@ class ProfileProcessor {
       if (Array.isArray(itemData)) {
         // This is a content entity nested under a section - pass the nesting context
         const entityType = entityTypeAnalyzer.determineEntityType(profileKey, itemKey, null, sectionKey);
-        const observations = itemData.map(item => this.substitutePaths(item)); // Apply path substitution
+        const observations = itemData.map(item => this.#substitutePaths(item)); // Apply path substitution
         const entity = await entityProcessor.createEntity(itemKey, entityType, observations);
         return [entity];
       }
@@ -213,7 +213,7 @@ class ProfileProcessor {
         const observations = Array.isArray(itemData.observations) ? itemData.observations : [itemData.observations];
 
         // Apply path substitution to observations
-        const processedObservations = observations.map(obs => this.substitutePaths(obs));
+        const processedObservations = observations.map(obs => this.#substitutePaths(obs));
 
         // Add source information
         processedObservations.push(`${itemKey} configuration and behaviors`);
@@ -231,7 +231,7 @@ class ProfileProcessor {
         const observations = Array.isArray(itemData.observations) ? itemData.observations : [itemData.observations];
 
         // Apply path substitution to observations
-        const processedObservations = observations.map(obs => this.substitutePaths(obs));
+        const processedObservations = observations.map(obs => this.#substitutePaths(obs));
 
         // Add source information
         processedObservations.push(`${itemKey} configuration and behaviors`);
@@ -261,7 +261,7 @@ class ProfileProcessor {
         // Pass nesting context for proper entity type determination
         const entityType = entityTypeAnalyzer.determineEntityType(profileKey, itemKey, null, sectionKey);
         const observations = Object.keys(simpleProperties).length > 0 
-          ? this.createObservations(simpleProperties)
+          ? this.#createObservations(simpleProperties)
           : [`${itemKey} configuration and behaviors`, `Profile: ${sectionKey}`, `Source: ${profileKey}`];
         const mainEntity = await entityProcessor.createEntity(itemKey, entityType, observations);
         entities.push(mainEntity);
@@ -269,10 +269,10 @@ class ProfileProcessor {
 
       // Create separate entities for nested objects
       for (const [nestedKey, nestedData] of Object.entries(nestedObjects)) {
-        const nestedEntityName = this.formatSectionName(nestedKey);
+        const nestedEntityName = this.#formatSectionName(nestedKey);
         // Pass nesting context for nested entities too
         const nestedEntityType = entityTypeAnalyzer.determineEntityType(profileKey, nestedKey, null, sectionKey);
-        const nestedObservations = this.createObservations(nestedData);
+        const nestedObservations = this.#createObservations(nestedData);
 
         const nestedEntity = await entityProcessor.createEntity(
           nestedEntityName,
@@ -301,7 +301,7 @@ class ProfileProcessor {
    * @param {string} text - Text containing path variables
    * @returns {string} Text with path variables substituted
    */
-  substitutePaths(text) {
+  #substitutePaths(text) {
     if (typeof text !== 'string') {
       return text;
     }
@@ -325,26 +325,26 @@ class ProfileProcessor {
    * @param {Object} itemData - Item data containing observations or properties
    * @returns {Array<string>} Array of observation strings
    */
-  createObservations(itemData) {
+  #createObservations(itemData) {
     const observations = [];
 
     // Handle different data structures
     if (typeof itemData === 'string') {
-      observations.push(this.substitutePaths(itemData));
+      observations.push(this.#substitutePaths(itemData));
     } else if (Array.isArray(itemData)) {
-      observations.push(...itemData.map(item => this.substitutePaths(item)));
+      observations.push(...itemData.map(item => this.#substitutePaths(item)));
     } else if (typeof itemData === 'object' && itemData !== null) {
       // Handle object with properties
       for (const [key, value] of Object.entries(itemData)) {
         if (Array.isArray(value)) {
           // For arrays, just add the values without key prefix
-          observations.push(...value.map(item => this.substitutePaths(item)));
+          observations.push(...value.map(item => this.#substitutePaths(item)));
         } else if (typeof value === 'object' && value !== null) {
           // Recursively handle nested objects
-          const nestedObservations = this.createObservations(value);
+          const nestedObservations = this.#createObservations(value);
           observations.push(...nestedObservations.map(obs => `${key}: ${obs}`));
         } else {
-          observations.push(`${key}: ${this.substitutePaths(value)}`);
+          observations.push(`${key}: ${this.#substitutePaths(value)}`);
         }
       }
     }
@@ -359,7 +359,7 @@ class ProfileProcessor {
    * @param {string} sectionKey - Raw section key
    * @returns {string} Formatted section name
    */
-  formatSectionName(sectionKey) {
+  #formatSectionName(sectionKey) {
     return sectionKey;
   }
 }

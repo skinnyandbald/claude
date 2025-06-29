@@ -86,7 +86,7 @@ class MemoryBuilder {
 
       // Process common files first if configured
       if (buildConfig.processCommonFirst) {
-        await this.processCommonFiles();
+        await this.#processCommonFiles();
       }
 
       // Process profile files in parallel
@@ -129,11 +129,11 @@ class MemoryBuilder {
 
       // Process additional files if configured
       if (buildConfig.processAdditionalFiles) {
-        await this.processAdditionalFiles(buildConfig);
+        await this.#processAdditionalFiles(buildConfig);
       }
 
       // Generate output
-      await this.generateOutput(outputConfig);
+      await this.#generateOutput(outputConfig);
 
       this.buildEndTime = Date.now();
 
@@ -143,7 +143,7 @@ class MemoryBuilder {
 
       // Show statistics
       if (this.config.performance.showStatistics) {
-        this.showBuildStatistics();
+        this.#showBuildStatistics();
       }
 
       return true;
@@ -161,7 +161,7 @@ class MemoryBuilder {
    * @private
    * @returns {Promise<void>}
    */
-  async processCommonFiles() {
+  async #processCommonFiles() {
     const buildConfig = this.config.build;
     const loggingConfig = this.config.logging;
     const commonDir = path.join(buildConfig.profilesDirectory, buildConfig.commonDirectory);
@@ -187,7 +187,7 @@ class MemoryBuilder {
     const commonFilePromises = commonFiles.map(async (fileName) => {
       try {
         const filePath = path.join(commonDir, fileName);
-        const entities = await this.processCommonFile(filePath, fileName);
+        const entities = await this.#processCommonFile(filePath, fileName);
         return {
           success: true,
           fileName: `common/${fileName}`,
@@ -228,7 +228,7 @@ class MemoryBuilder {
    * @param {string} fileName - File name for logging
    * @returns {Promise<Array>} Array of entities created from the file
    */
-  async processCommonFile(filePath, fileName) {
+  async #processCommonFile(filePath, fileName) {
     const yamlData = await this.fileProcessor.loadYamlFile(filePath);
     const entities = [];
 
@@ -284,7 +284,7 @@ class MemoryBuilder {
    * @param {Object} buildConfig - Build configuration object
    * @returns {Promise<void>}
    */
-  async processAdditionalFiles(buildConfig) {
+  async #processAdditionalFiles(buildConfig) {
     const profileDir = buildConfig.profilesDirectory;
 
     try {
@@ -336,7 +336,7 @@ class MemoryBuilder {
    * @param {Object} outputConfig - Output configuration object
    * @returns {Promise<void>}
    */
-  async generateOutput(outputConfig) {
+  async #generateOutput(outputConfig) {
     let outputPath = outputConfig.path;
 
     // Resolve relative path
@@ -371,7 +371,7 @@ class MemoryBuilder {
    * @private
    * @returns {void}
    */
-  showBuildStatistics() {
+  #showBuildStatistics() {
     const performanceConfig = this.config.performance;
 
     if (!performanceConfig.showStatistics) {

@@ -28,18 +28,18 @@ class EntityProcessor {
   async createEntity(name, entityType, observations) {
     try {
       // Validate inputs
-      this.validateEntityInputs(name, entityType, observations);
+      this.#validateEntityInputs(name, entityType, observations);
 
       // Create entity structure
       const entity = {
         type: 'entity',
-        name: this.sanitizeEntityName(name),
+        name: this.#sanitizeEntityName(name),
         entityType: entityType,
-        observations: this.processObservations(observations)
+        observations: this.#processObservations(observations)
       };
 
       // Validate created entity
-      this.validateEntityStructure(entity);
+      this.#validateEntityStructure(entity);
 
       return entity;
 
@@ -66,7 +66,7 @@ class EntityProcessor {
    * @param {Array} observations - Observations array to validate
    * @throws {EntityProcessingError} When validation fails
    */
-  validateEntityInputs(name, entityType, observations) {
+  #validateEntityInputs(name, entityType, observations) {
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       throw new EntityProcessingError(
         'Entity name is required and must be a non-empty string',
@@ -102,7 +102,7 @@ class EntityProcessor {
    * @param {string} name - Raw entity name
    * @returns {string} Sanitized entity name
    */
-  sanitizeEntityName(name) {
+  #sanitizeEntityName(name) {
     return name.trim();
   }
 
@@ -113,7 +113,7 @@ class EntityProcessor {
    * @param {Array} observations - Raw observations array
    * @returns {Array<string>} Processed observations array
    */
-  processObservations(observations) {
+  #processObservations(observations) {
     return observations
       .filter(obs => obs && typeof obs === 'string' && obs.trim().length > 0)
       .map(obs => obs.trim());
@@ -126,7 +126,7 @@ class EntityProcessor {
    * @param {Object} entity - Entity object to validate
    * @throws {EntityProcessingError} When structure validation fails
    */
-  validateEntityStructure(entity) {
+  #validateEntityStructure(entity) {
     const requiredFields = ['type', 'name', 'entityType', 'observations'];
 
     for (const field of requiredFields) {
