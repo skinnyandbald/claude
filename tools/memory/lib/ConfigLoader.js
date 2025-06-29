@@ -76,7 +76,7 @@ class ConfigLoader {
   detectProfiles() {
     const profilesDir = path.resolve(path.join(__dirname, '../profiles'));
     const allowedDir = path.resolve(__dirname, '..');
-    
+
     // Security: Ensure profiles directory is within allowed path
     if (!profilesDir.startsWith(allowedDir)) {
       console.error('❌ Security: Profiles directory outside allowed path');
@@ -84,7 +84,7 @@ class ConfigLoader {
     }
 
     if (!fs.existsSync(profilesDir)) {
-      console.warn(`⚠️  Profiles directory not found: ${profilesDir}`);
+      console.warn(`⚠️ Profiles directory not found: ${profilesDir}`);
       return [];
     }
 
@@ -120,7 +120,7 @@ class ConfigLoader {
 
     for (const section of requiredSections) {
       if (!config[section]) {
-        console.warn(`⚠️  Missing configuration section: ${section}`);
+        console.warn(`⚠️ Missing configuration section: ${section}`);
         return false;
       }
     }
