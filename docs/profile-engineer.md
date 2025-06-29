@@ -103,6 +103,22 @@ With ENGINEER profile:
 
 > Change line 23 from `kubernetes.io/ingress-class` to `kubernetes.io/ingress.class`. This solution works because we validated your RBAC configuration in our previous session.
 
+### Profile Drift Correction
+
+Profiles can drift during complex sessions. Direct correction phrase restores methodology:
+
+Profile drift example:
+
+> I think this ArgoCD issue might be related to several factors. There could be network connectivity problems, or perhaps RBAC misconfiguration, or maybe certificate issues. I believe we should explore multiple approaches simultaneously and consider the broader architectural implications...
+
+Correction trigger:
+
+> "Use engineer profile methodology."
+
+Immediate response:
+
+> Root cause analysis first. Check ArgoCD controller logs with `kubectl logs -n argocd deployment/argocd-application-controller`. Report findings before proposing solutions.
+
 ## Key Success Factors
 
 The following success factors demonstrate how specific ENGINEER profile traits create measurable improvements in technical outcomes, solution quality, and collaborative effectiveness.
