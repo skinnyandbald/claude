@@ -35,7 +35,7 @@ class MemoryBuilder {
   constructor(config = null, dependencies = {}) {
     this.configLoader = dependencies.configLoader || new ConfigLoader();
     this.config = config || this.configLoader.load();
-    
+
     // Initialize FileProcessor with security options
     const maxFileSize = this.config.security?.maxFileSize || (1024 * 1024); // Default 1MB
     this.fileProcessor = dependencies.fileProcessor || new FileProcessor(maxFileSize);
@@ -90,6 +90,10 @@ class MemoryBuilder {
       }
 
       // Process profile files in parallel
+      if (loggingConfig.showFileDetails) {
+        console.log(`📚 Processing ${buildConfig.profiles.length} standard profiles...`);
+      }
+
       const profileFilePromises = buildConfig.profiles.map(async (fileName) => {
         try {
           const entities = await this.processProfileFile(fileName);
@@ -176,7 +180,7 @@ class MemoryBuilder {
       .sort();
 
     if (loggingConfig.showFileDetails) {
-      console.log(`🛠️ Processing ${commonFiles.length} common infrastructure files...`);
+      console.log(`📚 Processing ${commonFiles.length} common profiles...`);
     }
 
     // Process common files in parallel
@@ -225,20 +229,10 @@ class MemoryBuilder {
    * @returns {Promise<Array>} Array of entities created from the file
    */
   async processCommonFile(filePath, fileName) {
-    const loggingConfig = this.config.logging;
-
-    if (loggingConfig.showFileDetails) {
-      console.log(`📚 Processing common/${fileName} file...`);
-    }
-
     const yamlData = await this.fileProcessor.loadYamlFile(filePath);
     const entities = [];
 
     for (const [profileKey, profileData] of Object.entries(yamlData)) {
-      if (loggingConfig.showFileDetails) {
-        console.log(`   Processing ${profileKey} common infrastructure...`);
-      }
-
       const profileEntities = await this.profileProcessor.processProfile(
         profileKey,
         profileData,
@@ -262,21 +256,12 @@ class MemoryBuilder {
    */
   async processProfileFile(fileName) {
     const buildConfig = this.config.build;
-    const loggingConfig = this.config.logging;
-
-    if (loggingConfig.showFileDetails) {
-      console.log(`📖 Processing ${fileName} file...`);
-    }
 
     const filePath = path.join(buildConfig.profilesDirectory, fileName);
     const yamlData = await this.fileProcessor.loadYamlFile(filePath);
     const entities = [];
 
     for (const [profileKey, profileData] of Object.entries(yamlData)) {
-      if (loggingConfig.showFileDetails) {
-        console.log(`   Processing ${profileKey} profile...`);
-      }
-
       const profileEntities = await this.profileProcessor.processProfile(
         profileKey,
         profileData,
