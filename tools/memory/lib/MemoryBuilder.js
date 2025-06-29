@@ -83,18 +83,37 @@ class MemoryBuilder {
         await this.processCommonFiles();
       }
 
-      // Process profile files in order
-      for (const fileName of buildConfig.profiles) {
+      // Process profile files in parallel
+      const profileFilePromises = buildConfig.profiles.map(async (fileName) => {
         try {
           const entities = await this.processProfileFile(fileName);
-          this.entities.push(...entities);
-          this.statistics.filesProcessed++;
-          this.statistics.profileBreakdown[fileName] = entities.length;
+          return {
+            success: true,
+            fileName,
+            entities
+          };
         } catch (error) {
           if (buildConfig.stopOnCriticalError) {
             throw new BuildError(`Critical error processing ${fileName}: ${error.message}`);
           }
-          console.warn(`⚠️  Skipping ${fileName}: ${error.message}`);
+          console.warn(`⚠️ Skipping ${fileName}: ${error.message}`);
+          return {
+            success: false,
+            fileName,
+            entities: [],
+            error
+          };
+        }
+      });
+
+      const profileResults = await Promise.all(profileFilePromises);
+
+      // Aggregate successful results
+      for (const result of profileResults) {
+        if (result.success) {
+          this.entities.push(...result.entities);
+          this.statistics.filesProcessed++;
+          this.statistics.profileBreakdown[result.fileName] = result.entities.length;
         }
       }
 
@@ -137,14 +156,16 @@ class MemoryBuilder {
     const loggingConfig = this.config.logging;
     const commonDir = path.join(buildConfig.profilesDirectory, buildConfig.commonDirectory);
 
-    if (!fs.existsSync(commonDir)) {
+    try {
+      await fs.promises.access(commonDir);
+    } catch (accessError) {
       if (loggingConfig.showFileDetails) {
-        console.log(`⚠️  Common directory not found: ${commonDir}`);
+        console.log(`⚠️ Common directory not found: ${commonDir}`);
       }
       return;
     }
 
-    const commonFiles = fs.readdirSync(commonDir)
+    const commonFiles = (await fs.promises.readdir(commonDir))
       .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
       .sort();
 
@@ -152,18 +173,39 @@ class MemoryBuilder {
       console.log(`🛠️ Processing ${commonFiles.length} common infrastructure files...`);
     }
 
-    for (const fileName of commonFiles) {
+    // Process common files in parallel
+    const commonFilePromises = commonFiles.map(async (fileName) => {
       try {
         const filePath = path.join(commonDir, fileName);
         const entities = await this.processCommonFile(filePath, fileName);
-        this.entities.push(...entities);
-        this.statistics.filesProcessed++;
-        this.statistics.profileBreakdown[`common/${fileName}`] = entities.length;
+        return {
+          success: true,
+          fileName: `common/${fileName}`,
+          entities,
+          filePath
+        };
       } catch (error) {
         if (buildConfig.stopOnCriticalError) {
           throw new BuildError(`Critical error processing common file ${fileName}: ${error.message}`);
         }
-        console.warn(`⚠️  Skipping common file ${fileName}: ${error.message}`);
+        console.warn(`⚠️ Skipping common file ${fileName}: ${error.message}`);
+        return {
+          success: false,
+          fileName: `common/${fileName}`,
+          entities: [],
+          error
+        };
+      }
+    });
+
+    const commonResults = await Promise.all(commonFilePromises);
+
+    // Aggregate successful results
+    for (const result of commonResults) {
+      if (result.success) {
+        this.entities.push(...result.entities);
+        this.statistics.filesProcessed++;
+        this.statistics.profileBreakdown[result.fileName] = result.entities.length;
       }
     }
   }
@@ -254,22 +296,44 @@ class MemoryBuilder {
   async processAdditionalFiles(buildConfig) {
     const profileDir = buildConfig.profilesDirectory;
 
-    if (!fs.existsSync(profileDir)) {
+    try {
+      await fs.promises.access(profileDir);
+    } catch (accessError) {
       return;
     }
 
-    const allFiles = fs.readdirSync(profileDir)
+    const allFiles = (await fs.promises.readdir(profileDir))
       .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
       .filter(file => !buildConfig.profiles.includes(file));
 
-    for (const fileName of allFiles) {
+    // Process additional files in parallel
+    const additionalFilePromises = allFiles.map(async (fileName) => {
       try {
         const entities = await this.processProfileFile(fileName);
-        this.entities.push(...entities);
-        this.statistics.filesProcessed++;
-        this.statistics.profileBreakdown[fileName] = entities.length;
+        return {
+          success: true,
+          fileName,
+          entities
+        };
       } catch (error) {
         console.warn(`⚠️ Skipping additional file ${fileName}: ${error.message}`);
+        return {
+          success: false,
+          fileName,
+          entities: [],
+          error
+        };
+      }
+    });
+
+    const additionalResults = await Promise.all(additionalFilePromises);
+
+    // Aggregate successful results
+    for (const result of additionalResults) {
+      if (result.success) {
+        this.entities.push(...result.entities);
+        this.statistics.filesProcessed++;
+        this.statistics.profileBreakdown[result.fileName] = result.entities.length;
       }
     }
   }
@@ -297,7 +361,7 @@ class MemoryBuilder {
       content = this.entities.map(entity => JSON.stringify(entity)).join('\n');
     }
 
-    fs.writeFileSync(outputPath, content, 'utf8');
+    await fs.promises.writeFile(outputPath, content, 'utf8');
 
     this.statistics.entitiesCreated = this.entities.length;
 

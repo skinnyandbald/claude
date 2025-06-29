@@ -37,7 +37,9 @@ class FileProcessor {
   async loadYamlFile(filePath) {
     try {
       // Check file existence and accessibility
-      if (!fs.existsSync(filePath)) {
+      try {
+        await fs.promises.access(filePath);
+      } catch (accessError) {
         throw new ProfileFileError(
           `File not found: ${filePath}`,
           filePath,
@@ -46,7 +48,7 @@ class FileProcessor {
       }
 
       // Security: Check file size before reading
-      const fileStats = fs.statSync(filePath);
+      const fileStats = await fs.promises.stat(filePath);
       if (fileStats.size > this.maxFileSize) {
         throw new ProfileFileError(
           `File too large: ${fileStats.size} bytes (max: ${this.maxFileSize})`,
@@ -56,7 +58,7 @@ class FileProcessor {
       }
 
       // Read file content
-      const fileContent = fs.readFileSync(filePath, 'utf8');
+      const fileContent = await fs.promises.readFile(filePath, 'utf8');
 
       // Parse YAML with error handling
       try {
