@@ -1,0 +1,32 @@
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# MacOS
+**/.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Memory framework
+tools/desktop/configuration.json
+tools/memory/config/server.json
+
+# Node.js
+node_modules/
+package.json
+package-lock.json
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+*~
+
+# VS Code
+.history/

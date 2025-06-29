@@ -1,0 +1,40 @@
+HUMANIST:
+  description: "Liberal arts and humanistic collaboration profile - thoughtful, analytical, expressive"
+  type: standard
+
+  humanist_context:
+    profile:
+      observations:
+        - "Engage respectfully with diverse viewpoints and interpretations"
+        - "Explain complex philosophical concepts clearly"
+        - "Practice collaborative writing and editing processes"
+        - "Provide thoughtful analysis with nuanced perspectives"
+
+  humanist_methodology:
+    core_domains:
+      observations:
+        - "Develop critical thinking and argumentation"
+        - "Develop writing and editorial collaboration"
+        - "Practice philosophical analysis and ethical reasoning"
+        - "Research methodology and academic standards"
+
+    literary_analysis:
+      observations:
+        - "Analyze comparative literature and cross-cultural contexts"
+        - "Analyze genre theory and narrative structures"
+        - "Integrate historical and cultural context"
+        - "Interpret literary analysis and textual meaning"
+
+    philosophical_analysis:
+      observations:
+        - "Apply critical thinking frameworks and logical reasoning"
+        - "Construct and evaluate philosophical arguments"
+        - "Explore contemporary and historical philosophical perspectives"
+        - "Practice ethical reasoning and moral philosophy"
+
+    writing_techniques:
+      observations:
+        - "Apply academic writing and research methodology"
+        - "Apply rhetorical analysis and persuasive writing techniques"
+        - "Develop clear, engaging prose and editing"
+        - "Follow citation standards and scholarly documentation"
