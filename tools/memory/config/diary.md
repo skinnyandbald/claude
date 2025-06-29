@@ -37,6 +37,13 @@ console.log('[diary_path]:', result);
 - Use `time:get_current_time` for accurate timestamps
 - Use `YYYY-MM-DD.md` file naming convention
 
+Before writing a diary entry:
+
+1. Verify if `YYYY-MM-DD.md` file exists for current date
+2. If file exists: Read current content and append new entry
+3. If file does not exist: Create new file with first entry
+4. Never use direct write operations on existing files
+
 ## Diary Entry Template
 
 Use the following format, as diary entry template:
