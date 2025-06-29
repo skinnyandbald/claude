@@ -11,6 +11,7 @@ const MemoryBuilder = require('./MemoryBuilder');
 
 // Configuration management
 const ConfigLoader = require('./ConfigLoader');
+const PackageBuilder = require('./PackageBuilder');
 
 // Processors
 const { FileProcessor, ProfileProcessor, EntityProcessor } = require('./processors');
@@ -25,12 +26,13 @@ const { BuildError, ProfileFileError, YamlParseError, EntityProcessingError } = 
  * Complete MemoryBuilder library exports
  * 
  * Provides access to all components of the modular memory builder system
- * including orchestration, processing, analysis, and error handling.
+ * including orchestration, processing, analysis, project setup, and error handling.
  */
 module.exports = {
   // Main classes
   MemoryBuilder,
   ConfigLoader,
+  PackageBuilder,
 
   // Processors
   FileProcessor,
