@@ -25,20 +25,26 @@ class MemoryBuilder {
    * Creates a new MemoryBuilder instance
    * 
    * @param {Object|null} [config=null] - Optional configuration object
+   * @param {Object} [dependencies={}] - Optional dependency injection for testing
+   * @param {ConfigLoader} [dependencies.configLoader] - Custom config loader
+   * @param {FileProcessor} [dependencies.fileProcessor] - Custom file processor
+   * @param {ProfileProcessor} [dependencies.profileProcessor] - Custom profile processor
+   * @param {EntityProcessor} [dependencies.entityProcessor] - Custom entity processor
+   * @param {EntityTypeAnalyzer} [dependencies.entityTypeAnalyzer] - Custom entity type analyzer
    */
-  constructor(config = null) {
-    this.configLoader = new ConfigLoader();
+  constructor(config = null, dependencies = {}) {
+    this.configLoader = dependencies.configLoader || new ConfigLoader();
     this.config = config || this.configLoader.load();
     
     // Initialize FileProcessor with security options
     const maxFileSize = this.config.security?.maxFileSize || (1024 * 1024); // Default 1MB
-    this.fileProcessor = new FileProcessor(maxFileSize);
-    this.profileProcessor = new ProfileProcessor(this.config);
-    this.entityProcessor = new EntityProcessor();
+    this.fileProcessor = dependencies.fileProcessor || new FileProcessor(maxFileSize);
+    this.profileProcessor = dependencies.profileProcessor || new ProfileProcessor(this.config);
+    this.entityProcessor = dependencies.entityProcessor || new EntityProcessor();
 
     // Pass profiles directory to EntityTypeAnalyzer for dynamic analysis
     const profilesDirectory = this.config.build.profilesDirectory || 'profiles';
-    this.entityTypeAnalyzer = new EntityTypeAnalyzer(profilesDirectory);
+    this.entityTypeAnalyzer = dependencies.entityTypeAnalyzer || new EntityTypeAnalyzer(profilesDirectory);
 
     this.buildStartTime = null;
     this.buildEndTime = null;
