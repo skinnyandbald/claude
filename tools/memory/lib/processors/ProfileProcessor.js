@@ -24,6 +24,30 @@ class ProfileProcessor {
   constructor(config = {}) {
     this.config = config;
     this.path = config.path || {};
+    
+    // Pre-compile regex patterns for path substitution to avoid hot path compilation
+    this.pathRegexCache = new Map();
+    
+    // Cross-platform home directory expansion (cached)
+    const os = require('os');
+    this.homeDir = os.homedir();
+    
+    // Pre-compile all path variable regex patterns
+    this.compiledPathPatterns = new Map();
+    for (const [pathKey, pathValue] of Object.entries(this.path)) {
+      const variable = `{path.${pathKey}}`;
+      // Escape special regex characters in the variable pattern
+      const escapedVariable = variable.replace(/[{}]/g, '\\$&');
+      // Pre-compile the regex pattern
+      const compiledRegex = new RegExp(escapedVariable, 'g');
+      // Expand ~ for cross-platform compatibility while keeping ~ in config
+      const expandedPath = pathValue.replace(/^~/, this.homeDir);
+      
+      this.compiledPathPatterns.set(pathKey, {
+        regex: compiledRegex,
+        expandedPath
+      });
+    }
   }
 
   /**
@@ -284,19 +308,13 @@ class ProfileProcessor {
 
     let result = text;
 
-    // Cross-platform home directory expansion
-    const os = require('os');
-    const homeDir = os.homedir();
-
-    for (const [pathKey, pathValue] of Object.entries(this.path)) {
-      const variable = `{path.${pathKey}}`;
-      // Escape special regex characters in the variable pattern
-      const escapedVariable = variable.replace(/[{}]/g, '\\$&');
-
-      // Expand ~ for cross-platform compatibility while keeping ~ in config
-      const expandedPath = pathValue.replace(/^~/, homeDir);
-      result = result.replace(new RegExp(escapedVariable, 'g'), expandedPath);
+    // Use pre-compiled regex patterns for better performance
+    for (const [pathKey, patternData] of this.compiledPathPatterns) {
+      result = result.replace(patternData.regex, patternData.expandedPath);
+      // Reset regex lastIndex to ensure global regex works correctly on subsequent calls
+      patternData.regex.lastIndex = 0;
     }
+    
     return result;
   }
 
