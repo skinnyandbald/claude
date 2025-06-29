@@ -29,7 +29,10 @@ class MemoryBuilder {
   constructor(config = null) {
     this.configLoader = new ConfigLoader();
     this.config = config || this.configLoader.load();
-    this.fileProcessor = new FileProcessor();
+    
+    // Initialize FileProcessor with security options
+    const maxFileSize = this.config.security?.maxFileSize || (1024 * 1024); // Default 1MB
+    this.fileProcessor = new FileProcessor(maxFileSize);
     this.profileProcessor = new ProfileProcessor(this.config);
     this.entityProcessor = new EntityProcessor();
 

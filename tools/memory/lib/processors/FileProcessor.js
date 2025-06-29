@@ -19,6 +19,14 @@ const { ProfileFileError, YamlParseError } = require('../errors');
  */
 class FileProcessor {
   /**
+   * Creates a new FileProcessor instance
+   * 
+   * @param {number} maxFileSize - Maximum file size in bytes (default: 1MB)
+   */
+  constructor(maxFileSize = 1024 * 1024) {
+    this.maxFileSize = maxFileSize;
+  }
+  /**
    * Loads and parses a YAML file
    * 
    * @param {string} filePath - Path to the YAML file to load
@@ -37,12 +45,29 @@ class FileProcessor {
         );
       }
 
+      // Security: Check file size before reading
+      const fileStats = fs.statSync(filePath);
+      if (fileStats.size > this.maxFileSize) {
+        throw new ProfileFileError(
+          `File too large: ${fileStats.size} bytes (max: ${this.maxFileSize})`,
+          filePath,
+          'Profile files should be reasonably sized. Consider splitting large configurations.'
+        );
+      }
+
       // Read file content
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
       // Parse YAML with error handling
       try {
-        const yamlData = yaml.load(fileContent);
+        // Security: Use safer YAML parsing options
+        const yamlData = yaml.load(fileContent, {
+          schema: yaml.DEFAULT_SCHEMA,  // More restrictive than EXTENDED_SCHEMA
+          json: true,                   // Stricter parsing mode
+          onWarning: (warning) => {
+            console.warn(`⚠️ YAML Warning in ${filePath}: ${warning.message}`);
+          }
+        });
         return yamlData || {};
       } catch (yamlError) {
         throw new YamlParseError(
