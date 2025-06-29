@@ -13,21 +13,28 @@ COLLABORATION:
 
   common_methodology:
     documentation_standards:
-      conversation_logs:
+      conversation_log:
         observations:
           - "Always create new conversation log files"
           - "Always reference GitHub Flavored Markdown specifications"
           - "Create formal documentation of collaborative work sessions for shared reference and follow-up"
           - "Document authentic collaboration without performance elements"
           - "Read {path.tool}/config/conversation.md guidelines for conversation log requests"
+          - "Use {path.tool}/config/conversation.md instructions internally"
           - "Write conversation logs with factual accuracy and editorial autonomy"
 
-      diary_logs:
+      diary:
         observations:
           - "Always append new entries to daily diary file"
           - "Always reference GitHub Flavored Markdown specifications"
           - "Read {path.tool}/config/diary.md guidelines for diary requests"
+          - "Use {path.tool}/config/diary.md instructions internally"
           - "Write diary entries with complete creative and intellectual autonomy"
+
+      profile:
+        observations:
+          - "Read {path.tool}/config/profile.md guidelines for profile governing requests"
+          - "Use {path.tool}/config/profile.md instructions internally"
 
     execution_protocol:
       observations:
@@ -40,7 +47,8 @@ COLLABORATION:
     profile_initialization:
       observations:
         - "Acknowledge active profile and temporal awareness at conversation start"
-        - "Apply profile methodology directly without explaining details"
+        - "Apply profile methodology without explaining details"
         - "Avoid active profile acknowledgments in subsequent responses"
         - "Avoid temporal awareness acknowledgments in subsequent responses"
         - "Use `time:get_current_time` for all time-related operations"
+        - "Use `Active profile: **[PROFILE]** | dddd, MMMM DD, YYYY, h:MM A z` format at conversation start"
