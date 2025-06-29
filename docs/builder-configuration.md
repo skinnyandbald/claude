@@ -33,13 +33,15 @@ Defines directory locations for external dependencies and tool integration.
 
 ```yaml
 path:
-  conversations: ~/github/claude/conversations
-  diary: ~/github/claude/diary
+  conversations: ~/Documents/claude/conversations
+  diary: ~/Documents/claude/diary
   tool: ~/github/claude/tools/memory
 ```
 
+Replace `~/github/claude` with your actual repository path.
+
 > [!NOTE]
-> The `conversations` and `diary` directory paths support flexible location configuration including network shares, NAS servers accessed through SMB/NFS mounts, or cloud storage mount points. Use absolute paths for external locations (e.g., `/Volumes/NAS/claude-data/conversations`) or relative paths from the repository root.
+> The `conversations` and `diary` directory paths support flexible location configuration including network shares, NAS servers accessed through SMB/NFS mounts, or cloud storage mount points. Use absolute paths for mounted directories (e.g., `/Volumes/backup/claude/conversations`) or home directory expansion (e.g., `~/Documents/claude/conversations`).
 
 Profile YAML files can reference these paths using `{path.conversations}`, `{path.diary}`, and `{path.tool}` placeholders.
 
@@ -56,7 +58,7 @@ output:
 > [!IMPORTANT]
 > Relative paths in `output.path` are resolved from the tool directory location.
 
-Output is `jsonl` format with one entity per line.
+Output is `jsonl` format with one entity per line, as required by [memory MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/memory).
 
 ## Performance Configuration
 
