@@ -224,17 +224,44 @@ class EntityTypeAnalyzer {
    * @returns {Object|null} Parsed profile structure or null if not found
    */
   getProfileStructure(profileKey) {
+    // Security: Validate profileKey input
+    if (!profileKey || typeof profileKey !== 'string') {
+      return null;
+    }
+
+    // Security: Allow only alphanumeric, dash, underscore characters
+    const safeProfileKeyPattern = /^[a-zA-Z0-9_-]+$/;
+    if (!safeProfileKeyPattern.test(profileKey)) {
+      console.warn(`⚠️ Invalid profile key format: ${profileKey}`);
+      return null;
+    }
+
     // Check cache first
     if (this.profileCache.has(profileKey)) {
       return this.profileCache.get(profileKey);
     }
 
+    // Security: Resolve and validate base profiles directory
+    const baseProfilesDir = path.resolve(this.profilesDirectory);
+
     // Try to load from both regular profiles and common directory
-    let profilePath = path.join(this.profilesDirectory, `${profileKey}.yaml`);
+    let profilePath = path.resolve(baseProfilesDir, `${profileKey}.yaml`);
+
+    // Security: Ensure profile path is within allowed directory
+    if (!profilePath.startsWith(baseProfilesDir)) {
+      console.warn(`⚠️ Profile path outside allowed directory: ${profileKey}`);
+      return null;
+    }
 
     // If not found, try common directory
     if (!fs.existsSync(profilePath)) {
-      profilePath = path.join(this.profilesDirectory, 'common', `${profileKey}.yaml`);
+      profilePath = path.resolve(baseProfilesDir, 'common', `${profileKey}.yaml`);
+
+      // Security: Validate common directory path
+      if (!profilePath.startsWith(baseProfilesDir)) {
+        console.warn(`⚠️ Common profile path outside allowed directory: ${profileKey}`);
+        return null;
+      }
     }
 
     if (!fs.existsSync(profilePath)) {

@@ -74,7 +74,14 @@ class ConfigLoader {
    * @returns {string[]} Array of profile filenames found in profiles directory
    */
   detectProfiles() {
-    const profilesDir = path.join(__dirname, '../profiles');
+    const profilesDir = path.resolve(path.join(__dirname, '../profiles'));
+    const allowedDir = path.resolve(__dirname, '..');
+    
+    // Security: Ensure profiles directory is within allowed path
+    if (!profilesDir.startsWith(allowedDir)) {
+      console.error('❌ Security: Profiles directory outside allowed path');
+      return [];
+    }
 
     if (!fs.existsSync(profilesDir)) {
       console.warn(`⚠️  Profiles directory not found: ${profilesDir}`);
