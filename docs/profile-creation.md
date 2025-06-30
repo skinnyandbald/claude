@@ -42,7 +42,6 @@ Profile structure follows a standardized YAML format with specific naming conven
 ```yaml
 PROFILE_NAME:
   description: "Brief profile description"
-  type: standard
 
   profile_name_context:
     profile:
@@ -73,18 +72,82 @@ PROFILE_NAME:
 
 ### Observation Format
 
-> [!IMPORTANT]  
-> Observation design directly programs behavioral responses, precise verb selection is essential.
+> [!CRITICAL]
+> All observations within each section MUST be in strict alphabetical order by first word. Observation design directly programs behavioral responses.
+
+#### Alphabetical Ordering Requirement
+
+**Every section must maintain strict alphabetical order:**
+
+```yaml
+# Correct alphabetical ordering
+observations:
+  - "Apply minimal effective changes"
+  - "Avoid autonomous decisions" 
+  - "Focus on specific problem asked"
+  - "Maintain production-safety mindset"
+  - "Read current file state"
+```
+
+```yaml
+# Incorrect - breaks alphabetical order
+observations:
+  - "Focus on specific problem asked"
+  - "Apply minimal effective changes"  # Should come before "Focus"
+  - "Read current file state"
+```
+
+#### Observation Content Patterns
+
+**Verb-Based Observations (Behavioral Sections)**
 
 Use imperative verbs for behavioral commands:
 
-- ✅ "Apply systematic validation before implementation"
-- ❌ "Systematic validation before implementation"
-- ⚠️ **"Apply"** vs **"Consider"** vs **"Avoid"** create fundamentally different behaviors
+- **Purpose**: Program specific behavioral responses
+- **Usage**: Most observations in most sections
+- **Pattern**: Action verb + specific keywords
+- **Examples**: "Apply", "Avoid", "Focus", "Maintain", "Read", "Use"
 
-Domain sections use descriptive phrases:
+```yaml
+# Correct verb-based formatting
+observations:
+  - "Apply systematic validation before implementation"
+  - "Avoid deferential acknowledgment patterns"
+  - "Focus on specific problem asked"
+```
 
-- ✅ "Infrastructure architecture and optimization"
+**Noun-Based Observations (Domain Sections)**
+
+Use descriptive phrases for competency areas:
+
+- **Purpose**: Classify domains of expertise or competency areas
+- **Usage**: Primarily in `*_domains` sections
+- **Pattern**: Noun phrase describing area or capability
+- **Examples**: "Infrastructure architecture", "Data analysis", "Research methodology"
+
+```yaml
+# Correct noun-based formatting (for *_domains sections)
+observations:
+  - "Infrastructure architecture and optimization"
+  - "Machine learning and predictive modeling"
+  - "Production system troubleshooting and debugging"
+```
+
+#### When to Use Each Pattern
+
+**Use Verb-Based (Prescriptive) for:**
+- Behavioral directives and action guidance
+- Methodology and technique specifications
+- Execution protocols and communication patterns
+- Process requirements and validation steps
+
+**Use Noun-Based (Descriptive) for:**
+- Domain competency areas (`technical_domains`, `innovation_domains`, etc.)
+- Area classifications and expertise categories
+- Capability specifications and scope definitions
+
+> [!WARNING]
+> **"Apply"** vs **"Consider"** vs **"Avoid"** create fundamentally different behaviors. Precise verb selection is essential.
 
 ## Custom Profiles
 
@@ -105,7 +168,6 @@ Add `profile-name.yaml` to `./tools/memory/profiles` directory:
 ```yaml
 DATA_SCIENTIST:
   description: "Data science and analytics expertise"
-  type: standard
 
   data_context:
     profile:
@@ -158,10 +220,11 @@ Effective profile design follows established principles for content organization
 
 ### Structure Requirements
 
-- Unique section names (no profile name collisions)
-- Alphabetical ordering throughout
-- Imperative verbs for behavioral observations
-- Descriptive phrases for domain sections
+- **Unique section names** (no profile name collisions)
+- **Strict alphabetical ordering** within all observation arrays
+- **Verb-based observations** for behavioral sections
+- **Noun-based observations** for `*_domains` sections
+- **Consistent formatting** (no punctuation, proper capitalization)
 
 ## Example Structures
 
