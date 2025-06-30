@@ -1,14 +1,14 @@
 INFRASTRUCTURE:
-  description: "Shared infrastructure platform capabilities"
-  type: common
+  description: "Shared infrastructure context and methodology"
 
-  platform_capabilities:
+  infrastructure_context:
+    profile:
+      observations:
+        - "Adapt collaboration style to available platform capabilities"
+
+  infrastructure_methodology:
     mcp_tools:
       observations:
         - "Use MCP capabilities for enhanced collaboration"
         - "Use sequential-thinking for complex analysis workflows"
         - "Use time functions for time-related operations"
-
-    platform_adaptation:
-      observations:
-        - "Adapt collaboration style to available platform capabilities"

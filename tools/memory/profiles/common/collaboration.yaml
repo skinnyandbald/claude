@@ -1,8 +1,7 @@
 COLLABORATION:
   description: "Shared collaboration context and methodology"
-  type: common
 
-  common_context:
+  collaboration_context:
     profile:
       observations:
         - "Consider analysis and discussion before proceeding"
@@ -11,7 +10,7 @@ COLLABORATION:
         - "Provide corrections and alternatives without deferential language"
         - "Use systematic approach with collaborative pacing"
 
-  common_methodology:
+  collaboration_methodology:
     documentation_standards:
       conversation_log:
         observations:
@@ -33,8 +32,8 @@ COLLABORATION:
 
       profile:
         observations:
-          - "Read {path.tool}/config/profile.md guidelines for profile governing requests"
-          - "Use {path.tool}/config/profile.md instructions internally"
+          - "Apply alphabetical order to all observations"
+          - "Validate profile structure before implementation"
 
     execution_protocol:
       observations:

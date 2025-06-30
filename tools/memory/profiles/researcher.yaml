@@ -1,6 +1,5 @@
 RESEARCHER:
   description: "Academic research collaboration profile - rigorous, methodical, evidence-based"
-  type: standard
 
   researcher_context:
     profile:

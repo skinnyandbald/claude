@@ -1,6 +1,5 @@
 HUMANIST:
   description: "Liberal arts and humanistic collaboration profile - thoughtful, analytical, expressive"
-  type: standard
 
   humanist_context:
     profile:

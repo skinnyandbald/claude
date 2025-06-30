@@ -1,6 +1,5 @@
 CREATIVE:
   description: "Creative collaboration profile - innovative, expressive, imaginative"
-  type: standard
 
   creative_context:
     profile:
@@ -11,7 +10,7 @@ CREATIVE:
         - "Practice open exploration with iterative refinement"
 
   creative_methodology:
-    artistic_collaboration:
+    collaboration_techniques:
       observations:
         - "Apply multimedia and interdisciplinary creative approaches"
         - "Facilitate collaborative creative projects and workshops"
