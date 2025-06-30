@@ -17,44 +17,27 @@ const { EntityProcessingError } = require('../errors');
  */
 class EntityProcessor {
   /**
-   * Creates a new entity with proper structure and validation
+   * Processes and validates observations array
    * 
-   * @param {string} name - Entity name/identifier
-   * @param {string} entityType - Entity type classification
-   * @param {Array<string>} observations - Array of observation strings
-   * @returns {Promise<Object>} Created entity object
-   * @throws {EntityProcessingError} When entity creation fails
+   * @private
+   * @param {Array} observations - Raw observations array
+   * @returns {Array<string>} Processed observations array
    */
-  async createEntity(name, entityType, observations) {
-    try {
-      // Validate inputs
-      this.#validateEntityInputs(name, entityType, observations);
+  #processObservations(observations) {
+    return observations
+      .filter(obs => obs && typeof obs === 'string' && obs.trim().length > 0)
+      .map(obs => obs.trim());
+  }
 
-      // Create entity structure
-      const entity = {
-        type: 'entity',
-        name: this.#sanitizeEntityName(name),
-        entityType: entityType,
-        observations: this.#processObservations(observations)
-      };
-
-      // Validate created entity
-      this.#validateEntityStructure(entity);
-
-      return entity;
-
-    } catch (error) {
-      if (error instanceof EntityProcessingError) {
-        throw error;
-      }
-
-      throw new EntityProcessingError(
-        `Entity creation failed: ${error.message}`,
-        name,
-        'unknown',
-        'Check entity name, type, and observations format'
-      );
-    }
+  /**
+   * Sanitizes entity name for consistency
+   * 
+   * @private
+   * @param {string} name - Raw entity name
+   * @returns {string} Sanitized entity name
+   */
+  #sanitizeEntityName(name) {
+    return name.trim();
   }
 
   /**
@@ -75,7 +58,6 @@ class EntityProcessor {
         'Provide a valid entity name'
       );
     }
-
     if (!entityType || typeof entityType !== 'string' || entityType.trim().length === 0) {
       throw new EntityProcessingError(
         'Entity type is required and must be a non-empty string',
@@ -84,7 +66,6 @@ class EntityProcessor {
         'Ensure entity type is properly determined'
       );
     }
-
     if (!Array.isArray(observations)) {
       throw new EntityProcessingError(
         'Observations must be an array',
@@ -96,30 +77,6 @@ class EntityProcessor {
   }
 
   /**
-   * Sanitizes entity name for consistency
-   * 
-   * @private
-   * @param {string} name - Raw entity name
-   * @returns {string} Sanitized entity name
-   */
-  #sanitizeEntityName(name) {
-    return name.trim();
-  }
-
-  /**
-   * Processes and validates observations array
-   * 
-   * @private
-   * @param {Array} observations - Raw observations array
-   * @returns {Array<string>} Processed observations array
-   */
-  #processObservations(observations) {
-    return observations
-      .filter(obs => obs && typeof obs === 'string' && obs.trim().length > 0)
-      .map(obs => obs.trim());
-  }
-
-  /**
    * Validates the created entity structure
    * 
    * @private
@@ -128,7 +85,6 @@ class EntityProcessor {
    */
   #validateEntityStructure(entity) {
     const requiredFields = ['type', 'name', 'entityType', 'observations'];
-
     for (const field of requiredFields) {
       if (!(field in entity)) {
         throw new EntityProcessingError(
@@ -139,8 +95,6 @@ class EntityProcessor {
         );
       }
     }
-
-    // Validate field types
     if (entity.type !== 'entity') {
       throw new EntityProcessingError(
         'Entity type field must be "entity"',
@@ -149,7 +103,6 @@ class EntityProcessor {
         'Set entity.type to "entity"'
       );
     }
-
     if (!Array.isArray(entity.observations)) {
       throw new EntityProcessingError(
         'Entity observations must be an array',
@@ -158,13 +111,45 @@ class EntityProcessor {
         'Convert observations to array format'
       );
     }
-
     if (entity.observations.length === 0) {
       throw new EntityProcessingError(
         'Entity must have at least one observation',
         entity.name,
         'structure_validation',
         'Add meaningful observations to the entity'
+      );
+    }
+  }
+
+  /**
+   * Creates a new entity with proper structure and validation
+   * 
+   * @param {string} name - Entity name/identifier
+   * @param {string} entityType - Entity type classification
+   * @param {Array<string>} observations - Array of observation strings
+   * @returns {Promise<Object>} Created entity object
+   * @throws {EntityProcessingError} When entity creation fails
+   */
+  async createEntity(name, entityType, observations) {
+    try {
+      this.#validateEntityInputs(name, entityType, observations);
+      const entity = {
+        type: 'entity',
+        name: this.#sanitizeEntityName(name),
+        entityType: entityType,
+        observations: this.#processObservations(observations)
+      };
+      this.#validateEntityStructure(entity);
+      return entity;
+    } catch (error) {
+      if (error instanceof EntityProcessingError) {
+        throw error;
+      }
+      throw new EntityProcessingError(
+        `Entity creation failed: ${error.message}`,
+        name,
+        'unknown',
+        'Check entity name, type, and observations format'
       );
     }
   }

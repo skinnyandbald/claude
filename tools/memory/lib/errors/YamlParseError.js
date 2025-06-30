@@ -20,13 +20,10 @@ class YamlParseError extends ProfileFileError {
    */
   constructor(message, fileName, originalError, suggestion = null) {
     let fullMessage = message;
-    
-    // Add line/column information if available
     if (originalError && originalError.mark) {
       const { line, column } = originalError.mark;
       fullMessage += ` (line ${line}, column ${column})`;
     }
-    
     super(fullMessage, fileName, suggestion);
     this.name = 'YamlParseError';
     this.originalError = originalError;

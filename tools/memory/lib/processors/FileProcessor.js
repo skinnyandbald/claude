@@ -26,6 +26,7 @@ class FileProcessor {
   constructor(maxFileSize = 1024 * 1024) {
     this.maxFileSize = maxFileSize;
   }
+
   /**
    * Loads and parses a YAML file
    * 
@@ -36,7 +37,6 @@ class FileProcessor {
    */
   async loadYamlFile(filePath) {
     try {
-      // Check file existence and accessibility
       try {
         await fs.promises.access(filePath);
       } catch (accessError) {
@@ -46,8 +46,6 @@ class FileProcessor {
           'Ensure the profile file exists and is readable'
         );
       }
-
-      // Security: Check file size before reading
       const fileStats = await fs.promises.stat(filePath);
       if (fileStats.size > this.maxFileSize) {
         throw new ProfileFileError(
@@ -56,16 +54,11 @@ class FileProcessor {
           'Profile files should be reasonably sized. Consider splitting large configurations.'
         );
       }
-
-      // Read file content
       const fileContent = await fs.promises.readFile(filePath, 'utf8');
-
-      // Parse YAML with error handling
       try {
-        // Security: Use safer YAML parsing options
         const yamlData = yaml.load(fileContent, {
-          schema: yaml.DEFAULT_SCHEMA,  // More restrictive than EXTENDED_SCHEMA
-          json: true,                   // Stricter parsing mode
+          schema: yaml.DEFAULT_SCHEMA,
+          json: true,
           onWarning: (warning) => {
             console.warn(`⚠️ YAML Warning in ${filePath}: ${warning.message}`);
           }
@@ -76,17 +69,13 @@ class FileProcessor {
           'YAML syntax error',
           filePath,
           yamlError,
-          'Check YAML indentation and syntax. Common issues: incorrect indentation, missing colons, unescaped quotes'
+          'Check YAML indentation and syntax'
         );
       }
-
     } catch (error) {
-      // Re-throw our custom errors
       if (error instanceof ProfileFileError || error instanceof YamlParseError) {
         throw error;
       }
-
-      // Handle unexpected file system errors
       throw new ProfileFileError(
         `Unexpected file error: ${error.message}`,
         filePath,

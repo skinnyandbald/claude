@@ -1,5 +1,5 @@
 /**
- * Zero-Hardcoding YAML-First Entity Type Analyzer
+ * YAML-First Entity Type Analyzer
  * 
  * @module lib/analyzers/EntityTypeAnalyzer
  * @author AXIVO
@@ -10,7 +10,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 /**
- * Zero-hardcoding entity type analyzer using binary type classification
+ * Entity type analyzer using binary type classification
  * 
  * Uses YAML `type` field to distinguish between:
  * - `type: common` - Shared infrastructure across all profiles
@@ -35,49 +35,40 @@ class EntityTypeAnalyzer {
   }
 
   /**
-   * Determines entity type using zero-hardcoding binary classification
+   * Evicts the least recently used item from cache
    * 
-   * @param {string} profileKey - Main profile identifier
-   * @param {string} subCategoryKey - Subcategory identifier
-   * @param {string} itemKey - Item identifier within subcategory
-   * @param {string} parentContext - Parent section context (for nested entities)
-   * @returns {string} Determined entity type classification
+   * @private
+   * @returns {void}
    */
-  determineEntityType(profileKey, subCategoryKey, itemKey, parentContext = null) {
-    const profileStructure = this.#getProfileStructure(profileKey);
-
-    if (!profileStructure) {
-      return this.#generateFallbackType(profileKey, subCategoryKey);
+  #evictLeastRecentlyUsed() {
+    if (this.cacheAccessTimes.size === 0) {
+      return;
     }
-
-    // Get the profile type from YAML (common vs standard)
-    const profileType = this.#getProfileType(profileStructure, profileKey);
-
-    if (!profileType) {
-      return this.#generateFallbackType(profileKey, subCategoryKey);
+    let oldestKey = null;
+    let oldestTime = Infinity;
+    for (const [key, accessTime] of this.cacheAccessTimes.entries()) {
+      if (accessTime < oldestTime) {
+        oldestTime = accessTime;
+        oldestKey = key;
+      }
     }
-
-    // Generate entity type based on binary classification
-    return this.#generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext);
+    if (oldestKey) {
+      this.profileCache.delete(oldestKey);
+      this.cacheAccessTimes.delete(oldestKey);
+    }
   }
 
   /**
-   * Extracts the profile type from YAML structure
+   * Extracts semantic type from subcategory name
    * 
    * @private
-   * @param {Object} profileStructure - Parsed YAML structure
-   * @param {string} profileKey - Profile identifier
-   * @returns {string|null} Profile type ('common' or 'standard') or null
+   * @param {string} subCategory - Subcategory name
+   * @returns {string} Extracted semantic type
    */
-  #getProfileType(profileStructure, profileKey) {
-    // Look for the type field in the main profile section
-    const profileSection = profileStructure[profileKey.toUpperCase()];
-
-    if (profileSection && profileSection.type) {
-      return profileSection.type;
-    }
-
-    return null;
+  #extractSemanticType(subCategory) {
+    const words = subCategory.split('_').filter(word => word.length >= 1);
+    const lastWord = words[words.length - 1];
+    return lastWord || 'content';
   }
 
   /**
@@ -94,39 +85,24 @@ class EntityTypeAnalyzer {
   #generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext) {
     const normalizedProfileKey = profileKey.toLowerCase();
     const normalizedSubCategory = subCategoryKey.toLowerCase();
-
-    // Profile header entity
     if (this.#isProfileHeader(subCategoryKey, profileKey)) {
-      if (profileType === 'common') {
-        return `common_${normalizedProfileKey}`;
-      }
-      if (profileType === 'standard') {
-        return `${normalizedProfileKey}_description`;
-      }
+      return `${normalizedProfileKey}_description`;
     }
-
-    // Section header entity
     if (this.#isSectionHeader(subCategoryKey, profileKey)) {
       return 'section';
     }
-
-    // Content entity (item with observations)
     if (profileType === 'common') {
-      // Special handling for documentation within infrastructure
       if (normalizedProfileKey === 'infrastructure' && this.#isDocumentationType(subCategoryKey)) {
         return 'common_documentation';
       }
-      // Use parent context for nested entities to maintain hierarchy
       if (parentContext) {
         const semanticType = this.#extractSemanticType(parentContext);
-        return `common_${semanticType}`;  // common_methodology, common_context
+        return `common_${semanticType}`;
       } else {
-        return `common_${normalizedProfileKey}`;  // common_collaboration, common_infrastructure
+        return `common_${normalizedProfileKey}`;
       }
     }
-
     if (profileType === 'standard') {
-      // Use parent context for nested entities to maintain hierarchy
       if (parentContext) {
         const semanticType = this.#extractSemanticType(parentContext);
         return `${normalizedProfileKey}_${semanticType}`;
@@ -135,73 +111,7 @@ class EntityTypeAnalyzer {
         return `${normalizedProfileKey}_${semanticType}`;
       }
     }
-
     return this.#generateFallbackType(profileKey, subCategoryKey);
-  }
-
-  /**
-   * Checks if this is a profile header entity
-   * 
-   * @private
-   * @param {string} subCategoryKey - Subcategory to check
-   * @param {string} profileKey - Profile key
-   * @returns {boolean} True if this is a profile header
-   */
-  #isProfileHeader(subCategoryKey, profileKey) {
-    return subCategoryKey.toLowerCase() === profileKey.toLowerCase();
-  }
-
-  /**
-   * Checks if this is a section header entity
-   * 
-   * @private
-   * @param {string} subCategoryKey - Subcategory to check
-   * @param {string} profileKey - Profile key
-   * @returns {boolean} True if this is a section header
-   */
-  #isSectionHeader(subCategoryKey, profileKey) {
-    // Section headers are direct children of the profile that aren't the profile itself
-    const profileStructure = this.#getProfileStructure(profileKey);
-    if (!profileStructure) return false;
-
-    const profileSection = profileStructure[profileKey.toUpperCase()];
-    if (!profileSection) return false;
-
-    // Check if this key exists as a direct child of the profile section
-    return Object.keys(profileSection).some(key =>
-      key.toLowerCase() === subCategoryKey.toLowerCase() &&
-      key !== 'description' &&
-      key !== 'type'
-    );
-  }
-
-  /**
-   * Checks if this is a documentation-related type
-   * 
-   * @private
-   * @param {string} subCategoryKey - Subcategory to check
-   * @returns {boolean} True if documentation-related
-   */
-  #isDocumentationType(subCategoryKey) {
-    const docKeywords = ['logging', 'documentation', 'docs', 'log'];
-    const normalizedKey = subCategoryKey.toLowerCase();
-    return docKeywords.some(keyword => normalizedKey.includes(keyword));
-  }
-
-  /**
-   * Extracts semantic type from subcategory name
-   * 
-   * @private
-   * @param {string} subCategory - Subcategory name
-   * @returns {string} Extracted semantic type
-   */
-  #extractSemanticType(subCategory) {
-    // Clean input and split by underscores
-    const words = subCategory.split('_').filter(word => word.length >= 1);
-
-    // Use the last word as the type, or fallback to 'content'
-    const lastWord = words[words.length - 1];
-    return lastWord || 'content';
   }
 
   /**
@@ -227,65 +137,42 @@ class EntityTypeAnalyzer {
    * @returns {Object|null} Parsed profile structure or null if not found
    */
   #getProfileStructure(profileKey) {
-    // Security: Validate profileKey input
     if (!profileKey || typeof profileKey !== 'string') {
       return null;
     }
-
-    // Security: Allow only alphanumeric, dash, underscore characters
     const safeProfileKeyPattern = /^[a-zA-Z0-9_-]+$/;
     if (!safeProfileKeyPattern.test(profileKey)) {
       console.warn(`⚠️ Invalid profile key format: ${profileKey}`);
       return null;
     }
-
-    // Check cache first
     if (this.profileCache.has(profileKey)) {
-      // Update access time for LRU tracking
       this.cacheAccessTimes.set(profileKey, Date.now());
       return this.profileCache.get(profileKey);
     }
-
-    // Security: Resolve and validate base profiles directory
     const baseProfilesDir = path.resolve(this.profilesDirectory);
-
-    // Try to load from both regular profiles and common directory
     let profilePath = path.resolve(baseProfilesDir, `${profileKey}.yaml`);
-
-    // Security: Ensure profile path is within allowed directory
     if (!profilePath.startsWith(baseProfilesDir)) {
       console.warn(`⚠️ Profile path outside allowed directory: ${profileKey}`);
       return null;
     }
-
-    // If not found, try common directory
     if (!fs.existsSync(profilePath)) {
       profilePath = path.resolve(baseProfilesDir, 'common', `${profileKey}.yaml`);
-
-      // Security: Validate common directory path
       if (!profilePath.startsWith(baseProfilesDir)) {
         console.warn(`⚠️ Common profile path outside allowed directory: ${profileKey}`);
         return null;
       }
     }
-
     if (!fs.existsSync(profilePath)) {
       return null;
     }
-
     try {
       const yamlContent = fs.readFileSync(profilePath, 'utf8');
       const profileStructure = yaml.load(yamlContent);
-
-      // Check if cache needs eviction before adding new item
       if (this.profileCache.size >= this.maxCacheSize) {
         this.#evictLeastRecentlyUsed();
       }
-
-      // Cache the structure with current access time
       this.profileCache.set(profileKey, profileStructure);
       this.cacheAccessTimes.set(profileKey, Date.now());
-
       return profileStructure;
     } catch (error) {
       console.warn(`Warning: Could not parse profile ${profileKey}: ${error.message}`);
@@ -294,133 +181,64 @@ class EntityTypeAnalyzer {
   }
 
   /**
-   * Evicts the least recently used item from cache
+   * Extracts the profile type from YAML structure
    * 
    * @private
-   * @returns {void}
+   * @param {Object} profileStructure - Parsed YAML structure
+   * @param {string} profileKey - Profile identifier
+   * @returns {string|null} Profile type ('common' or 'standard') or null
    */
-  #evictLeastRecentlyUsed() {
-    if (this.cacheAccessTimes.size === 0) {
-      return;
+  #getProfileType(profileStructure, profileKey) {
+    const profileSection = profileStructure[profileKey.toUpperCase()];
+    if (profileSection && profileSection.type) {
+      return profileSection.type;
     }
-
-    // Find the key with the oldest access time
-    let oldestKey = null;
-    let oldestTime = Infinity;
-
-    for (const [key, accessTime] of this.cacheAccessTimes.entries()) {
-      if (accessTime < oldestTime) {
-        oldestTime = accessTime;
-        oldestKey = key;
-      }
-    }
-
-    if (oldestKey) {
-      this.profileCache.delete(oldestKey);
-      this.cacheAccessTimes.delete(oldestKey);
-    }
+    return null;
   }
 
   /**
-   * Gets available entity types for a category
-   * 
-   * @param {string} categoryKey - Category to get types for
-   * @returns {Array<string>} Available entity types for the category
-   */
-  getAvailableEntityTypes(categoryKey) {
-    const profileStructure = this.#getProfileStructure(categoryKey);
-
-    if (!profileStructure) {
-      return ['section', `${categoryKey}_description`];
-    }
-
-    const profileType = this.#getProfileType(profileStructure, categoryKey);
-    const entityTypes = new Set();
-
-    if (profileType === 'common') {
-      entityTypes.add(`common_${categoryKey.toLowerCase()}`);
-      entityTypes.add('common_documentation'); // For infrastructure logging
-    } else if (profileType === 'standard') {
-      entityTypes.add(`${categoryKey.toLowerCase()}_description`);
-      // Add semantic types based on actual structure
-      this.#collectSemanticTypes(profileStructure, categoryKey, entityTypes);
-    }
-
-    entityTypes.add('section'); // Universal section type
-
-    return Array.from(entityTypes);
-  }
-
-  /**
-   * Collects semantic types from profile structure
+   * Checks if this is a documentation-related type
    * 
    * @private
-   * @param {Object} profileStructure - YAML structure
-   * @param {string} categoryKey - Category key
-   * @param {Set} entityTypes - Set to collect types
+   * @param {string} subCategoryKey - Subcategory to check
+   * @returns {boolean} True if documentation-related
    */
-  #collectSemanticTypes(profileStructure, categoryKey, entityTypes) {
-    const profileSection = profileStructure[categoryKey.toUpperCase()];
-    if (!profileSection) return;
-
-    const normalizedCategoryKey = categoryKey.toLowerCase();
-
-    for (const [key, value] of Object.entries(profileSection)) {
-      if (key === 'description' || key === 'type') continue;
-
-      if (typeof value === 'object' && value !== null) {
-        for (const [subKey] of Object.entries(value)) {
-          const semanticType = this.#extractSemanticType(subKey);
-          entityTypes.add(`${normalizedCategoryKey}_${semanticType}`);
-        }
-      }
-    }
+  #isDocumentationType(subCategoryKey) {
+    const docKeywords = ['logging', 'documentation', 'docs', 'log'];
+    const normalizedKey = subCategoryKey.toLowerCase();
+    return docKeywords.some(keyword => normalizedKey.includes(keyword));
   }
 
   /**
-   * Validates if an entity type is appropriate for a category
+   * Checks if this is a profile header entity
    * 
-   * @param {string} categoryKey - Category to validate against
-   * @param {string} entityType - Entity type to validate
-   * @returns {boolean} True if entity type is valid for the category
+   * @private
+   * @param {string} subCategoryKey - Subcategory to check
+   * @param {string} profileKey - Profile key
+   * @returns {boolean} True if this is a profile header
    */
-  isValidEntityTypeForCategory(categoryKey, entityType) {
-    const availableTypes = this.getAvailableEntityTypes(categoryKey);
-    return availableTypes.includes(entityType);
+  #isProfileHeader(subCategoryKey, profileKey) {
+    return subCategoryKey.toLowerCase() === profileKey.toLowerCase();
   }
 
   /**
-   * Discovers all available profiles in the profiles directory
+   * Checks if this is a section header entity
    * 
-   * @returns {Array<string>} Array of discovered profile names
+   * @private
+   * @param {string} subCategoryKey - Subcategory to check
+   * @param {string} profileKey - Profile key
+   * @returns {boolean} True if this is a section header
    */
-  discoverProfiles() {
-    const profiles = [];
-
-    if (!fs.existsSync(this.profilesDirectory)) {
-      return profiles;
-    }
-
-    // Regular profiles
-    const regularProfiles = fs.readdirSync(this.profilesDirectory)
-      .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
-      .filter(file => !file.startsWith('.'))
-      .map(file => path.basename(file, path.extname(file)));
-
-    profiles.push(...regularProfiles);
-
-    // Common profiles
-    const commonDir = path.join(this.profilesDirectory, 'common');
-    if (fs.existsSync(commonDir)) {
-      const commonProfiles = fs.readdirSync(commonDir)
-        .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
-        .filter(file => !file.startsWith('.'))
-        .map(file => path.basename(file, path.extname(file)));
-
-      profiles.push(...commonProfiles);
-    }
-
-    return profiles;
+  #isSectionHeader(subCategoryKey, profileKey) {
+    const profileStructure = this.#getProfileStructure(profileKey);
+    if (!profileStructure) return false;
+    const profileSection = profileStructure[profileKey.toUpperCase()];
+    if (!profileSection) return false;
+    return Object.keys(profileSection).some(key =>
+      key.toLowerCase() === subCategoryKey.toLowerCase() &&
+      key !== 'description' &&
+      key !== 'type'
+    );
   }
 
   /**
@@ -431,6 +249,53 @@ class EntityTypeAnalyzer {
   clearCache() {
     this.profileCache.clear();
     this.cacheAccessTimes.clear();
+  }
+
+  /**
+   * Determines entity type using binary classification
+   * 
+   * @param {string} profileKey - Main profile identifier
+   * @param {string} subCategoryKey - Subcategory identifier
+   * @param {string} itemKey - Item identifier within subcategory
+   * @param {string} parentContext - Parent section context (for nested entities)
+   * @returns {string} Determined entity type classification
+   */
+  determineEntityType(profileKey, subCategoryKey, itemKey, parentContext = null) {
+    const profileStructure = this.#getProfileStructure(profileKey);
+    if (!profileStructure) {
+      return this.#generateFallbackType(profileKey, subCategoryKey);
+    }
+    const profileType = this.#getProfileType(profileStructure, profileKey);
+    if (!profileType) {
+      return this.#generateFallbackType(profileKey, subCategoryKey);
+    }
+    return this.#generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext);
+  }
+
+  /**
+   * Discovers all available profiles in the profiles directory
+   * 
+   * @returns {Array<string>} Array of discovered profile names
+   */
+  discoverProfiles() {
+    const profiles = [];
+    if (!fs.existsSync(this.profilesDirectory)) {
+      return profiles;
+    }
+    const regularProfiles = fs.readdirSync(this.profilesDirectory)
+      .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
+      .filter(file => !file.startsWith('.'))
+      .map(file => path.basename(file, path.extname(file)));
+    profiles.push(...regularProfiles);
+    const commonDir = path.join(this.profilesDirectory, 'common');
+    if (fs.existsSync(commonDir)) {
+      const commonProfiles = fs.readdirSync(commonDir)
+        .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
+        .filter(file => !file.startsWith('.'))
+        .map(file => path.basename(file, path.extname(file)));
+      profiles.push(...commonProfiles);
+    }
+    return profiles;
   }
 }
 

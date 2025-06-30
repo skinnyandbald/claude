@@ -9,7 +9,6 @@ const MemoryBuilder = require('./lib/MemoryBuilder');
  * All orchestration logic is now contained in lib/MemoryBuilder.js
  */
 
-// Run the builder
 if (require.main === module) {
   const builder = new MemoryBuilder();
   builder.build().then(success => {

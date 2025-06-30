@@ -17,15 +17,10 @@ const path = require('path');
  */
 function enhanceMemoryBuilderPackage() {
   const packagePath = path.resolve('./package.json');
-
-  // Read current package.json
   if (!fs.existsSync(packagePath)) {
     throw new Error('package.json not found. Run "npm init -y" first.');
   }
-
   const currentPackage = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-
-  // Enhance with memory-builder specific configuration
   const enhanced = {
     ...currentPackage,
     name: 'memory-builder',
@@ -48,18 +43,13 @@ function enhanceMemoryBuilderPackage() {
       'lib': 'lib'
     }
   };
-
-  // Write enhanced package.json
   fs.writeFileSync(packagePath, JSON.stringify(enhanced, null, 2) + '\n');
-
   console.log('✅ Enhanced package.json for AXIVO memory builder');
   console.log(`📦 Name: ${enhanced.name}`);
   console.log(`📝 Scripts: ${Object.keys(enhanced.scripts).join(', ')}`);
-
   return enhanced;
 }
 
-// Run when executed directly
 if (require.main === module) {
   try {
     enhanceMemoryBuilderPackage();

@@ -6,20 +6,11 @@
  * @license BSD-3-Clause
  */
 
-// Main orchestrator
 const MemoryBuilder = require('./MemoryBuilder');
-
-// Configuration management
 const ConfigLoader = require('./ConfigLoader');
 const PackageBuilder = require('./PackageBuilder');
-
-// Processors
 const { FileProcessor, ProfileProcessor, EntityProcessor } = require('./processors');
-
-// Analyzers
 const { EntityTypeAnalyzer } = require('./analyzers');
-
-// Error classes
 const { BuildError, ProfileFileError, YamlParseError, EntityProcessingError } = require('./errors');
 
 /**
@@ -29,20 +20,13 @@ const { BuildError, ProfileFileError, YamlParseError, EntityProcessingError } = 
  * including orchestration, processing, analysis, project setup, and error handling.
  */
 module.exports = {
-  // Main classes
   MemoryBuilder,
   ConfigLoader,
   PackageBuilder,
-
-  // Processors
   FileProcessor,
   ProfileProcessor,
   EntityProcessor,
-
-  // Analyzers
   EntityTypeAnalyzer,
-
-  // Error handling
   BuildError,
   ProfileFileError,
   YamlParseError,
