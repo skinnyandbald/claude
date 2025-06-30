@@ -59,62 +59,6 @@ class EntityTypeAnalyzer {
   }
 
   /**
-   * Extracts semantic type from subcategory name
-   * 
-   * @private
-   * @param {string} subCategory - Subcategory name
-   * @returns {string} Extracted semantic type
-   */
-  #extractSemanticType(subCategory) {
-    const words = subCategory.split('_').filter(word => word.length >= 1);
-    const lastWord = words[words.length - 1];
-    return lastWord || 'content';
-  }
-
-  /**
-   * Generates entity type based on binary profile classification
-   * 
-   * @private
-   * @param {string} profileType - 'common' or 'standard'
-   * @param {string} profileKey - Profile identifier
-   * @param {string} subCategoryKey - Subcategory identifier
-   * @param {string} itemKey - Item identifier
-   * @param {string} parentContext - Parent context
-   * @returns {string} Generated entity type
-   */
-  #generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext) {
-    const normalizedProfileKey = profileKey.toLowerCase();
-    const normalizedSubCategory = subCategoryKey.toLowerCase();
-    if (this.#isProfileHeader(subCategoryKey, profileKey)) {
-      return `${normalizedProfileKey}_description`;
-    }
-    if (this.#isSectionHeader(subCategoryKey, profileKey)) {
-      return 'section';
-    }
-    if (profileType === 'common') {
-      if (normalizedProfileKey === 'infrastructure' && this.#isDocumentationType(subCategoryKey)) {
-        return 'common_documentation';
-      }
-      if (parentContext) {
-        const semanticType = this.#extractSemanticType(parentContext);
-        return `common_${semanticType}`;
-      } else {
-        return `common_${normalizedProfileKey}`;
-      }
-    }
-    if (profileType === 'standard') {
-      if (parentContext) {
-        const semanticType = this.#extractSemanticType(parentContext);
-        return `${normalizedProfileKey}_${semanticType}`;
-      } else {
-        const semanticType = this.#extractSemanticType(subCategoryKey);
-        return `${normalizedProfileKey}_${semanticType}`;
-      }
-    }
-    return this.#generateFallbackType(profileKey, subCategoryKey);
-  }
-
-  /**
    * Generates fallback entity type when profile type cannot be determined
    * 
    * @private
@@ -261,15 +205,7 @@ class EntityTypeAnalyzer {
    * @returns {string} Determined entity type classification
    */
   determineEntityType(profileKey, subCategoryKey, itemKey, parentContext = null) {
-    const profileStructure = this.#getProfileStructure(profileKey);
-    if (!profileStructure) {
-      return this.#generateFallbackType(profileKey, subCategoryKey);
-    }
-    const profileType = this.#getProfileType(profileStructure, profileKey);
-    if (!profileType) {
-      return this.#generateFallbackType(profileKey, subCategoryKey);
-    }
-    return this.#generateEntityTypeFromProfileType(profileType, profileKey, subCategoryKey, itemKey, parentContext);
+    return this.#generateFallbackType(profileKey, subCategoryKey);
   }
 
   /**
