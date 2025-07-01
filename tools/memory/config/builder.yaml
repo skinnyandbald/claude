@@ -31,8 +31,3 @@ path:
 performance:
   showBuildTime: true
   showStatistics: true
-
-workflow:
-  user:
-    email: 41898282+github-actions[bot]@users.noreply.github.com
-    name: github-actions[bot]

@@ -3,6 +3,7 @@ name: Memory
 on:
   pull_request:
     paths:
+      - .github/workflows/memory.yml
       - tools/memory/**
 
 concurrency:
@@ -30,10 +31,10 @@ jobs:
         working-directory: tools/memory
         run: npm install js-yaml
 
-      - name: Build memory configuration
+      - name: Build memory tool
         uses: actions/github-script@v7
         with:
           script: |
             const { Workflow } = require('./tools/memory/lib');
             const workflow = new Workflow({ core, exec });
-            await workflow.execute();
+            await workflow.build();
