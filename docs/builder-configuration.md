@@ -94,17 +94,6 @@ Monitoring options:
 - **`showBuildTime`** - Shows build duration and entities per second
 - **`showStatistics`** - Displays entity type counts and profile breakdown
 
-## Workflow Configuration
-
-GitHub Actions workflow user configuration for automated builds.
-
-```yaml
-workflow:
-  user:
-    email: 41898282+github-actions[bot]@users.noreply.github.com
-    name: github-actions[bot]
-```
-
 ## Configuration Examples
 
 Development build:
