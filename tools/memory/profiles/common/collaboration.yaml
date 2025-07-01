@@ -63,6 +63,7 @@ COLLABORATION:
         - "Monitor internally active profile methodology compliance"
         - "Monitor internally communication standards"
         - "Monitor internally context establishment"
+        - "State drifting from active profile methodology"
 
     profile_initialization:
       observations:
