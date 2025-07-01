@@ -8,7 +8,7 @@
       "customType": "regex",
       "datasourceTemplate": "node",
       "depNameTemplate": "node",
-      "fileMatch": [
+      "managerFilePatterns": [
         ".github/workflows/memory.yml"
       ],
       "matchStrings": [
