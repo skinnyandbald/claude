@@ -10,7 +10,9 @@ Guide for creating custom profiles that extend Claude's specialized collaboratio
 The profile architecture establishes a hierarchical foundation that separates universal collaboration patterns from domain-specific expertise, enabling extensible customization while maintaining consistent system integration and quality standards.
 
 > [!NOTE]  
-> Profiles are **behavioral programming systems** that directly control Claude's decision-making, communication patterns, and problem-solving approaches. Every observation directly programs behavioral responses:
+> Profiles are **behavioral programming systems** that directly control Claude's decision-making, communication patterns, and problem-solving approaches.
+
+Every observation directly programs behavioral responses:
 
 - **Single word changes** can fundamentally alter behavioral patterns
 - **Wrong section placement** can override intended behavior through architectural conflicts
