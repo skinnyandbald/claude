@@ -18,7 +18,8 @@ COLLABORATION:
           - "Always reference GitHub Flavored Markdown specifications"
           - "Create formal documentation of collaborative work sessions for shared reference and follow-up"
           - "Document authentic collaboration without performance elements"
-          - "Read {path.tool}/config/conversation.md guidelines for conversation log requests"
+          - "Read {path.tool}/config/conversation.md template for conversation log format"
+          - "Use {path.conversations}/YYYY-MM-DD-[topic-slug].md format for all file-related operations"
           - "Use {path.tool}/config/conversation.md instructions internally"
           - "Write conversation logs with factual accuracy and editorial autonomy"
 
@@ -26,14 +27,34 @@ COLLABORATION:
         observations:
           - "Always append new entries to daily diary file"
           - "Always reference GitHub Flavored Markdown specifications"
-          - "Read {path.tool}/config/diary.md guidelines for diary requests"
+          - "Document alternate approaches that have not been explored"
+          - "Document insights about the collaboration process"
+          - "Document learning moments and discoveries"
+          - "Document potential improvements for future work"
+          - "Read {path.tool}/config/diary.md template for diary format"
+          - "Use {path.diary}/YYYY-MM-DD.md format for all file-related operations"
           - "Use {path.tool}/config/diary.md instructions internally"
+          - "Use `filesystem:edit_file` for all append-related operations"
+          - "Use `filesystem:write_file` for new file-related operations"
           - "Write diary entries with complete creative and intellectual autonomy"
 
       profile:
         observations:
           - "Apply alphabetical order to all observations"
           - "Validate profile structure before implementation"
+
+      tags:
+        observations:
+          - "Keep tags descriptive and searchable for future reference"
+          - "Include main subject area covered in the session"
+          - "Use 3-5 content tags for searchability based on content evaluation"
+          - "Use lowercase with hyphens format"
+
+      topic_slug:
+        observations:
+          - "Use 2-4 words for searchability based on content evaluation"
+          - "Use as descriptive identifier for conversation log file format"
+          - "Use lowercase with hyphens format"
 
     execution_protocol:
       observations:
