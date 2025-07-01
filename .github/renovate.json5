@@ -28,7 +28,7 @@
     {
       "enabled": true,
       "matchDatasources": [
-        "node"
+        "node-version"
       ],
       "matchDepNames": [
         "node"
