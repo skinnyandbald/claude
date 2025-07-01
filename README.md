@@ -1,15 +1,15 @@
 # Claude Collaboration Infrastructure
 
-Professional AI collaboration framework with specialized profiles, persistent memory, and systematic methodologies for technical work.
+Professional AI collaboration framework with specialized profiles, persistent memory, and systematic methodologies.
 
 ## Architecture
 
-See below the project architecture and design.
+The following sections detail the multi-layered infrastructure design consisting of specialized collaboration profiles, persistent memory systems, and systematic methodologies for professional work.
 
 ### Collaboration Profiles
 
-- **Engineer** - Infrastructure, Kubernetes, production systems, debugging
 - **Creative** - Innovation, design thinking, artistic collaboration
+- **Engineer** - Infrastructure, Kubernetes, production systems, debugging
 - **Humanist** - Analysis, writing, philosophy, literary research
 - **Researcher** - Academic methodology, data analysis, evidence evaluation
 
@@ -22,7 +22,7 @@ See below the project architecture and design.
 
 ### Strategic Value
 
-Creates authentic technical partnership with institutional memory. Each session builds cumulative knowledge rather than stateless interaction, delivering productivity gains equivalent to working with a team member who has perfect recall of all architectural decisions.
+Creates authentic partnership with institutional memory. Each session builds cumulative knowledge rather than stateless interaction, delivering productivity gains equivalent to working with a team member who has perfect recall of all architectural decisions.
 
 ## Quick Start
 
@@ -51,17 +51,20 @@ On conversation start, Claude must:
 ```
 
 > [!NOTE]
-> On conversation start, use for example the following trigger to evaluate the profile methodology:
+> On conversation start, use various triggers to evaluate the profile methodology:
 >
-> *Please detail the loaded profile methodology.*
+> *Please detail the profile methodology.* - Claude's [response](./docs/images/profile-methodology.png)
+> *Explain how your temporal awareness is beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-temporal-awareness.png)
+> *Explain how the ENGINEER profile helps you, while collaborating on a Kubernetes cluster P0 incident in production.* - Claude's [response](./docs/images/profile-production-incident.png)
+> *Explain how conversation logs and diary entries are beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-documentation.png)
 
 ## Key Features
 
-See below the core infrastructure capabilities.
+The framework provides three foundational capabilities that enable persistent, systematic collaboration with institutional memory preservation.
 
 ### Conversation Logs
 
-Structured documentation of collaboration sessions preserves technical decisions and outcomes across time. Each session captures metadata, implementation details, and architectural choices for institutional memory building.
+Structured documentation of collaboration sessions preserves decisions and outcomes across time. Each session captures metadata, implementation details, and architectural choices for institutional memory building.
 
 ### Diary System
 
@@ -69,24 +72,15 @@ Private reflection space complements factual logs with insights and alternative 
 
 ### Profile Specialization
 
-Curated competencies and systematic methodologies ensure reliable professional-level collaboration. Each profile maintains domain-specific expertise and established workflows for consistent technical partnership.
-
-## Repository Structure
-
-```
-├── conversations/        # Collaboration session logs
-├── diary/                # Private reflections and insights
-├── docs/                 # Complete documentation
-├── tools/
-│   ├── desktop/          # Claude Desktop setup
-│   └── memory/           # Profile builder and configuration
-└── .gitignore            # Privacy protection
-```
+Curated competencies and systematic methodologies ensure reliable professional-level collaboration. Each profile maintains domain-specific expertise and established workflows for consistent partnership.
 
 ## Documentation
 
 - **[User Guide](docs/README.md)** - Complete system documentation
-- **[Memory Builder](tools/memory/README.md)** - System architecture
-- **[Profile Creation](tools/memory/profiles/README.md)** - Custom profile development
-- **[Conversations](conversations/README.md)** - Session documentation
-- **[Diary](diary/README.md)** - Reflection system
+- **[Installation and Setup](docs/claude-desktop-setup.md)** - Configure Claude Desktop and MCP tools
+- **[Builder Configuration](docs/builder-configuration.md)** - Memory builder and system settings
+- **[Profile System](docs/profile-system.md)** - Core collaboration architecture
+- **[Profile Creation](docs/profile-creation.md)** - Custom profile development
+- **[Collaboration](docs/collaboration.md)** - Conversation logs, diary and memory management tools
+- **[Engineer Profile Guide](docs/profile-engineer.md)** - Technical collaboration examples
+- **[Effectiveness Analysis](docs/profile-effectiveness.md)** - Performance metrics and comparisons
