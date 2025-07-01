@@ -277,6 +277,6 @@ Behavioral changes require sustained validation until enhancement proves effecti
 
 ## Related Documentation
 
-- [Profile System Overview](./profile-system.md) - System architecture
-- [Engineer Profile Guide](./profile-engineer.md) - Implementation example
-- [Memory Builder Configuration](./builder-configuration.md) - Build system reference
+- **[Profile System Overview](./profile-system.md)** - System architecture
+- **[Engineer Profile Guide](./profile-engineer.md)** - Implementation example
+- **[Builder Configuration](./builder-configuration.md)** - Build system reference

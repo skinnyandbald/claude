@@ -106,5 +106,5 @@ This creates engineering collaboration equivalent to working with a team member 
 
 ## Related Documentation
 
-- [Engineer Profile Guide](./profile-engineer.md) - Implementation examples with documentation integration
-- [Profile Effectiveness](./profile-effectiveness.md) - Comparative analysis of enhanced vs. baseline capabilities
+- **[Engineer Profile Guide](./profile-engineer.md)** - Implementation examples with documentation integration
+- **[Profile Effectiveness](./profile-effectiveness.md)** - Comparative analysis of enhanced vs. baseline capabilities

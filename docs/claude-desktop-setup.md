@@ -167,5 +167,5 @@ Common setup issues and systematic debugging procedures help resolve configurati
 ## Related Documentation
 
 - **[Profile System](./profile-system.md)** - Core collaboration architecture
-- **[Technical Configuration](./builder-configuration.md)** - Memory builder reference
+- **[Builder Configuration](./builder-configuration.md)** - Memory builder reference
 - **[Profile Creation](./profile-creation.md)** - Custom profile development
