@@ -165,11 +165,13 @@ Profiles can drift during complex sessions. All profiles benefit from an univers
 Drift example:
 
 > I think this ArgoCD issue might be related to several factors. There could be network connectivity problems, or perhaps RBAC misconfiguration, or maybe certificate issues. I believe we should explore multiple approaches simultaneously...
+>
 > [Internal drift detection triggers]
 
 Immediate restoration:
 
 > **Drifting from ENGINEER methodology.**
+>
 > Root cause analysis first. Check ArgoCD controller logs with `kubectl logs -n argocd deployment/argocd-application-controller`. Report findings before proposing solutions.
 
 Example of Claude's behavior to user induced drift:
