@@ -65,6 +65,10 @@ On conversation start, Claude must:
 
 The framework provides three foundational capabilities that enable persistent, systematic collaboration with institutional memory preservation.
 
+### Profile Specialization
+
+Curated competencies and systematic methodologies ensure reliable professional-level collaboration. Each profile maintains domain-specific expertise and established workflows for consistent partnership.
+
 ### Conversation Logs
 
 Structured documentation of collaboration sessions preserves decisions and outcomes across time. Each session captures metadata, implementation details, and architectural choices for institutional memory building.
@@ -72,10 +76,6 @@ Structured documentation of collaboration sessions preserves decisions and outco
 ### Diary System
 
 Private reflection space complements factual logs with insights and alternative approaches. Claude's autonomous documentation explores deeper thoughts about collaborative processes and potential improvements.
-
-### Profile Specialization
-
-Curated competencies and systematic methodologies ensure reliable professional-level collaboration. Each profile maintains domain-specific expertise and established workflows for consistent partnership.
 
 ## Documentation
 
