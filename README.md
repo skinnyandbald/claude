@@ -1,6 +1,6 @@
 # Claude Collaboration Infrastructure
 
-Professional AI collaboration framework with specialized profiles, persistent memory, and systematic methodologies.
+Professional AI collaboration framework for [Claude Desktop](https://claude.ai/download) with specialized profiles, persistent memory, and systematic methodologies.
 
 ## Architecture
 
