@@ -151,7 +151,7 @@ Use noun-based (Descriptive) for:
 
 Creating a custom profile requires following a systematic process from initial file creation through build configuration and validation, ensuring proper integration with the existing collaboration infrastructure.
 
-> [!CAUTION]  
+> [!IMPORTANT]  
 > Profile creation impact assessment required before implementation:
 >
 > - **Behavioral Integration**: New profiles can create conflicts with existing behavioral hierarchies
