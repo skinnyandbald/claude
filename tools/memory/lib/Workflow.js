@@ -36,7 +36,6 @@ class Workflow {
       await this.exec.exec('node', ['./lib/PackageBuilder.js']);
       await this.exec.exec('npm', ['install']);
       await this.exec.exec('npm', ['run', 'build']);
-      this.core.info('Memory tool built successfully');
     } catch (error) {
       this.core.setFailed(`Workflow failed: ${error.message}`);
     }
