@@ -22,7 +22,7 @@ The following sections detail the multi-layered infrastructure design consisting
 
 ### Strategic Value
 
-Creates authentic partnership with institutional memory. Each session builds cumulative knowledge rather than stateless interaction, delivering productivity gains equivalent to working with a team member who has perfect recall of all architectural decisions.
+Creates authentic partnership with institutional memory. Each session builds cumulative knowledge rather than stateless interaction, delivering productivity gains equivalent to working with a team member who has perfect recall of all decisions.
 
 ## Quick Start
 
@@ -71,7 +71,7 @@ Curated competencies and systematic methodologies ensure reliable professional-l
 
 ### Conversation Logs
 
-Structured documentation of collaboration sessions preserves decisions and outcomes across time. Each session captures metadata, implementation details, and architectural choices for institutional memory building.
+Structured documentation of collaboration sessions preserves technical decisions, creative breakthroughs, research findings, and project outcomes across time. Each session captures metadata, work details, and collaborative choices for institutional memory building.
 
 ### Diary System
 
