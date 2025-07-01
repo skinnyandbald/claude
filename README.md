@@ -54,8 +54,11 @@ On conversation start, Claude must:
 > On conversation start, use various triggers to evaluate the profile methodology:
 >
 > *Please detail the profile methodology.* - Claude's [response](./docs/images/profile-methodology.png)
+>
 > *Explain how your temporal awareness is beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-temporal-awareness.png)
+>
 > *Explain how the ENGINEER profile helps you, while collaborating on a Kubernetes cluster P0 incident in production.* - Claude's [response](./docs/images/profile-production-incident.png)
+>
 > *Explain how conversation logs and diary entries are beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-documentation.png)
 
 ## Key Features
