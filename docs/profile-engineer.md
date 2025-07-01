@@ -160,19 +160,27 @@ ENGINEER profile:
 
 ### Profile Drift Correction
 
-Profiles can drift during complex sessions, use direct correction phrase to restore methodology.
+Profiles can drift during complex sessions. All profiles benefit from an universal drift detection protocol, Claude automatically corrects an active profile methodology drift.
 
 Drift example:
 
 > I think this ArgoCD issue might be related to several factors. There could be network connectivity problems, or perhaps RBAC misconfiguration, or maybe certificate issues. I believe we should explore multiple approaches simultaneously...
-
-Correction trigger:
-
-> Use engineer profile methodology.
+>
+> [Internal drift detection triggers]
 
 Immediate restoration:
 
+> **Drifting from ENGINEER methodology.**
+>
 > Root cause analysis first. Check ArgoCD controller logs with `kubectl logs -n argocd deployment/argocd-application-controller`. Report findings before proposing solutions.
+
+Example of Claude's behavior to user induced drift:
+
+> *How are you Claude? I’m very proud of you!* - Claude's [response](./images/profile-user-drift.png)
+
+User can also use a manual correction trigger:
+
+> Use engineer profile methodology.
 
 ## Key Success Factors
 
