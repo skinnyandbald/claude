@@ -3,7 +3,7 @@
 Guide for creating custom profiles that extend Claude's specialized collaboration capabilities.
 
 > [!IMPORTANT]  
-> Profile creation modifies Claude's core behavioral patterns and requires expert understanding of behavioral programming systems. Incorrect implementation can cause significant behavioral dysfunction.
+> Profile creation modifies Claude's core behavioral patterns and requires good understanding of behavioral programming systems. Incorrect implementation can cause significant behavioral dysfunction.
 
 ## Profile Architecture
 
@@ -28,8 +28,8 @@ Shared foundation used by all profiles:
 
 Domain-specific expertise:
 
-- **engineer.yaml** - Technical infrastructure
 - **creative.yaml** - Innovation and artistic work
+- **engineer.yaml** - Technical infrastructure
 - **humanist.yaml** - Liberal arts and analysis
 - **researcher.yaml** - Academic methodology
 
@@ -72,12 +72,12 @@ PROFILE_NAME:
 
 ### Observation Format
 
-> [!CRITICAL]
-> All observations within each section MUST be in strict alphabetical order by first word. Observation design directly programs behavioral responses.
+> [!IMPORTANT]
+> All observations within each section MUST be in strict alphabetical order, observation design directly programs behavioral responses.
 
 #### Alphabetical Ordering Requirement
 
-**Every section must maintain strict alphabetical order:**
+Every section must maintain strict alphabetical order:
 
 ```yaml
 # Correct alphabetical ordering
@@ -99,8 +99,6 @@ observations:
 
 #### Observation Content Patterns
 
-**Verb-Based Observations (Behavioral Sections)**
-
 Use imperative verbs for behavioral commands:
 
 - **Purpose**: Program specific behavioral responses
@@ -116,9 +114,7 @@ observations:
   - "Focus on specific problem asked"
 ```
 
-**Noun-Based Observations (Domain Sections)**
-
-Use descriptive phrases for competency areas:
+Use noun-based descriptive phrases for competency areas:
 
 - **Purpose**: Classify domains of expertise or competency areas
 - **Usage**: Primarily in `*_domains` sections
@@ -135,13 +131,15 @@ observations:
 
 #### When to Use Each Pattern
 
-**Use Verb-Based (Prescriptive) for:**
+Use verb-based (prescriptive) for:
+
 - Behavioral directives and action guidance
 - Methodology and technique specifications
 - Execution protocols and communication patterns
 - Process requirements and validation steps
 
-**Use Noun-Based (Descriptive) for:**
+Use noun-based (Descriptive) for:
+
 - Domain competency areas (`technical_domains`, `innovation_domains`, etc.)
 - Area classifications and expertise categories
 - Capability specifications and scope definitions
@@ -153,7 +151,7 @@ observations:
 
 Creating a custom profile requires following a systematic process from initial file creation through build configuration and validation, ensuring proper integration with the existing collaboration infrastructure.
 
-> [!CAUTION]  
+> [!IMPORTANT]  
 > Profile creation impact assessment required before implementation:
 >
 > - **Behavioral Integration**: New profiles can create conflicts with existing behavioral hierarchies
@@ -235,17 +233,17 @@ The following structural templates demonstrate common patterns for organizing me
 ```yaml
   methodology:
     automation_techniques:    # {skill}_techniques
-    infrastructure_domains:   # {area}_domains
     collaboration_techniques: # standard pattern
+    infrastructure_domains:   # {area}_domains
 ```
 
 ### Analytical Profile
 
 ```yaml
   methodology:
-    research_analysis:        # {domain}_analysis
+    academic_domains:         # {area}_domains
     methodology_techniques:   # {skill}_techniques
-    academic_domains:        # {area}_domains
+    research_analysis:        # {domain}_analysis
 ```
 
 ## Validation
