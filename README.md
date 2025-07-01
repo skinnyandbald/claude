@@ -1,6 +1,6 @@
-# Claude Collaboration Infrastructure
+# Claude Collaboration Platform
 
-Professional AI collaboration framework for [Claude Desktop](https://claude.ai/download) with specialized profiles, persistent memory, and systematic methodologies.
+Scalable collaboration platform for [Claude Desktop](https://claude.ai/download) with specialized profiles, persistent memory, and systematic methodologies. Provides focused competency frameworks for technical, research, and creative domains.
 
 ## Architecture
 
