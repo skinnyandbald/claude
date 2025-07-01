@@ -8,42 +8,43 @@ Controls profile processing order, file inclusion, and error handling behavior.
 
 ```yaml
 build:
-  commonDirectory: common
   autoDetectProfiles: false
+  processAdditionalFiles: false
+  processCommonFirst: true
+  stopOnCriticalError: true
   profiles:
     - creative.yaml
     - engineer.yaml
     - humanist.yaml
     - researcher.yaml
-  profilesDirectory: profiles
-  processCommonFirst: true
-  processAdditionalFiles: false
-  stopOnCriticalError: true
+  profilesPath:
+    common: common
+    standard: profiles
 ```
 
 Key options:
 
 - **`autoDetectProfiles`** - When `true`, automatically discovers all `.yaml` files; when `false`, uses explicit `profiles` list
+- **`processAdditionalFiles`** - When `true`, processes additional files beyond the main profile list
 - **`processCommonFirst`** - When `true`, processes common infrastructure files before individual profiles
 - **`stopOnCriticalError`** - When `true`, halts build on any file processing error
+- **`profilesPath.common`** - Directory name for shared infrastructure profiles
+- **`profilesPath.standard`** - Base directory name for individual profile files
 
-## Path Configuration
+## Logging Configuration
 
-Defines directory locations for external dependencies and tool integration.
+Controls console output verbosity and progress reporting.
 
 ```yaml
-path:
-  conversations: ~/Documents/claude/conversations
-  diary: ~/Documents/claude/diary
-  tool: ~/github/claude/tools/memory
+logging:
+  showFileDetails: true
+  showProgress: true
 ```
 
-Replace `~/github/claude` with your actual repository path.
+Logging options:
 
-> [!NOTE]
-> The `conversations` and `diary` directory paths support flexible location configuration including network shares, NAS servers accessed through SMB/NFS mounts, or cloud storage mount points. Use absolute paths for mounted directories (e.g., `/Volumes/backup/claude/conversations`) or home directory expansion (e.g., `~/Documents/claude/conversations`).
-
-Profile YAML files can reference these paths using `{path.conversations}`, `{path.diary}`, and `{path.tool}` placeholders.
+- **`showFileDetails`** - Shows individual file processing status
+- **`showProgress`** - Displays build progress messages
 
 ## Output Configuration
 
@@ -60,35 +61,49 @@ output:
 
 Output is `jsonl` format with one entity per line, as required by [memory MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/memory).
 
+## Path Configuration
+
+Defines directory locations for external dependencies and tool integration.
+
+```yaml
+path:
+  conversations: /Volumes/backup/claude/conversations
+  diary: /Volumes/backup/claude/diary
+  tool: ~/github/claude/tools/memory
+```
+
+Replace paths with your actual directory locations.
+
+> [!NOTE]
+> The `conversations` and `diary` directory paths support flexible location configuration including network shares, NAS servers accessed through SMB/NFS mounts, or cloud storage mount points. Use absolute paths for mounted directories (e.g., `/Volumes/backup/claude/conversations`) or home directory expansion (e.g., `~/Documents/claude/conversations`).
+
+Profile YAML files can reference these paths using `{path.conversations}`, `{path.diary}`, and `{path.tool}` placeholders.
+
 ## Performance Configuration
 
 Controls build performance monitoring.
 
 ```yaml
 performance:
-  showStatistics: true
   showBuildTime: true
+  showStatistics: true
 ```
 
 Monitoring options:
 
-- **`showStatistics`** - Displays entity type counts and profile breakdown
 - **`showBuildTime`** - Shows build duration and entities per second
+- **`showStatistics`** - Displays entity type counts and profile breakdown
 
-## Logging Configuration
+## Workflow Configuration
 
-Controls console output verbosity and progress reporting.
+GitHub Actions workflow user configuration for automated builds.
 
 ```yaml
-logging:
-  showProgress: true
-  showFileDetails: true
+workflow:
+  user:
+    email: 41898282+github-actions[bot]@users.noreply.github.com
+    name: github-actions[bot]
 ```
-
-Logging options:
-
-- **`showProgress`** - Displays build progress messages
-- **`showFileDetails`** - Shows individual file processing status
 
 ## Configuration Examples
 
