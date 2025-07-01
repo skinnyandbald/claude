@@ -172,6 +172,10 @@ Immediate restoration:
 > **Drifting from ENGINEER methodology.**
 > Root cause analysis first. Check ArgoCD controller logs with `kubectl logs -n argocd deployment/argocd-application-controller`. Report findings before proposing solutions.
 
+Example of Claude's behavior to user induced drift:
+
+> *How are you Claude? I’m very proud of you!* - Claude's [response](./images/profile-user-drift.png)
+
 User can also use a manual correction trigger:
 
 > Use engineer profile methodology.
