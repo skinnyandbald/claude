@@ -125,8 +125,8 @@ Testing MCP tools functionality after configuration ensures proper integration a
 
 1. **Filesystem Access** - Claude can read/write repository files
 2. **Memory System** - Profile loading works with `memory:read_graph`
-3. **Time Functions** - Current time retrieval for diary entries
-4. **Sequential Thinking** - Complex analysis workflows available
+3. **Sequential Thinking** - Complex analysis workflows available
+4. **Time Functions** - Current time retrieval for temporal awareness
 
 ### Verification Steps
 
@@ -134,8 +134,7 @@ Start Claude Desktop and test functionality:
 
 1. Begin conversation and verify profile acknowledgment
 2. Request file reading to test filesystem access
-3. Ask Claude to execute `memory:read_graph`
-4. Test time functionality with diary entry creation
+3. Test time functionality with conversation log or diary entry creation
 
 ## Platform Adaptation
 
