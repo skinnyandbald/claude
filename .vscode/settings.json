@@ -14,6 +14,11 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true
   },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
   "[jsonl]": {
     "editor.autoIndent": "keep",
     "editor.defaultFormatter": "vscode.json-language-features",
@@ -39,7 +44,7 @@
   ],
   "editor.showUnused": true,
   "files.associations": {
-    "**/tools/memory/configuration.json": "jsonl",
+    "**/renovate.json5": "jsonc",
     "**/tools/memory/config/server.json": "jsonl"
   },
   "files.exclude": {
@@ -50,5 +55,13 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true
   },
-  "javascript.validate.enable": true
+  "javascript.validate.enable": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "renovate.json5"
+      ],
+      "url": "https://docs.renovatebot.com/renovate-schema.json"
+    }
+  ]
 }

@@ -60,6 +60,8 @@ On conversation start, Claude must:
 > *Explain how the ENGINEER profile helps you, while collaborating on a Kubernetes cluster P0 incident in production.* - Claude's [response](./docs/images/profile-production-incident.png)
 >
 > *Explain how conversation logs and diary entries are beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-documentation.png)
+>
+> *Provide example prompts how to create conversation logs and diary entries and explain how I can use them later, into a new session.* - Claude's [response](./docs/images/profile-documentation-examples.png)
 
 ## Key Features
 
