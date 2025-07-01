@@ -174,8 +174,8 @@ class ConfigLoader {
       console.error('❌ Auto-detection failed - no profiles found');
       return false;
     }
-    if (config.build.processCommonFirst && !config.build.commonDirectory) {
-      console.error('❌ processCommonFirst enabled but commonDirectory not specified');
+    if (config.build.processCommonFirst && !config.build.profilesPath?.common) {
+      console.error('❌ processCommonFirst enabled but profilesPath.common not specified');
       return false;
     }
     if (!config.output.path) {

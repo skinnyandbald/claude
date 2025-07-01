@@ -39,7 +39,7 @@ class MemoryBuilder {
     this.fileProcessor = dependencies.fileProcessor || new FileProcessor(maxFileSize);
     this.profileProcessor = dependencies.profileProcessor || new ProfileProcessor(this.config);
     this.entityProcessor = dependencies.entityProcessor || new EntityProcessor();
-    const profilesDirectory = this.config.build.profilesDirectory || 'profiles';
+    const profilesDirectory = this.config.build.profilesPath?.standard || 'profiles';
     this.entityTypeAnalyzer = dependencies.entityTypeAnalyzer || new EntityTypeAnalyzer(profilesDirectory);
     this.buildStartTime = null;
     this.buildEndTime = null;
@@ -88,7 +88,7 @@ class MemoryBuilder {
    * @returns {Promise<void>}
    */
   async #processAdditionalFiles(buildConfig) {
-    const profileDir = buildConfig.profilesDirectory;
+    const profileDir = buildConfig.profilesPath?.standard || 'profiles';
     try {
       await fs.promises.access(profileDir);
     } catch (accessError) {
@@ -159,7 +159,7 @@ class MemoryBuilder {
   async #processCommonFiles() {
     const buildConfig = this.config.build;
     const loggingConfig = this.config.logging;
-    const commonDir = path.join(buildConfig.profilesDirectory, buildConfig.commonDirectory);
+    const commonDir = path.join(buildConfig.profilesPath?.standard || 'profiles', buildConfig.profilesPath?.common || 'common');
     try {
       await fs.promises.access(commonDir);
     } catch (accessError) {
@@ -324,7 +324,7 @@ class MemoryBuilder {
    */
   async processProfileFile(fileName) {
     const buildConfig = this.config.build;
-    const filePath = path.join(buildConfig.profilesDirectory, fileName);
+    const filePath = path.join(buildConfig.profilesPath?.standard || 'profiles', fileName);
     const yamlData = await this.fileProcessor.loadYamlFile(filePath);
     const entities = [];
     for (const [profileKey, profileData] of Object.entries(yamlData)) {

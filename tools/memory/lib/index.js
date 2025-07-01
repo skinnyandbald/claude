@@ -9,6 +9,7 @@
 const MemoryBuilder = require('./MemoryBuilder');
 const ConfigLoader = require('./ConfigLoader');
 const PackageBuilder = require('./PackageBuilder');
+const Workflow = require('./Workflow');
 const { FileProcessor, ProfileProcessor, EntityProcessor } = require('./processors');
 const { EntityTypeAnalyzer } = require('./analyzers');
 const { BuildError, ProfileFileError, YamlParseError, EntityProcessingError } = require('./errors');
@@ -23,6 +24,7 @@ module.exports = {
   MemoryBuilder,
   ConfigLoader,
   PackageBuilder,
+  Workflow,
   FileProcessor,
   ProfileProcessor,
   EntityProcessor,
