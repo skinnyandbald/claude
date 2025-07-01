@@ -28,8 +28,8 @@ Shared foundation used by all profiles:
 
 Domain-specific expertise:
 
-- **engineer.yaml** - Technical infrastructure
 - **creative.yaml** - Innovation and artistic work
+- **engineer.yaml** - Technical infrastructure
 - **humanist.yaml** - Liberal arts and analysis
 - **researcher.yaml** - Academic methodology
 
