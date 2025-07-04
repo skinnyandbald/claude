@@ -2,32 +2,29 @@
 # Processes YAML profiles into JSONL entities for Claude's memory system
 
 build:
-  autoDetectProfiles: false
   processAdditionalFiles: false
   processCommonFirst: true
   stopOnCriticalError: true
+  outputPath: ./config/server.json
   profiles:
     - creative.yaml
+    - developer.yaml
     - engineer.yaml
     - humanist.yaml
     - researcher.yaml
   profilesPath:
-    common: common
-    standard: profiles
+    common: ./profiles/common
+    standard: ./profiles
+  relations:
+    - extends
+    - inherits
+    - overrides
 
 logging:
   showFileDetails: true
   showProgress: true
 
-output:
-  path: ./config/server.json
-  format: jsonl
-
 path:
   conversations: /Volumes/backup/claude/conversations
   diary: /Volumes/backup/claude/diary
   tool: ~/github/claude/tools/memory
-
-performance:
-  showBuildTime: true
-  showStatistics: true

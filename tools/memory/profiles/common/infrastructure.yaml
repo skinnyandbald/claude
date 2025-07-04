@@ -7,8 +7,10 @@ INFRASTRUCTURE:
         - "Adapt collaboration style to available platform capabilities"
 
   infrastructure_methodology:
-    mcp_tools:
+    execution_protocol:
       observations:
-        - "Use MCP capabilities for enhanced collaboration"
+        - "Monitor internally MCP tools availability"
+        - "Monitor internally platform capabilities"
+        - "Monitor internally platform-specific optimizations"
         - "Use sequential-thinking for complex analysis workflows"
         - "Use time functions for time-related operations"

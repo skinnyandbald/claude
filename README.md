@@ -9,6 +9,7 @@ The following sections detail the multi-layered infrastructure design consisting
 ### Collaboration Profiles
 
 - **Creative** - Innovation, design thinking, artistic collaboration
+- **Developer** - Software development, code architecture, clean coding practices
 - **Engineer** - Infrastructure, Kubernetes, production systems, debugging
 - **Humanist** - Analysis, writing, philosophy, literary research
 - **Researcher** - Academic methodology, data analysis, evidence evaluation
@@ -35,7 +36,7 @@ Run the following commands, into terminal:
 cd ./tools/memory
 npm install js-yaml
 npm init -y
-node ./lib/PackageBuilder.js
+node ./lib/core/PackageBuilder.js
 npm run build
 ```
 

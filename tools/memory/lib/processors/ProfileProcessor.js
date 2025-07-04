@@ -1,291 +1,330 @@
 /**
- * Profile processing for MemoryBuilder
+ * ProfileProcessor Class
  * 
- * @module lib/processors/ProfileProcessor
+ * Processes individual profiles from YAML data and generates entities and relations arrays.
+ * Handles empty or invalid profile data gracefully and implements recursive section processing.
+ * 
+ * @class ProfileProcessor
  * @author AXIVO
  * @license BSD-3-Clause
  */
-const { EntityProcessingError } = require('../errors');
+
+const { EntityGenerator } = require('../generators');
+const MemoryBuilderError = require('../core/Error');
 
 /**
- * Profile processor for YAML profile structures
+ * Processes individual profiles from YAML data into entities and relations
  * 
- * Processes profile data structures, handles section traversal, and coordinates
- * entity creation for complex nested profile hierarchies.
+ * Handles profile inheritance, path substitution, and recursive section processing.
+ * Generates entities with proper source attribution and standard observations.
  * 
  * @class ProfileProcessor
  */
 class ProfileProcessor {
-  /**
-   * Constructor
-   * 
-   * @param {Object} config - Configuration object containing path
-   */
   constructor(config = {}) {
+    this.metadataFields = new Set(['description', 'relations']);
+    this.entityGenerator = new EntityGenerator();
     this.config = config;
-    this.path = config.path || {};
-    this.pathRegexCache = new Map();
-    const os = require('os');
-    this.homeDir = os.homedir();
-    this.compiledPathPatterns = new Map();
-    for (const [pathKey, pathValue] of Object.entries(this.path)) {
-      const variable = `{path.${pathKey}}`;
-      const escapedVariable = variable.replace(/[{}]/g, '\\$&');
-      const compiledRegex = new RegExp(escapedVariable, 'g');
-      const expandedPath = pathValue.replace(/^~/, this.homeDir);
-      this.compiledPathPatterns.set(pathKey, {
-        regex: compiledRegex,
-        expandedPath
+  }
+
+  /**
+   * Categorize object properties into observations and subsections
+   * 
+   * @private
+   * @param {Object} sectionData - Section data to categorize
+   * @returns {Object} Object with observations and subSections arrays
+   */
+  #categorizeProperties(sectionData) {
+    const observations = [];
+    const subSections = {};
+    for (const [key, value] of Object.entries(sectionData)) {
+      if (key === 'observations' && Array.isArray(value)) {
+        const filteredObservations = this.#processObservations(value);
+        if (filteredObservations.length > 0) {
+          observations.push(...filteredObservations);
+        }
+      } else if (Array.isArray(value)) {
+        const filteredObservations = this.#processObservations(value);
+        if (filteredObservations.length > 0) {
+          subSections[key] = filteredObservations;
+        }
+      } else if (typeof value === 'object' && value !== null) {
+        subSections[key] = value;
+      } else if (value !== null && value !== undefined && value !== '') {
+        const processedValue = this.#substitutePaths(value);
+        observations.push(processedValue);
+      }
+    }
+    return { observations, subSections };
+  }
+
+  /**
+   * Create description entity from profile data
+   * 
+   * @private
+   * @param {Object} profileData - Profile data containing description
+   * @param {string} profileName - Name of the profile
+   * @param {string} sourceFile - Source filename
+   * @returns {Object|null} Description entity or null if no description
+   */
+  #createDescriptionEntity(profileData, profileName, sourceFile) {
+    if (!profileData.description) {
+      return null;
+    }
+    const description = this.#substitutePaths(profileData.description);
+    return this.entityGenerator.createDescriptionEntity(
+      profileName,
+      description,
+      sourceFile
+    );
+  }
+
+  /**
+   * Create section entity with source logic
+   * 
+   * @private
+   * @param {string} sectionName - Name of the section
+   * @param {Array} observations - Array of observations
+   * @param {Object} context - Processing context
+   * @returns {Object} Section entity
+   */
+  #createSectionEntity(sectionName, observations, context) {
+    const sourceToUse = context.nestingLevel >= 2 ? context.profileName : context.sourceFile;
+    return this.entityGenerator.createSectionEntity(
+      sectionName,
+      observations,
+      context.profileName,
+      sourceToUse,
+      context.parentSection
+    );
+  }
+
+  /**
+   * Extract profile data from YAML structure
+   * 
+   * @private
+   * @param {string} profileName - Name of the profile
+   * @param {Object} yamlData - Parsed YAML configuration data
+   * @returns {Object|null} Profile data or null if invalid
+   */
+  #extractProfileData(profileName, yamlData) {
+    if (!yamlData || typeof yamlData !== 'object') {
+      return null;
+    }
+    const profileData = yamlData[profileName] || yamlData;
+    if (!profileData || typeof profileData !== 'object') {
+      return null;
+    }
+    return profileData;
+  }
+
+  /**
+   * Process leaf section (direct array)
+   * 
+   * @private
+   * @param {string} sectionName - Name of the section
+   * @param {Array} sectionData - Array data to process
+   * @param {Object} context - Processing context
+   * @returns {Array} Array with single entity or empty array
+   */
+  #processLeafSection(sectionName, sectionData, context) {
+    const observations = this.#processObservations(sectionData);
+    if (observations.length === 0) {
+      return [];
+    }
+    const entity = this.#createSectionEntity(sectionName, observations, context);
+    return [entity];
+  }
+
+  /**
+   * Process observations with path substitution
+   * 
+   * @private
+   * @param {Array} observations - Array of observation strings
+   * @returns {Array} Processed observations with path substitution
+   */
+  #processObservations(observations) {
+    if (!Array.isArray(observations)) {
+      return [];
+    }
+    return observations
+      .filter(item => item !== null && item !== undefined && item !== '')
+      .map(item => this.#substitutePaths(item));
+  }
+
+  /**
+   * Process relations from profile data
+   * 
+   * @private
+   * @param {Object} profileData - Profile data containing relations
+   * @param {string} profileName - Name of the profile
+   * @returns {Array} Array of processed relations
+   * @throws {MemoryBuilderError} When invalid relation type is found
+   */
+  #processRelations(profileData, profileName) {
+    const relations = [];
+    const validRelationTypes = this.config.build?.relations || ['inherits'];
+    if (profileData.relations && Array.isArray(profileData.relations)) {
+      profileData.relations.forEach(relation => {
+        if (relation.target && relation.type) {
+          if (!validRelationTypes.includes(relation.type)) {
+            throw new MemoryBuilderError(`Invalid relation type '${relation.type}' in profile '${profileName}'. Valid types: ${validRelationTypes.join(', ')}`);
+          }
+          relations.push({
+            from: profileName,
+            to: relation.target,
+            relationType: relation.type
+          });
+        }
       });
     }
+    return relations;
   }
 
   /**
-   * Creates observations array from item data
+   * Process a section recursively to extract entities
    * 
    * @private
-   * @param {Object} itemData - Item data containing observations or properties
-   * @returns {Array<string>} Array of observation strings
+   * @param {Object} sectionInfo - Section information
+   * @param {string} sectionInfo.sectionName - Name of the section
+   * @param {*} sectionInfo.sectionData - Section data to process
+   * @param {Object} processingContext - Processing environment
+   * @param {string} processingContext.profileName - Parent profile name
+   * @param {string} processingContext.sourceFile - Source filename
+   * @param {Object} [hierarchyContext] - Hierarchy navigation context
+   * @param {string} [hierarchyContext.parentSection] - Parent section name
+   * @param {number} [hierarchyContext.nestingLevel] - Current nesting level
+   * @returns {Array} Array of generated entities
    */
-  #createObservations(itemData) {
-    const observations = [];
-    if (typeof itemData === 'string') {
-      observations.push(this.#substitutePaths(itemData));
-    } else if (Array.isArray(itemData)) {
-      observations.push(...itemData.map(item => this.#substitutePaths(item)));
-    } else if (typeof itemData === 'object' && itemData !== null) {
-      for (const [key, value] of Object.entries(itemData)) {
-        if (Array.isArray(value)) {
-          observations.push(...value.map(item => this.#substitutePaths(item)));
-        } else if (typeof value === 'object' && value !== null) {
-          const nestedObservations = this.#createObservations(value);
-          observations.push(...nestedObservations.map(obs => `${key}: ${obs}`));
-        } else {
-          observations.push(`${key}: ${this.#substitutePaths(value)}`);
-        }
-      }
+  #processSectionRecursively(sectionInfo, processingContext, hierarchyContext = {}) {
+    const { sectionName, sectionData } = sectionInfo;
+    const { profileName, sourceFile } = processingContext;
+    const { parentSection = null, nestingLevel = 0 } = hierarchyContext;
+    if (!sectionData || (typeof sectionData !== 'object' && !Array.isArray(sectionData))) {
+      return [];
     }
-    return observations.filter(obs => obs && obs.trim().length > 0);
-  }
-
-  /**
-   * Formats section names for display
-   * 
-   * @private
-   * @param {string} sectionKey - Raw section key
-   * @returns {string} Formatted section name
-   */
-  #formatSectionName(sectionKey) {
-    return sectionKey;
-  }
-
-  /**
-   * Processes a section within a main profile
-   * 
-   * @private
-   * @param {string} profileKey - Parent profile identifier
-   * @param {string} sectionKey - Section identifier
-   * @param {Object} sectionData - Section data
-   * @param {string} sourceFile - Source filename for entity attribution
-   * @param {Object} entityTypeAnalyzer - Entity type analyzer instance
-   * @param {Object} entityProcessor - Entity processor instance
-   * @returns {Promise<Array>} Array of entities created from the section
-   */
-  async #processSection(profileKey, sectionKey, sectionData, sourceFile, entityTypeAnalyzer, entityProcessor) {
+    const context = {
+      sectionName,
+      profileName,
+      sourceFile,
+      parentSection,
+      nestingLevel
+    };
+    if (Array.isArray(sectionData)) {
+      return this.#processLeafSection(sectionName, sectionData, context);
+    }
+    const { observations, subSections } = this.#categorizeProperties(sectionData);
     const entities = [];
-    try {
-      const sectionEntityType = entityTypeAnalyzer.determineEntityType(profileKey, sectionKey, 'section');
-      const sectionEntity = await entityProcessor.createEntity(
-        sectionKey,
-        sectionEntityType,
-        [
-          `${sectionData.description || sectionKey.replace(/_/g, ' ')} configuration and behaviors`,
-          `Profile: ${profileKey}`,
-          `Source: ${sourceFile}`
-        ]
-      );
-      entities.push(sectionEntity);
-      for (const [itemKey, itemData] of Object.entries(sectionData)) {
-        if (typeof itemData === 'string') {
-          const entityType = entityTypeAnalyzer.determineEntityType(profileKey, sectionKey, itemKey);
-          const entity = await entityProcessor.createEntity(itemKey, entityType, [this.#substitutePaths(itemData)]);
-          entities.push(entity);
-          continue;
-        }
-        if (typeof itemData !== 'object' || itemData === null) {
-          continue;
-        }
-        const itemEntities = await this.#processSectionItem(
-          profileKey,
-          sectionKey,
-          itemKey,
-          itemData,
-          entityTypeAnalyzer,
-          entityProcessor
-        );
-        entities.push(...itemEntities);
-      }
-      return entities;
-    } catch (error) {
-      throw new EntityProcessingError(
-        `Failed to process section '${sectionKey}': ${error.message}`,
-        sectionKey,
-        profileKey,
-        'Check section structure and item definitions'
-      );
+    if (observations.length > 0 || Object.keys(subSections).length > 0) {
+      const entity = this.#createSectionEntity(sectionName, observations, context);
+      entities.push(entity);
     }
+    const subEntities = this.#processSubSections(subSections, processingContext, hierarchyContext, sectionName);
+    entities.push(...subEntities);
+    return entities;
   }
 
   /**
-   * Processes an individual item within a section
+   * Process sections from profile data
    * 
    * @private
-   * @param {string} profileKey - Parent profile identifier
-   * @param {string} sectionKey - Parent section identifier
-   * @param {string} itemKey - Item identifier
-   * @param {Object} itemData - Item data
-   * @param {Object} entityTypeAnalyzer - Entity type analyzer instance
-   * @param {Object} entityProcessor - Entity processor instance
-   * @returns {Promise<Array>} Array of created entities (parent + any nested entities)
+   * @param {Object} profileData - Profile data containing sections
+   * @param {string} profileName - Name of the profile
+   * @param {string} sourceFile - Source filename
+   * @returns {Array} Array of section entities
    */
-  async #processSectionItem(profileKey, sectionKey, itemKey, itemData, entityTypeAnalyzer, entityProcessor) {
-    try {
-      const entities = [];
-      if (Array.isArray(itemData)) {
-        const entityType = entityTypeAnalyzer.determineEntityType(profileKey, itemKey, null, sectionKey);
-        const observations = itemData.map(item => this.#substitutePaths(item));
-        const entity = await entityProcessor.createEntity(itemKey, entityType, observations);
-        return [entity];
+  #processSections(profileData, profileName, sourceFile) {
+    const entities = [];
+    const processingContext = { profileName, sourceFile };
+    for (const [sectionName, sectionData] of Object.entries(profileData)) {
+      if (this.metadataFields.has(sectionName)) {
+        continue;
       }
-      if (itemData.observations) {
-        const entityType = entityTypeAnalyzer.determineEntityType(profileKey, itemKey, null, sectionKey);
-        const observations = Array.isArray(itemData.observations) ? itemData.observations : [itemData.observations];
-        const processedObservations = observations.map(obs => this.#substitutePaths(obs));
-        processedObservations.push(`${itemKey} configuration and behaviors`);
-        processedObservations.push(`Profile: ${sectionKey}`);
-        processedObservations.push(`Source: ${profileKey}`);
-        const entity = await entityProcessor.createEntity(itemKey, entityType, processedObservations);
-        return [entity];
-      }
-      if (itemData.section_type && itemData.observations) {
-        const entityType = itemData.section_type;
-        const observations = Array.isArray(itemData.observations) ? itemData.observations : [itemData.observations];
-        const processedObservations = observations.map(obs => this.#substitutePaths(obs));
-        processedObservations.push(`${itemKey} configuration and behaviors`);
-        processedObservations.push(`Profile: ${sectionKey}`);
-        processedObservations.push(`Source: ${profileKey}`);
-        const entity = await entityProcessor.createEntity(itemKey, entityType, processedObservations);
-        return [entity];
-      }
-      const simpleProperties = {};
-      const nestedObjects = {};
-      for (const [key, value] of Object.entries(itemData)) {
-        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-          nestedObjects[key] = value;
-        } else {
-          simpleProperties[key] = value;
-        }
-      }
-      if (Object.keys(simpleProperties).length > 0 || Object.keys(nestedObjects).length > 0) {
-        const entityType = entityTypeAnalyzer.determineEntityType(profileKey, itemKey, null, sectionKey);
-        const observations = Object.keys(simpleProperties).length > 0 
-          ? this.#createObservations(simpleProperties)
-          : [`${itemKey} configuration and behaviors`, `Profile: ${sectionKey}`, `Source: ${profileKey}`];
-        const mainEntity = await entityProcessor.createEntity(itemKey, entityType, observations);
-        entities.push(mainEntity);
-      }
-      for (const [nestedKey, nestedData] of Object.entries(nestedObjects)) {
-        const nestedEntityName = this.#formatSectionName(nestedKey);
-        const nestedEntityType = entityTypeAnalyzer.determineEntityType(profileKey, nestedKey, null, sectionKey);
-        const nestedObservations = this.#createObservations(nestedData);
-        const nestedEntity = await entityProcessor.createEntity(
-          nestedEntityName,
-          nestedEntityType,
-          nestedObservations
-        );
-        entities.push(nestedEntity);
-      }
-      return entities;
-    } catch (error) {
-      throw new EntityProcessingError(
-        `Failed to process item '${itemKey}': ${error.message}`,
-        itemKey,
-        profileKey,
-        'Check item data format and ensure all required fields are present'
+      const sectionEntities = this.#processSectionRecursively(
+        { sectionName, sectionData },
+        processingContext
       );
+      entities.push(...sectionEntities);
     }
+    return entities;
   }
 
   /**
-   * Substitutes path variables in a string with cross-platform expansion
+   * Process subsections recursively
+   * 
+   * @private
+   * @param {Object} subSections - Object containing subsections to process
+   * @param {Object} processingContext - Processing environment
+   * @param {Object} hierarchyContext - Current hierarchy context
+   * @param {string} currentSectionName - Current section name for parent tracking
+   * @returns {Array} Array of entities from subsections
+   */
+  #processSubSections(subSections, processingContext, hierarchyContext, currentSectionName) {
+    const entities = [];
+    for (const [subSectionName, subSectionData] of Object.entries(subSections)) {
+      const subEntities = this.#processSectionRecursively(
+        { sectionName: subSectionName, sectionData: subSectionData },
+        processingContext,
+        {
+          parentSection: hierarchyContext.parentSection || currentSectionName,
+          nestingLevel: (hierarchyContext.nestingLevel || 0) + 1
+        }
+      );
+      entities.push(...subEntities);
+    }
+    return entities;
+  }
+
+  /**
+   * Perform path variable substitution
    * 
    * @private
    * @param {string} text - Text containing path variables
-   * @returns {string} Text with path variables substituted
+   * @returns {string} Text with substituted paths
    */
   #substitutePaths(text) {
-    if (typeof text !== 'string') {
+    if (typeof text !== 'string' || !this.config.path) {
       return text;
     }
     let result = text;
-    for (const [pathKey, patternData] of this.compiledPathPatterns) {
-      result = result.replace(patternData.regex, patternData.expandedPath);
-      patternData.regex.lastIndex = 0;
+    for (const [key, value] of Object.entries(this.config.path)) {
+      const placeholder = `{path.${key}}`;
+      if (result.includes(placeholder)) {
+        result = result.replace(new RegExp(placeholder.replace(/[{}]/g, '\\$&'), 'g'), value);
+      }
     }
     return result;
   }
 
   /**
-   * Processes a profile and all its sections
+   * Process a profile and return entities and relations
    * 
-   * @param {string} profileKey - Top-level profile identifier
-   * @param {Object} profileData - Profile data from YAML file
-   * @param {string} sourceFile - Source filename for entity attribution
-   * @param {Object} entityTypeAnalyzer - Entity type analyzer instance
-   * @param {Object} entityProcessor - Entity processor instance
-   * @returns {Promise<Array>} Array of entities created from the profile
-   * @throws {EntityProcessingError} When profile processing fails
+   * @param {string} profileName - Name of the profile
+   * @param {Object} yamlData - Parsed YAML data
+   * @param {string} sourceFile - Source filename
+   * @returns {Object} Object containing entities and relations arrays
+   * @throws {MemoryBuilderError} When profile processing fails
    */
-  async processProfile(profileKey, profileData, sourceFile, entityTypeAnalyzer, entityProcessor) {
-    const entities = [];
+  process(profileName, yamlData, sourceFile) {
     try {
-      if (profileData.description) {
-        const headerEntityType = entityTypeAnalyzer.determineEntityType(profileKey, profileKey, 'header');
-        const headerEntity = await entityProcessor.createEntity(
-          profileKey,
-          headerEntityType,
-          [
-            profileData.description,
-            `Source: ${sourceFile}`
-          ]
-        );
-        entities.push(headerEntity);
+      const profileData = this.#extractProfileData(profileName, yamlData);
+      if (!profileData) {
+        return { entities: [], relations: [] };
       }
-      for (const [sectionKey, sectionData] of Object.entries(profileData)) {
-        if (sectionKey === 'description' || typeof sectionData !== 'object' || sectionData === null) {
-          continue;
-        }
-        const subEntities = await this.#processSection(
-          profileKey,
-          sectionKey,
-          sectionData,
-          sourceFile,
-          entityTypeAnalyzer,
-          entityProcessor
-        );
-        entities.push(...subEntities);
+      const entities = [];
+      const relations = this.#processRelations(profileData, profileName);
+      const descriptionEntity = this.#createDescriptionEntity(profileData, profileName, sourceFile);
+      if (descriptionEntity) {
+        entities.push(descriptionEntity);
       }
-      return entities;
+      const sectionEntities = this.#processSections(profileData, profileName, sourceFile);
+      entities.push(...sectionEntities);
+      return { entities, relations };
     } catch (error) {
-      if (error instanceof EntityProcessingError) {
+      if (error instanceof MemoryBuilderError) {
         throw error;
       }
-      throw new EntityProcessingError(
-        `Failed to process profile: ${error.message}`,
-        profileKey,
-        profileKey,
-        'Check profile structure and data format'
-      );
+      throw new MemoryBuilderError(`Failed to process profile ${profileName}: ${error.message}`);
     }
   }
 }

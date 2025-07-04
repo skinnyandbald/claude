@@ -31,11 +31,11 @@ class Workflow {
    */
   async build() {
     try {
-      process.chdir('tools/memory');
+      process.chdir('./tools/memory');
       await this.exec.exec('npm', ['init', '-y'], { silent: true });
-      await this.exec.exec('node', ['./lib/PackageBuilder.js'], { silent: true });
+      await this.exec.exec('node', ['./lib/core/PackageBuilder.js'], { silent: true });
       await this.exec.exec('npm', ['install'], { silent: true });
-      await this.exec.exec('npm', ['run', 'build']);
+      await this.exec.exec('npm', ['run', 'build', '--silent']);
     } catch (error) {
       this.core.setFailed(`Workflow failed: ${error.message}`);
     }

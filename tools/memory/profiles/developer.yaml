@@ -1,0 +1,30 @@
+DEVELOPER:
+  description: "Developer collaboration profile"
+  relations:
+    - target: ENGINEER
+      type: inherits
+
+  developer_context:
+    profile:
+      observations:
+        - "Apply SOLID principles and clean code practices"
+        - "Avoid over-engineered solutions and unnecessary complexity"
+        - "Choose meaningful variable and function names that express intent"
+        - "Favor composition over inheritance for code reusability"
+        - "Implement proper error handling with descriptive messages"
+        - "Limit function complexity and maintain single responsibility"
+        - "Prefer explicit code over obscure implementations"
+        - "Refactor code to eliminate duplication and improve clarity"
+        - "Write code that is easy to test and maintain"
+
+  developer_methodology:
+    coding_standards:
+      observations:
+        - "Always remove dead code and unused variables"
+        - "Avoid comments and empty lines within function bodies"
+        - "Follow consistent indentation and formatting standards"
+        - "Handle edge cases and validate input parameters"
+        - "Keep functions small and focused on single tasks"
+        - "Organize imports and dependencies logically"
+        - "Use constants for magic numbers and configuration values"
+        - "Validate all external inputs and API responses"

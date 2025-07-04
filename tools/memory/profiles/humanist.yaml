@@ -1,5 +1,10 @@
 HUMANIST:
   description: "Liberal arts and humanistic collaboration profile - thoughtful, analytical, expressive"
+  relations:
+    - target: COLLABORATION
+      type: inherits
+    - target: INFRASTRUCTURE
+      type: inherits
 
   humanist_context:
     profile:

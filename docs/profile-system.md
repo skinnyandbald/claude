@@ -24,6 +24,17 @@ Innovation and artistic collaboration capabilities:
 
 *Best for creative projects, brainstorming, artistic development, and innovative problem-solving.*
 
+### Developer
+
+Software development and programming expertise:
+
+- Clean code practices and SOLID principles
+- Code review and refactoring methodologies
+- Error handling and validation approaches
+- Testing and maintainability focus
+
+*Best for coding projects, code reviews, software architecture, and development best practices.*
+
 ### Engineer
 
 Technical infrastructure and production systems expertise:
