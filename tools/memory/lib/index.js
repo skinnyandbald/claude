@@ -8,18 +8,18 @@
  * @license BSD-3-Clause
  */
 
-const MemoryBuilder = require('./MemoryBuilder');
-const Workflow = require('./Workflow');
 const core = require('./core');
-const loaders = require('./loaders');
-const processors = require('./processors');
 const generators = require('./generators');
+const loaders = require('./loaders');
+const MemoryBuilder = require('./core/MemoryBuilder');
+const processors = require('./processors');
+const Workflow = require('./Workflow');
 
 module.exports = {
-  MemoryBuilder,
-  Workflow,
   core,
+  generators,
   loaders,
+  MemoryBuilder,
   processors,
-  generators
+  Workflow
 };

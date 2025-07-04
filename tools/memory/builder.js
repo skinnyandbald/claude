@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const MemoryBuilder = require('./lib/MemoryBuilder');
+const MemoryBuilder = require('./lib/core/MemoryBuilder');
 
 /**
  * Memory Builder Entry Point

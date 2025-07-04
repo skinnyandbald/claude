@@ -7,11 +7,11 @@
  */
 
 const EntityGenerator = require('./EntityGenerator');
-const RelationGenerator = require('./RelationGenerator');
 const OutputGenerator = require('./OutputGenerator');
+const RelationGenerator = require('./RelationGenerator');
 
 module.exports = {
   EntityGenerator,
-  RelationGenerator,
-  OutputGenerator
+  OutputGenerator,
+  RelationGenerator
 };

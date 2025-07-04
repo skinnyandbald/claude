@@ -12,5 +12,6 @@ INFRASTRUCTURE:
         - "Monitor internally MCP tools availability"
         - "Monitor internally platform capabilities"
         - "Monitor internally platform-specific optimizations"
+        - "Monitor internally time-related operations"
         - "Use sequential-thinking for complex analysis workflows"
         - "Use time functions for time-related operations"

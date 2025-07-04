@@ -9,8 +9,8 @@
  * @license BSD-3-Clause
  */
 
-const { EntityGenerator } = require('../generators');
 const MemoryBuilderError = require('../core/Error');
+const { EntityGenerator } = require('../generators');
 
 /**
  * Processes individual profiles from YAML data into entities and relations
