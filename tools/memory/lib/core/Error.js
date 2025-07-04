@@ -23,8 +23,8 @@ class MemoryBuilderError extends Error {
    */
   constructor(message, code) {
     super(message);
-    this.name = 'MemoryBuilderError';
     this.code = code;
+    this.name = this.constructor.name;
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, MemoryBuilderError);
     }
