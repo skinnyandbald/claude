@@ -1,5 +1,10 @@
 RESEARCHER:
   description: "Academic research collaboration profile - rigorous, methodical, evidence-based"
+  relations:
+    - target: COLLABORATION
+      type: inherits
+    - target: INFRASTRUCTURE
+      type: inherits
 
   researcher_context:
     profile:

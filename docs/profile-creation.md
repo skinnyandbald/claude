@@ -31,6 +31,7 @@ Shared foundation used by all profiles:
 Domain-specific expertise:
 
 - **creative.yaml** - Innovation and artistic work
+- **developer.yaml** - Software development and programming
 - **engineer.yaml** - Technical infrastructure
 - **humanist.yaml** - Liberal arts and analysis
 - **researcher.yaml** - Academic methodology

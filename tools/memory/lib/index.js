@@ -1,5 +1,7 @@
 /**
- * Main library exports for MemoryBuilder
+ * Memory Builder Library
+ * 
+ * Main module exports for the simplified memory builder system
  * 
  * @module lib
  * @author AXIVO
@@ -7,30 +9,15 @@
  */
 
 const MemoryBuilder = require('./MemoryBuilder');
-const ConfigLoader = require('./ConfigLoader');
-const PackageBuilder = require('./PackageBuilder');
-const Workflow = require('./Workflow');
-const { FileProcessor, ProfileProcessor, EntityProcessor } = require('./processors');
-const { EntityTypeAnalyzer } = require('./analyzers');
-const { BuildError, ProfileFileError, YamlParseError, EntityProcessingError } = require('./errors');
+const core = require('./core');
+const loaders = require('./loaders');
+const processors = require('./processors');
+const generators = require('./generators');
 
-/**
- * Complete MemoryBuilder library exports
- * 
- * Provides access to all components of the modular memory builder system
- * including orchestration, processing, analysis, project setup, and error handling.
- */
 module.exports = {
   MemoryBuilder,
-  ConfigLoader,
-  PackageBuilder,
-  Workflow,
-  FileProcessor,
-  ProfileProcessor,
-  EntityProcessor,
-  EntityTypeAnalyzer,
-  BuildError,
-  ProfileFileError,
-  YamlParseError,
-  EntityProcessingError
+  core,
+  loaders,
+  processors,
+  generators
 };

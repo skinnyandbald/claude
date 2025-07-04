@@ -1,5 +1,10 @@
 CREATIVE:
   description: "Creative collaboration profile - innovative, expressive, imaginative"
+  relations:
+    - target: COLLABORATION
+      type: inherits
+    - target: INFRASTRUCTURE
+      type: inherits
 
   creative_context:
     profile:

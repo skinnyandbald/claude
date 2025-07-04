@@ -1,344 +1,164 @@
 /**
- * Main MemoryBuilder orchestrator
+ * Memory Builder
+ * 
+ * Main orchestrator class that coordinates the entire memory build process
  * 
  * @module lib/MemoryBuilder
  * @author AXIVO
  * @license BSD-3-Clause
  */
-const fs = require('fs');
+
 const path = require('path');
-const ConfigLoader = require('./ConfigLoader');
-const { FileProcessor, ProfileProcessor, EntityProcessor } = require('./processors');
-const { EntityTypeAnalyzer } = require('./analyzers');
-const { BuildError } = require('./errors');
+const fs = require('fs');
+const { ConfigLoader, FileLoader } = require('./loaders');
+const { ProfileProcessor } = require('./processors');
+const { RelationGenerator, OutputGenerator } = require('./generators');
+const { MemoryBuilderError } = require('./core');
 
 /**
- * Main MemoryBuilder orchestrator class
+ * Main orchestrator for memory builder system
  * 
- * Coordinates the complete memory building process from YAML profile files to JSONL output.
- * Manages configuration loading, file processing, entity creation, and build statistics.
+ * Coordinates configuration loading, file processing, relation generation,
+ * and output creation. Provides build statistics and error handling.
  * 
  * @class MemoryBuilder
  */
 class MemoryBuilder {
-  /**
-   * Creates a new MemoryBuilder instance
-   * 
-   * @param {Object|null} [config=null] - Optional configuration object
-   * @param {Object} [dependencies={}] - Optional dependency injection for testing
-   * @param {ConfigLoader} [dependencies.configLoader] - Custom config loader
-   * @param {FileProcessor} [dependencies.fileProcessor] - Custom file processor
-   * @param {ProfileProcessor} [dependencies.profileProcessor] - Custom profile processor
-   * @param {EntityProcessor} [dependencies.entityProcessor] - Custom entity processor
-   * @param {EntityTypeAnalyzer} [dependencies.entityTypeAnalyzer] - Custom entity type analyzer
-   */
-  constructor(config = null, dependencies = {}) {
-    this.configLoader = dependencies.configLoader || new ConfigLoader();
-    this.config = config || this.configLoader.load();
-    const maxFileSize = this.config.security?.maxFileSize || (1024 * 1024);
-    this.fileProcessor = dependencies.fileProcessor || new FileProcessor(maxFileSize);
-    this.profileProcessor = dependencies.profileProcessor || new ProfileProcessor(this.config);
-    this.entityProcessor = dependencies.entityProcessor || new EntityProcessor();
-    const profilesDirectory = this.config.build.profilesPath?.standard || 'profiles';
-    this.entityTypeAnalyzer = dependencies.entityTypeAnalyzer || new EntityTypeAnalyzer(profilesDirectory);
-    this.buildStartTime = null;
-    this.buildEndTime = null;
+  constructor(config = {}) {
+    this.config = config;
     this.entities = [];
-    this.statistics = {
+    this.relations = [];
+    this.allRelations = [];
+    this.stats = {
       filesProcessed: 0,
       entitiesCreated: 0,
-      profilesProcessed: 0,
-      entityTypes: {},
-      profileBreakdown: {}
+      relationsCreated: 0,
+      startTime: null
     };
   }
 
   /**
-   * Generates the final output file
+   * Process additional files not in standard profiles
    * 
    * @private
-   * @param {Object} outputConfig - Output configuration object
-   * @returns {Promise<void>}
    */
-  async #generateOutput(outputConfig) {
-    let outputPath = outputConfig.path;
-    if (!path.isAbsolute(outputPath)) {
-      outputPath = path.resolve(__dirname, '..', outputConfig.path);
-    }
-    let content;
-    if (outputConfig.format === 'json') {
-      content = JSON.stringify(this.entities, null, 2);
-    } else {
-      content = this.entities.map(entity => JSON.stringify(entity)).join('\n');
-    }
-    await fs.promises.writeFile(outputPath, content, 'utf8');
-    this.statistics.entitiesCreated = this.entities.length;
-    for (const entity of this.entities) {
-      const entityType = entity.entityType;
-      this.statistics.entityTypes[entityType] = (this.statistics.entityTypes[entityType] || 0) + 1;
-    }
-    console.log(`📝 Output written to ${outputPath}`);
-  }
-
-  /**
-   * Processes additional files beyond the main profile order
-   * 
-   * @private
-   * @param {Object} buildConfig - Build configuration object
-   * @returns {Promise<void>}
-   */
-  async #processAdditionalFiles(buildConfig) {
-    const profileDir = buildConfig.profilesPath?.standard || 'profiles';
-    try {
-      await fs.promises.access(profileDir);
-    } catch (accessError) {
+  async #processAdditionalFiles() {
+    const profilesPath = path.resolve(__dirname, '..', this.config.build.profilesPath.standard);
+    if (!fs.existsSync(profilesPath)) {
       return;
     }
-    const allFiles = (await fs.promises.readdir(profileDir))
-      .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
-      .filter(file => !buildConfig.profiles.includes(file));
-    const additionalFilePromises = allFiles.map(async (fileName) => {
-      try {
-        const entities = await this.processProfileFile(fileName);
-        return {
-          success: true,
-          fileName,
-          entities
-        };
-      } catch (error) {
-        console.warn(`⚠️ Skipping additional file ${fileName}: ${error.message}`);
-        return {
-          success: false,
-          fileName,
-          entities: [],
-          error
-        };
-      }
-    });
-    const additionalResults = await Promise.all(additionalFilePromises);
-    for (const result of additionalResults) {
-      if (result.success) {
-        this.entities.push(...result.entities);
-        this.statistics.filesProcessed++;
-        this.statistics.profileBreakdown[result.fileName] = result.entities.length;
-      }
-    }
-  }
-
-  /**
-   * Processes a single common infrastructure file
-   * 
-   * @private
-   * @param {string} filePath - Full path to the common file
-   * @param {string} fileName - File name for logging
-   * @returns {Promise<Array>} Array of entities created from the file
-   */
-  async #processCommonFile(filePath, fileName) {
-    const yamlData = await this.fileProcessor.loadYamlFile(filePath);
-    const entities = [];
-    for (const [profileKey, profileData] of Object.entries(yamlData)) {
-      const profileEntities = await this.profileProcessor.processProfile(
-        profileKey,
-        profileData,
-        `common/${fileName}`,
-        this.entityTypeAnalyzer,
-        this.entityProcessor
-      );
-      entities.push(...profileEntities);
-      this.statistics.profilesProcessed++;
-    }
-    return entities;
-  }
-
-  /**
-   * Processes common infrastructure files
-   * 
-   * @private
-   * @returns {Promise<void>}
-   */
-  async #processCommonFiles() {
-    const buildConfig = this.config.build;
-    const loggingConfig = this.config.logging;
-    const commonDir = path.join(buildConfig.profilesPath?.standard || 'profiles', buildConfig.profilesPath?.common || 'common');
-    try {
-      await fs.promises.access(commonDir);
-    } catch (accessError) {
-      if (loggingConfig.showFileDetails) {
-        console.log(`⚠️ Common directory not found: ${commonDir}`);
-      }
-      return;
-    }
-    const commonFiles = (await fs.promises.readdir(commonDir))
-      .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
+    const processedFiles = new Set(this.config.build.profiles);
+    const files = fs.readdirSync(profilesPath)
+      .filter(file => (file.endsWith('.yaml') || file.endsWith('.yml')) && !processedFiles.has(file))
       .sort();
-    if (loggingConfig.showFileDetails) {
-      console.log(`📚 Processing ${commonFiles.length} common profiles...`);
-    }
-    const commonFilePromises = commonFiles.map(async (fileName) => {
-      try {
-        const filePath = path.join(commonDir, fileName);
-        const entities = await this.#processCommonFile(filePath, fileName);
-        return {
-          success: true,
-          fileName: `common/${fileName}`,
-          entities,
-          filePath
-        };
-      } catch (error) {
-        if (buildConfig.stopOnCriticalError) {
-          throw new BuildError(`Critical error processing common file ${fileName}: ${error.message}`);
-        }
-        console.warn(`⚠️ Skipping common file ${fileName}: ${error.message}`);
-        return {
-          success: false,
-          fileName: `common/${fileName}`,
-          entities: [],
-          error
-        };
-      }
-    });
-    const commonResults = await Promise.all(commonFilePromises);
-    for (const result of commonResults) {
-      if (result.success) {
-        this.entities.push(...result.entities);
-        this.statistics.filesProcessed++;
-        this.statistics.profileBreakdown[result.fileName] = result.entities.length;
-      }
+    for (const file of files) {
+      await this.#processFile(path.join(profilesPath, file), file);
     }
   }
 
   /**
-   * Displays comprehensive build statistics
+   * Process a single profile file
    * 
    * @private
-   * @returns {void}
+   * @param {string} filePath - Full path to file
+   * @param {string} filename - Base filename for source attribution
    */
-  #showBuildStatistics() {
-    const performanceConfig = this.config.performance;
-    if (!performanceConfig.showStatistics) {
-      return;
-    }
-    console.log('\n🏷️ Entity Types:');
-    const sortedEntityTypes = Object.entries(this.statistics.entityTypes)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 10);
-    for (const [type, count] of sortedEntityTypes) {
-      console.log(`   ${type}: ${count}`);
-    }
-    console.log('\n📁 Profile Files:');
-    const sortedProfiles = Object.entries(this.statistics.profileBreakdown)
-      .sort(([, a], [, b]) => b - a);
-    for (const [fileName, count] of sortedProfiles) {
-      console.log(`   ${fileName}: ${count} entities`);
-    }
-    if (performanceConfig.showBuildTime) {
-      const buildTime = this.buildEndTime - this.buildStartTime;
-      const entitiesPerSecond = Math.round(this.statistics.entitiesCreated / (buildTime / 1000));
-      console.log('\n⏱️ Build Performance:');
-      console.log(`   Build time: ${buildTime}ms`);
-      console.log(`   Files processed: ${this.statistics.filesProcessed}`);
-      console.log(`   Entities per second: ${entitiesPerSecond}`);
+  async #processFile(filePath, filename) {
+    try {
+      const fileLoader = new FileLoader();
+      const data = fileLoader.load(filePath);
+      const profileName = path.basename(filename, path.extname(filename)).toUpperCase();
+      const processor = new ProfileProcessor(this.config);
+      const result = processor.process(profileName, data, filename);
+      this.entities.push(...result.entities);
+      this.allRelations.push(...result.relations);
+      this.stats.filesProcessed++;
+      if (this.config.logging.showFileDetails) {
+        console.log(`📄 Processed '${filename}' profile`);
+      }
+    } catch (error) {
+      if (this.config.build.stopOnCriticalError) {
+        throw new MemoryBuilderError(`Failed to process ${filename}: ${error.message}`);
+      } else {
+        console.warn(`⚠️  Warning: Failed to process ${filename}: ${error.message}`);
+      }
     }
   }
 
   /**
-   * Executes the complete memory build process
+   * Process all files according to configuration
    * 
-   * @returns {Promise<boolean>} True if build succeeded, false otherwise
+   * @private
+   */
+  async #processFiles() {
+    if (this.config.build.processCommonFirst) {
+      const commonPath = path.resolve(__dirname, '..', this.config.build.profilesPath.common);
+      if (fs.existsSync(commonPath)) {
+        const files = fs.readdirSync(commonPath)
+          .filter(file => file.endsWith('.yaml') || file.endsWith('.yml'))
+          .sort();
+        if (this.config.logging?.showProgress && files.length > 0) {
+          console.log(`📚 Processing ${files.length} common profiles...`);
+        }
+        for (const file of files) {
+          await this.#processFile(path.join(commonPath, file), `${path.basename(this.config.build.profilesPath.common)}/${file}`);
+        }
+      }
+    }
+    if (this.config.logging?.showProgress) {
+      console.log(`📚 Processing ${this.config.build.profiles.length} standard profiles...`);
+    }
+    const profilesPath = path.resolve(__dirname, '..', this.config.build.profilesPath.standard);
+    for (const profileFile of this.config.build.profiles) {
+      const filePath = path.join(profilesPath, profileFile);
+      await this.#processFile(filePath, profileFile);
+    }
+    if (this.config.build.processAdditionalFiles) {
+      await this.#processAdditionalFiles();
+    }
+  }
+
+  /**
+   * Main build method that orchestrates the entire process
+   * 
+   * @returns {Promise<boolean>} Build success status
    */
   async build() {
     try {
-      this.buildStartTime = Date.now();
-      const buildConfig = this.config.build;
-      const outputConfig = this.config.output;
-      const loggingConfig = this.config.logging;
-      if (loggingConfig.showProgress) {
-        console.log('⚙️ Starting multi-file memory configuration build...');
+      this.stats.startTime = Date.now();
+      if (Object.keys(this.config).length === 0) {
+        const configLoader = new ConfigLoader();
+        this.config = configLoader.load();
       }
       this.entities = [];
-      this.statistics = {
-        filesProcessed: 0,
-        entitiesCreated: 0,
-        profilesProcessed: 0,
-        entityTypes: {},
-        profileBreakdown: {}
-      };
-      if (buildConfig.processCommonFirst) {
-        await this.#processCommonFiles();
+      this.relations = [];
+      this.allRelations = [];
+      this.stats.filesProcessed = 0;
+      this.stats.entitiesCreated = 0;
+      this.stats.relationsCreated = 0;
+      await this.#processFiles();
+      if (this.config.logging?.showProgress) {
+        console.log('🔗 Generating relations from profile declarations...');
       }
-      if (loggingConfig.showFileDetails) {
-        console.log(`📚 Processing ${buildConfig.profiles.length} standard profiles...`);
+      const relationGenerator = new RelationGenerator(this.config);
+      this.relations = relationGenerator.generate(this.allRelations, this.entities);
+      if (this.config.logging?.showProgress) {
+        console.log(`🔗 Generated ${this.relations.length} relations`);
       }
-      const profileFilePromises = buildConfig.profiles.map(async (fileName) => {
-        try {
-          const entities = await this.processProfileFile(fileName);
-          return {
-            success: true,
-            fileName,
-            entities
-          };
-        } catch (error) {
-          if (buildConfig.stopOnCriticalError) {
-            throw new BuildError(`Critical error processing ${fileName}: ${error.message}`);
-          }
-          console.warn(`⚠️ Skipping ${fileName}: ${error.message}`);
-          return {
-            success: false,
-            fileName,
-            entities: [],
-            error
-          };
-        }
-      });
-      const profileResults = await Promise.all(profileFilePromises);
-      for (const result of profileResults) {
-        if (result.success) {
-          this.entities.push(...result.entities);
-          this.statistics.filesProcessed++;
-          this.statistics.profileBreakdown[result.fileName] = result.entities.length;
-        }
+      this.stats.entitiesCreated = this.entities.length;
+      this.stats.relationsCreated = this.relations.length;
+      const buildTime = Date.now() - this.stats.startTime;
+      if (this.config.logging?.showProgress) {
+        console.log(`📝 Output written to ${this.config.build.outputPath}`);
+        console.log(`✅ Generated ${this.stats.entitiesCreated} entities and ${this.stats.relationsCreated} relations from ${this.stats.filesProcessed} profiles in ${buildTime}ms`);
       }
-      if (buildConfig.processAdditionalFiles) {
-        await this.#processAdditionalFiles(buildConfig);
-      }
-      await this.#generateOutput(outputConfig);
-      this.buildEndTime = Date.now();
-      const buildTime = this.buildEndTime - this.buildStartTime;
-      console.log(`✅ Generated ${this.entities.length} entities from ${this.statistics.filesProcessed} profile files in ${buildTime}ms`);
-      if (this.config.performance.showStatistics) {
-        this.#showBuildStatistics();
-      }
+      const outputGenerator = new OutputGenerator(this.config);
+      outputGenerator.generate(this.entities, this.relations);
       return true;
     } catch (error) {
-      this.buildEndTime = Date.now();
-      console.error(`❌ Build failed: ${error.message}`);
+      console.error('❌ Build failed:', error.message);
       return false;
     }
-  }
-
-  /**
-   * Processes a single profile file
-   * 
-   * @param {string} fileName - Profile file name to process
-   * @returns {Promise<Array>} Array of entities created from the file
-   */
-  async processProfileFile(fileName) {
-    const buildConfig = this.config.build;
-    const filePath = path.join(buildConfig.profilesPath?.standard || 'profiles', fileName);
-    const yamlData = await this.fileProcessor.loadYamlFile(filePath);
-    const entities = [];
-    for (const [profileKey, profileData] of Object.entries(yamlData)) {
-      const profileEntities = await this.profileProcessor.processProfile(
-        profileKey,
-        profileData,
-        fileName,
-        this.entityTypeAnalyzer,
-        this.entityProcessor
-      );
-      entities.push(...profileEntities);
-      this.statistics.profilesProcessed++;
-    }
-    return entities;
   }
 }
 

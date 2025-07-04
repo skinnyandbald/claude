@@ -4,32 +4,39 @@ Technical reference for the MemoryBuilder configuration system that processes YA
 
 ## Build Settings
 
-Controls profile processing order, file inclusion, and error handling behavior.
+Controls profile processing order, file inclusion, error handling behavior, and output generation.
 
 ```yaml
 build:
-  autoDetectProfiles: false
   processAdditionalFiles: false
   processCommonFirst: true
   stopOnCriticalError: true
+  outputPath: ./config/server.json
   profiles:
     - creative.yaml
+    - developer.yaml
     - engineer.yaml
     - humanist.yaml
     - researcher.yaml
   profilesPath:
-    common: common
-    standard: profiles
+    common: ./profiles/common
+    standard: ./profiles
+  relations:
+    - extends
+    - inherits
+    - overrides
 ```
 
 Key options:
 
-- **`autoDetectProfiles`** - When `true`, automatically discovers all `.yaml` files; when `false`, uses explicit `profiles` list
 - **`processAdditionalFiles`** - When `true`, processes additional files beyond the main profile list
 - **`processCommonFirst`** - When `true`, processes common infrastructure files before individual profiles
 - **`stopOnCriticalError`** - When `true`, halts build on any file processing error
-- **`profilesPath.common`** - Directory name for shared infrastructure profiles
-- **`profilesPath.standard`** - Base directory name for individual profile files
+- **`outputPath`** - Path to the generated memory server file (relative paths resolved from tool directory)
+- **`profiles`** - Explicit list of profile files to process
+- **`profilesPath.common`** - Path to shared infrastructure profiles directory
+- **`profilesPath.standard`** - Path to individual profile files directory
+- **`relations`** - Array of valid relation types for validation
 
 ## Logging Configuration
 
@@ -45,21 +52,6 @@ Logging options:
 
 - **`showFileDetails`** - Shows individual file processing status
 - **`showProgress`** - Displays build progress messages
-
-## Output Configuration
-
-Controls generation and format of the memory system file.
-
-```yaml
-output:
-  path: ./config/server.json
-  format: jsonl
-```
-
-> [!IMPORTANT]
-> Relative paths in `output.path` are resolved from the tool directory location.
-
-Output is `jsonl` format with one entity per line, as required by [memory MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/memory).
 
 ## Path Configuration
 
@@ -79,29 +71,16 @@ Replace paths with your actual directory locations.
 
 Profile YAML files can reference these paths using `{path.conversations}`, `{path.diary}`, and `{path.tool}` placeholders.
 
-## Performance Configuration
-
-Controls build performance monitoring.
-
-```yaml
-performance:
-  showBuildTime: true
-  showStatistics: true
-```
-
-Monitoring options:
-
-- **`showBuildTime`** - Shows build duration and entities per second
-- **`showStatistics`** - Displays entity type counts and profile breakdown
-
 ## Configuration Examples
 
 Development build:
 
 ```yaml
 build:
-  autoDetectProfiles: true
   stopOnCriticalError: false
+  outputPath: ./config/server.json
+  profiles:
+    - engineer.yaml
 logging:
   showFileDetails: true
 ```
@@ -110,11 +89,26 @@ Production build:
 
 ```yaml
 build:
-  autoDetectProfiles: false
   stopOnCriticalError: true
+  outputPath: ./config/server.json
+  profiles:
+    - creative.yaml
+    - developer.yaml
+    - engineer.yaml
+    - humanist.yaml
+    - researcher.yaml
 logging:
   showProgress: false
   showFileDetails: false
+```
+
+Minimal configuration:
+
+```yaml
+build:
+  outputPath: ./config/server.json
+  profiles:
+    - engineer.yaml
 ```
 
 ## File Processing Order
@@ -126,5 +120,6 @@ logging:
 ## Error Handling Strategy
 
 The `stopOnCriticalError` setting determines build behavior:
+
 - **true:** Stop immediately on file processing errors
 - **false:** Continue processing remaining files, skip failed ones
