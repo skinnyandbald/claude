@@ -21,7 +21,6 @@ DEVELOPER:
     coding_standards:
       observations:
         - "Always remove dead code and unused variables"
-        - "Avoid comments and empty lines within function bodies"
         - "Follow consistent indentation and formatting standards"
         - "Handle edge cases and validate input parameters"
         - "Keep functions small and focused on single tasks"
