@@ -9,6 +9,7 @@
  */
 
 const MemoryBuilder = require('./MemoryBuilder');
+const Workflow = require('./Workflow');
 const core = require('./core');
 const loaders = require('./loaders');
 const processors = require('./processors');
@@ -16,6 +17,7 @@ const generators = require('./generators');
 
 module.exports = {
   MemoryBuilder,
+  Workflow,
   core,
   loaders,
   processors,

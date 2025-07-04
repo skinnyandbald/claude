@@ -19,6 +19,39 @@ Every observation directly programs behavioral responses:
 - **Incorrect verb selection** creates unintended behavioral responses
 - **Behavioral validation** requires 1-2 weeks of sustained monitoring
 
+### Profile Relations
+
+Profiles can inherit from other profiles using the `relations` structure to build hierarchical expertise and avoid duplication:
+
+```yaml
+PROFILE_NAME:
+  description: "Profile description"
+  relations:
+    - target: COLLABORATION      # Inherits common collaboration patterns
+      type: inherits
+    - target: INFRASTRUCTURE     # Inherits platform capabilities  
+      type: inherits
+```
+
+#### Relation Types
+
+- **extends** - Profile builds upon target with additional specialized capabilities
+- **inherits** - Profile adopts all competencies and behaviors from target profile  
+- **overrides** - Profile replaces specific behaviors from target profile
+
+#### Common Inheritance Patterns
+
+- **All profiles** typically inherit from `COLLABORATION` and `INFRASTRUCTURE`
+- **Developer** inherits from `ENGINEER` for technical foundation plus coding practices
+- **Specialized profiles** can inherit from domain profiles for focused expertise
+
+```yaml
+DEVELOPER:
+  relations:
+    - target: ENGINEER
+      type: inherits
+```
+
 ### Common Profiles
 
 Shared foundation used by all profiles:
@@ -45,6 +78,11 @@ Profile structure follows a standardized YAML format with specific naming conven
 ```yaml
 PROFILE_NAME:
   description: "Brief profile description"
+  relations:
+    - target: COLLABORATION
+      type: inherits
+    - target: INFRASTRUCTURE
+      type: inherits
 
   profile_name_context:
     profile:
@@ -169,6 +207,11 @@ Add `profile-name.yaml` to `./tools/memory/profiles` directory:
 ```yaml
 DATA_SCIENTIST:
   description: "Data science and analytics expertise"
+  relations:
+    - target: COLLABORATION
+      type: inherits
+    - target: INFRASTRUCTURE
+      type: inherits
 
   data_context:
     profile:
