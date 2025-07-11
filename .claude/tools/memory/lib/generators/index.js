@@ -5,7 +5,6 @@
  * @author AXIVO
  * @license BSD-3-Clause
  */
-
 const EntityGenerator = require('./EntityGenerator');
 const OutputGenerator = require('./OutputGenerator');
 const RelationGenerator = require('./RelationGenerator');

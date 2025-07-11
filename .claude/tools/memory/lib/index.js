@@ -7,7 +7,6 @@
  * @author AXIVO
  * @license BSD-3-Clause
  */
-
 const core = require('./core');
 const generators = require('./generators');
 const loaders = require('./loaders');

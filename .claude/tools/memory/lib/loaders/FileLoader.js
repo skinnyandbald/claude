@@ -7,7 +7,6 @@
  * @author AXIVO
  * @license BSD-3-Clause
  */
-
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
