@@ -25,10 +25,10 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 21
+          node-version: 22
 
       - name: Install dependencies
-        working-directory: tools/memory
+        working-directory: .claude/tools/memory
         run: npm install js-yaml
 
       - name: Build memory tool

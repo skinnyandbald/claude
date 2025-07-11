@@ -8,7 +8,6 @@
  * @author AXIVO
  * @license BSD-3-Clause
  */
-
 const MemoryBuilderError = require('../core/Error');
 
 /**
@@ -113,7 +112,7 @@ class RelationGenerator {
       throw new MemoryBuilderError('Relations and entities must be arrays');
     }
     const allowedRelationTypes = this.config.build?.relations || ['inherits'];
-    const invalidRelations = collectedRelations.filter(relation => 
+    const invalidRelations = collectedRelations.filter(relation =>
       relation && relation.relationType && !allowedRelationTypes.includes(relation.relationType)
     );
     if (invalidRelations.length > 0 && this.config.build?.stopOnCriticalError) {
@@ -121,7 +120,7 @@ class RelationGenerator {
       throw new MemoryBuilderError(`Invalid relation types: ${invalidTypes.join(', ')}. Allowed: ${allowedRelationTypes.join(', ')}`);
     }
     const validRelations = collectedRelations.filter(relation =>
-      relation && relation.from && relation.to && relation.relationType && 
+      relation && relation.from && relation.to && relation.relationType &&
       allowedRelationTypes.includes(relation.relationType)
     );
     const missingEntities = this.#validateEntityReferences(validRelations, entities);

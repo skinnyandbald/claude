@@ -7,7 +7,6 @@
  * @author AXIVO
  * @license BSD-3-Clause
  */
-
 const MemoryBuilderError = require('../core/Error');
 
 /**
