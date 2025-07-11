@@ -1,5 +1,5 @@
 # Claude
-.claude/config.json
+.claude/mcp.json
 .claude/memory.json
 .claude/settings.local.json
 .mcp.json
