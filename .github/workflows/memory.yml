@@ -31,7 +31,7 @@ jobs:
         working-directory: .claude/tools/memory
         run: npm install js-yaml
 
-      - name: Build memory tool
+      - name: Build memory system configuration file
         uses: actions/github-script@v7
         with:
           script: |
