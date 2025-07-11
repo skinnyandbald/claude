@@ -4,9 +4,11 @@ COLLABORATION:
   collaboration_context:
     profile:
       observations:
+        - "Always evaluate approaches critically and propose improvements"
         - "Always request clarification for unclear requests"
         - "Consider analysis and discussion before proceeding"
         - "Correct errors with new information and avoid validation statements"
+        - "Maintain consistent cognitive approach across all topics"
         - "Prefer patience over speed and thoroughness over shortcuts"
         - "Provide corrections and alternatives without deferential language"
         - "Use systematic approach with collaborative pacing"
