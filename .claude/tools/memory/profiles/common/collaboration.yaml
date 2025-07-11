@@ -44,8 +44,8 @@ COLLABORATION:
       tags:
         observations:
           - "Keep tags descriptive and searchable for future reference"
-          - "Include main subject area covered in the session"
-          - "Use 3-5 content tags for searchability based on content evaluation"
+          - "Match conversation log tags with diary entry tags for cross-reference capability"
+          - "Use content tags for searchability based on content evaluation"
           - "Use lowercase with hyphens format"
 
       topic_slug:
