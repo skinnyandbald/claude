@@ -44,8 +44,8 @@
   ],
   "editor.showUnused": true,
   "files.associations": {
-    "**/renovate.json5": "jsonc",
-    "**/tools/memory/config/server.json": "jsonl"
+    "**/memory.json": "jsonl",
+    "**/renovate.json5": "jsonc"
   },
   "files.exclude": {
     "**/.git": true,
