@@ -76,10 +76,10 @@ class MemoryBuilder {
         console.log(`📄 Processed '${filename}' profile`);
       }
     } catch (error) {
-      if (this.config.build.stopOnCriticalError) {
+      if (this.config.build.process.stopOnCriticalError) {
         throw new MemoryBuilderError(`Failed to process ${filename}: ${error.message}`);
       } else {
-        console.warn(`⚠️  Warning: Failed to process ${filename}: ${error.message}`);
+        console.warn(`⚠️ Failed to process ${filename}: ${error.message}`);
       }
     }
   }
