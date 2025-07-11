@@ -14,15 +14,15 @@
 
 [What was accomplished and main objectives]
 
-## Key Accomplishments
-
-[Topics covered, decisions made and outcomes achieved]
-
-## Details
+## Session Details
 
 [Specific work, examples, methods and implementation details]
 
-## Outcomes and Next Steps
+### Key Accomplishments
+
+[Topics covered, decisions made and outcomes achieved]
+
+### Outcomes and Next Steps
 
 [What was completed and follow-up work identified]
 
