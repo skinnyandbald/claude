@@ -49,7 +49,7 @@ class ConfigLoader {
     }
     this.validateConfig(config);
     if (config.build.autoDetectProfiles) {
-      config.build.profiles = this.autoDetectProfiles(config.build.profilesPath.standard);
+      config.build.profiles = this.autoDetectProfiles(config.build.profilesPath.domain);
     }
     this.expandPaths(config);
     return config;

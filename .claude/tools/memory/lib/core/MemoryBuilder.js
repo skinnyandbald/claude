@@ -43,7 +43,7 @@ class MemoryBuilder {
    * @private
    */
   async #processAdditionalFiles() {
-    const profilesPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.standard);
+    const profilesPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.domain);
     if (!fs.existsSync(profilesPath)) {
       return;
     }
@@ -91,7 +91,7 @@ class MemoryBuilder {
    * @private
    */
   async #processFiles() {
-    if (this.config.build.processCommonFirst) {
+    if (this.config.build.process.commonProfilesFirst) {
       const commonPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.common);
       if (fs.existsSync(commonPath)) {
         const files = fs.readdirSync(commonPath)
@@ -108,12 +108,12 @@ class MemoryBuilder {
     if (this.config.logging?.showProgress) {
       console.log(`📚 Processing ${this.config.build.profiles.length} standard profiles...`);
     }
-    const profilesPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.standard);
+    const profilesPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.domain);
     for (const profileFile of this.config.build.profiles) {
       const filePath = path.join(profilesPath, profileFile);
       await this.#processFile(filePath, profileFile);
     }
-    if (this.config.build.processAdditionalFiles) {
+    if (this.config.build.process.additionalProfiles) {
       await this.#processAdditionalFiles();
     }
   }

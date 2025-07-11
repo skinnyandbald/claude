@@ -6,13 +6,13 @@
   "customManagers": [
     {
       "customType": "regex",
-      "datasourceTemplate": "node",
+      "datasourceTemplate": "node-version",
       "depNameTemplate": "node",
       "managerFilePatterns": [
         ".github/workflows/memory.yml"
       ],
       "matchStrings": [
-        "with:[\\s\\S]+?node-version:\\s+(?<currentValue>.+)"
+        "with:[\\s\\r]+?node-version:\\s+(?<currentValue>.+)"
       ],
       "versioningTemplate": "node"
     }
