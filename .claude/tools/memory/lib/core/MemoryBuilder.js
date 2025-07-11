@@ -37,7 +37,7 @@ class MemoryBuilder {
   }
 
   /**
-   * Process additional files not in standard profiles
+   * Process additional files not in domain profiles
    * 
    * @private
    */
@@ -105,7 +105,7 @@ class MemoryBuilder {
       }
     }
     if (this.config.logging?.showProgress) {
-      console.log(`📚 Processing ${this.config.build.profiles.length} standard profiles...`);
+      console.log(`📚 Processing ${this.config.build.profiles.length} domain profiles...`);
     }
     const profilesPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.domain);
     for (const profileFile of this.config.build.profiles) {
