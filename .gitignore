@@ -1,3 +1,9 @@
+# Claude
+.claude/config.json
+.claude/memory.json
+.claude/settings.local.json
+.mcp.json
+
 # Environment
 .env
 .env.local
@@ -12,10 +18,6 @@ logs/
 .LSOverride
 Icon
 ._*
-
-# Memory framework
-tools/desktop/configuration.json
-tools/memory/config/server.json
 
 # Node.js
 node_modules/
