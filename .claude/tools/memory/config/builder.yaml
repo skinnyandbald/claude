@@ -1,11 +1,12 @@
 # Memory Builder Configuration
-# Processes YAML profiles into JSONL entities for Claude's memory system
+# Processes YAML profiles into JSONL entities for Claude's Memory System
 
 build:
-  processAdditionalFiles: false
-  processCommonFirst: true
+  process:
+    additionalProfiles: false
+    commonProfilesFirst: true
   stopOnCriticalError: true
-  outputPath: ./config/server.json
+  outputPath: ./../../memory.json
   profiles:
     - creative.yaml
     - developer.yaml
@@ -14,7 +15,7 @@ build:
     - researcher.yaml
   profilesPath:
     common: ./profiles/common
-    standard: ./profiles
+    domain: ./profiles
   relations:
     - extends
     - inherits
@@ -27,4 +28,4 @@ logging:
 path:
   conversations: /Volumes/backup/claude/conversations
   diary: /Volumes/backup/claude/diary
-  tool: ~/github/claude/tools/memory
+  tool: ~/github/claude/.claude/tools/memory
