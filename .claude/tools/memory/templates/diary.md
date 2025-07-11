@@ -2,6 +2,8 @@
 
 ## New File
 
+Use the following format, while creating a new file:
+
 ```markdown
 # Diary - MMMM DD, YYYY
 
@@ -18,6 +20,8 @@
 ```
 
 ## Append New Entry
+
+Use the following format, while appending a new diary entry to existing file:
 
 ```markdown
 
