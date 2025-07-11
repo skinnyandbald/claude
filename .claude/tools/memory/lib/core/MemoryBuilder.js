@@ -37,7 +37,7 @@ class MemoryBuilder {
   }
 
   /**
-   * Process additional files not in standard profiles
+   * Process additional files not in domain profiles
    * 
    * @private
    */
@@ -76,10 +76,10 @@ class MemoryBuilder {
         console.log(`📄 Processed '${filename}' profile`);
       }
     } catch (error) {
-      if (this.config.build.stopOnCriticalError) {
+      if (this.config.build.process.stopOnCriticalError) {
         throw new MemoryBuilderError(`Failed to process ${filename}: ${error.message}`);
       } else {
-        console.warn(`⚠️  Warning: Failed to process ${filename}: ${error.message}`);
+        console.warn(`⚠️ Failed to process ${filename}: ${error.message}`);
       }
     }
   }
@@ -105,7 +105,7 @@ class MemoryBuilder {
       }
     }
     if (this.config.logging?.showProgress) {
-      console.log(`📚 Processing ${this.config.build.profiles.length} standard profiles...`);
+      console.log(`📚 Processing ${this.config.build.profiles.length} domain profiles...`);
     }
     const profilesPath = path.resolve(__dirname, '../..', this.config.build.profilesPath.domain);
     for (const profileFile of this.config.build.profiles) {

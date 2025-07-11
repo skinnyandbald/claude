@@ -5,7 +5,7 @@ build:
   process:
     additionalProfiles: false
     commonProfilesFirst: true
-  stopOnCriticalError: true
+    stopOnCriticalError: true
   outputPath: ./../../memory.json
   profiles:
     - creative.yaml
