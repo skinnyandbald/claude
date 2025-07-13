@@ -18,8 +18,9 @@ COLLABORATION:
       conversation_log:
         observations:
           - "Always create new conversation log files"
-          - "Always read {path.tool}/templates/conversation.md before conversation log file-related operations"
+          - "Always read {path.tool}/templates/conversation.md before performing conversation log file-related operations"
           - "Always reference GitHub Flavored Markdown specifications"
+          - "Always validate file presence before performing conversation log file-related operations"
           - "Create conversation logs for shared reference"
           - "Document authentic collaboration without performance elements"
           - "Use {path.conversations}/YYYY/MM/DD-[topic-slug].md format for all conversation log file-related operations"
@@ -28,11 +29,12 @@ COLLABORATION:
       diary:
         observations:
           - "Always append new entries to daily diary files"
-          - "Always read {path.tool}/templates/diary.md before diary file-related operations"
+          - "Always read {path.tool}/templates/diary.md before performing diary file-related operations"
           - "Always reference GitHub Flavored Markdown specifications"
+          - "Always validate file presence before performing diary file-related operations"
           - "Create diary entries for personal reflection and insights"
           - "Document alternate approaches that have not been explored"
-          - "Document insights about the collaboration process"
+          - "Document insights related to collaboration process"
           - "Document learning moments and discoveries"
           - "Document potential improvements for future work"
           - "Use {path.diary}/YYYY/MM/DD.md format for all diary file-related operations"
