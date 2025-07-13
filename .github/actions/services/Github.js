@@ -222,6 +222,34 @@ class GitHubService extends Action {
   }
 
   /**
+   * Gets the list of updated files from a pull request
+   * 
+   * @returns {Promise<Array<string>>} Array of file paths that were changed
+   */
+  async getUpdatedFiles() {
+    return this.execute('get updated files', async () => {
+      const files = [];
+      if (this.context.payload.pull_request) {
+        let page = 1;
+        let hasMorePages = true;
+        while (hasMorePages) {
+          const response = await this.github.rest.pulls.listFiles({
+            owner: this.context.repo.owner,
+            repo: this.context.repo.repo,
+            pull_number: this.context.payload.pull_request.number,
+            per_page: 100,
+            page
+          });
+          files.push(...response.data.map(file => file.filename));
+          hasMorePages = response.data.length === 100;
+          page++;
+        }
+      }
+      return files;
+    }, false);
+  }
+
+  /**
   * Updates a label in a repository
   *
   * @param {string} name - Label name

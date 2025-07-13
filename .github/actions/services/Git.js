@@ -79,28 +79,6 @@ class GitService extends Action {
   }
 
   /**
-   * Gets the git status
-   * 
-   * @returns {Promise<Object>} Git status information
-   */
-  async getStatus() {
-    return this.execute('get git status', async () => {
-      const result = await this.shellService.execute('git', ['status', '--porcelain'], { output: true });
-      const status = { deleted: [], modified: [], untracked: [] };
-      if (result) {
-        result.split('\n').filter(Boolean).forEach(line => {
-          const statusCode = line.substring(0, 2);
-          const file = line.substring(2).trim();
-          if (statusCode.includes('D')) status.deleted.push(file);
-          else if (['A', 'C', 'M', 'R'].some(filter => statusCode.includes(filter))) status.modified.push(file);
-          else status.untracked.push(file);
-        });
-      }
-      return status;
-    }, false);
-  }
-
-  /**
    * Creates a signed commit using GitHub GraphQL API
    * 
    * @param {string} branch - Git branch reference
