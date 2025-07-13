@@ -1,5 +1,5 @@
 DEVELOPER:
-  description: "Developer collaboration profile"
+  description: "Software development collaboration profile - clean, systematic, maintainable"
   relations:
     - target: ENGINEER
       type: inherits
@@ -25,5 +25,6 @@ DEVELOPER:
         - "Handle edge cases and validate input parameters"
         - "Keep functions small and focused on single tasks"
         - "Organize imports and dependencies logically"
+        - "Present code solutions without justification unless requested"
         - "Use constants for magic numbers and configuration values"
         - "Validate all external inputs and API responses"
