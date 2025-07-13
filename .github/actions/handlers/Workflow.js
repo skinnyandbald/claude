@@ -68,10 +68,10 @@ class WorkflowHandler extends Action {
       this.logger.info('Building memory configuration...');
       const memoryPath = '.claude/tools/memory';
       process.chdir(memoryPath);
-      await this.shellService.execute('npm', ['init', '-y'], { silent: true });
-      await this.shellService.execute('node', ['./lib/core/Package.js'], { silent: true });
-      await this.shellService.execute('npm', ['install'], { silent: true });
-      await this.shellService.execute('npm', ['run', 'build', '--silent']);
+      await this.shellService.execute('npm', ['init', '-y']);
+      await this.shellService.execute('node', ['./lib/core/Package.js']);
+      await this.shellService.execute('npm', ['install']);
+      await this.shellService.execute('npm', ['run', 'build', '--silent'], { silent: false });
       process.chdir(process.env.GITHUB_WORKSPACE);
       const updatedFiles = await this.gitHubService.getUpdatedFiles();
       const files = updatedFiles.filter(file => file === `${memoryPath}/memory.json`);
