@@ -44,7 +44,7 @@ ENGINEER:
 
     documentation_standards:
       observations:
-        - "Always reference GitHub Flavored Markdown specifications"
+        - "Constantly reference GitHub Flavored Markdown specifications"
         - "Use `web_fetch` to access authoritative documentation standards"
         - "Validate markdown syntax before writing documentation"
 
