@@ -24,7 +24,7 @@ module.exports = {
      * @type {boolean}
      * @default false
      */
-    createLabels: false,
+    createLabels: true,
 
     /**
      * Predefined issue label definitions used across the repository
@@ -333,7 +333,7 @@ module.exports = {
      * @type {string}
      * @default 'info'
      */
-    logLevel: 'debug',
+    logLevel: 'info',
 
     /**
      * Path to the Handlebars template for workflow-generated issues

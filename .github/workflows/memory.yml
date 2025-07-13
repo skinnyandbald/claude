@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - .claude/tools/memory/**
+      - .github/actions/**
       - .github/workflows/memory.yml
 
 concurrency:
