@@ -77,6 +77,10 @@ class WorkflowHandler extends Action {
       // DEBUG start
       this.logger.info(`All updated files: ${JSON.stringify(updatedFiles, null, 2)}`);
       this.logger.info(`Looking for memory file: ${memoryPath}/memory.json`);
+      // Check if memory.json exists
+      const memoryJsonPath = `${memoryPath}/memory.json`;
+      const memoryFileExists = await this.fileService.exists(memoryJsonPath);
+      this.logger.info(`Memory file exists at ${memoryJsonPath}: ${memoryFileExists}`);
       // DEBUG end
       const files = updatedFiles.filter(file => file === `${memoryPath}/memory.json`);
       if (!files.length) {
