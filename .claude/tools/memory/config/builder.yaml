@@ -6,7 +6,7 @@ build:
     additionalProfiles: false
     commonProfilesFirst: true
     stopOnCriticalError: true
-  outputPath: ./../../memory.json
+  outputPath: ./graph.json
   profiles:
     - creative.yaml
     - developer.yaml
@@ -28,4 +28,4 @@ logging:
 path:
   conversations: /Volumes/backup/claude/conversations
   diary: /Volumes/backup/claude/diary
-  tool: ~/github/claude/.claude/tools/memory
+  tool: /Users/floren/github/claude/.claude/tools/memory
