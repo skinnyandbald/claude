@@ -22,21 +22,13 @@ class EntityGenerator {
    * Add standard observations to entity
    * 
    * @private
-   * @param {string} name - Entity name
    * @param {string} entityType - Entity type
-   * @param {Object} context - Entity context
    * @returns {Array<string>} Standard observations
    */
-  #addStandardObservations(name, entityType, context) {
+  #addStandardObservations(entityType) {
     const observations = [];
     if (entityType === 'section') {
-      observations.push(`${name} configuration and behaviors`);
-      if (context.parentEntity) {
-        observations.push(`Profile: ${context.parentEntity}`);
-      }
-      observations.push(`Source: ${context.sourceFile}`);
-    } else if (entityType.endsWith('_description')) {
-      observations.push(`Source: ${context.sourceFile}`);
+      observations.push('capabilities');
     }
     return observations;
   }
@@ -120,7 +112,7 @@ class EntityGenerator {
     }
     const entityType = this.#determineEntityType(name, context);
     const processedObservations = this.#processObservations(observations, context);
-    const standardObservations = this.#addStandardObservations(name, entityType, context);
+    const standardObservations = this.#addStandardObservations(entityType);
     const allObservations = [...processedObservations, ...standardObservations];
     const validatedObservations = this.#validateObservations(allObservations);
     return {
