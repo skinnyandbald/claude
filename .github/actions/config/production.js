@@ -299,15 +299,15 @@ module.exports = {
    */
   workflow: {
     /**
-     * Commit message for memory.json updates
+     * Commit message for memory graph updates
      * 
      * Standard commit message used when the workflow creates signed commits
-     * for memory.json file changes. Follows conventional commit format.
+     * for memory graph file changes. Follows conventional commit format.
      * 
      * @type {string}
-     * @default 'chore(github-action): update memory configuration'
+     * @default 'chore(github-action): update memory graph'
      */
-    commitMessage: 'chore(github-action): update memory configuration',
+    commitMessage: 'chore(github-action): update memory graph',
 
     /**
      * Standard labels to apply to workflow-generated issues

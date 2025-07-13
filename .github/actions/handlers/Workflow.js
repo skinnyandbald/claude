@@ -57,7 +57,7 @@ class WorkflowHandler extends Action {
   }
 
   /**
-   * Builds memory configuration
+   * Builds memory graph
    * 
    * @returns {Promise<void>}
    */
@@ -67,7 +67,7 @@ class WorkflowHandler extends Action {
         this.logger.info('Updating repository labels...');
         await this.labelService.update();
       }
-      this.logger.info('Building memory configuration...');
+      this.logger.info('Building memory graph...');
       const toolPath = '.claude/tools/memory';
       process.chdir(toolPath);
       await this.shellService.execute('npm', ['init', '-y']);
@@ -82,12 +82,12 @@ class WorkflowHandler extends Action {
       const changedFiles = [...gitStatus.modified, ...gitStatus.untracked];
       const files = changedFiles.includes(memoryPath) ? [memoryPath] : [];
       if (!files.length) {
-        this.logger.info('No memory configuration changes to commit');
+        this.logger.info('No memory graph changes to commit');
         return;
       }
       const branch = process.env.GITHUB_HEAD_REF;
       await this.gitService.signedCommit(branch, files, this.config.get('workflow.commitMessage'));
-      this.logger.info('Successfully built memory configuration');
+      this.logger.info('Successfully built memory graph');
     });
   }
 
