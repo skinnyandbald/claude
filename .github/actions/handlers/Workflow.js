@@ -14,6 +14,7 @@ const IssueService = require('../services/Issue');
 const LabelService = require('../services/Label');
 const ShellService = require('../services/Shell');
 const TemplateService = require('../services/Template');
+const MemoryConfig = require('../../../.claude/tools/memory/lib/loaders/Config');
 
 /**
  * Workflow handler for memory configuration build operations
@@ -39,6 +40,7 @@ class WorkflowHandler extends Action {
     this.labelService = new LabelService(params);
     this.shellService = new ShellService(params);
     this.templateService = new TemplateService(params);
+    this.memoryConfig = new MemoryConfig();
   }
 
   /**
@@ -66,23 +68,19 @@ class WorkflowHandler extends Action {
         await this.labelService.update();
       }
       this.logger.info('Building memory configuration...');
-      const memoryPath = '.claude/tools/memory';
-      process.chdir(memoryPath);
+      const toolPath = '.claude/tools/memory';
+      process.chdir(toolPath);
       await this.shellService.execute('npm', ['init', '-y']);
       await this.shellService.execute('node', ['./lib/core/Package.js']);
       await this.shellService.execute('npm', ['install']);
       await this.shellService.execute('npm', ['run', 'build', '--silent'], { silent: false });
       process.chdir(process.env.GITHUB_WORKSPACE);
-      const updatedFiles = await this.gitHubService.getUpdatedFiles();
-      // DEBUG start
-      const memoryJsonPath = '.claude/memory.json';
-      // Check git status for memory.json specifically
-      const gitStatus = await this.shellService.execute('git', ['status', '--porcelain', memoryJsonPath], { output: true, silent: false });
-      this.logger.info(`Git status for ${memoryJsonPath}: '${gitStatus}'`);
-      const isModified = gitStatus.trim().startsWith('M ');
-      this.logger.info(`Memory file is modified: ${isModified}`);
-      // DEBUG end
-      const files = isModified ? [memoryJsonPath] : [];
+      const path = require('path');
+      const memoryConfig = this.memoryConfig.load();
+      const memoryPath = path.join(toolPath, memoryConfig.build.outputPath);
+      const gitStatus = await this.gitService.getStatus();
+      const changedFiles = [...gitStatus.modified, ...gitStatus.untracked];
+      const files = changedFiles.includes(memoryPath) ? [memoryPath] : [];
       if (!files.length) {
         this.logger.info('No memory configuration changes to commit');
         return;

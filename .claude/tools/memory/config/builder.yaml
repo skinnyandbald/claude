@@ -6,7 +6,7 @@ build:
     additionalProfiles: false
     commonProfilesFirst: true
     stopOnCriticalError: true
-  outputPath: ./../../memory.json
+  outputPath: ./graph.json
   profiles:
     - creative.yaml
     - developer.yaml
