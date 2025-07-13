@@ -71,6 +71,7 @@ class WorkflowHandler extends Action {
       await this.shellService.execute('node', ['./lib/core/Package.js'], { silent: true });
       await this.shellService.execute('npm', ['install'], { silent: true });
       await this.shellService.execute('npm', ['run', 'build', '--silent']);
+      process.chdir(process.env.GITHUB_WORKSPACE);
       const statusResult = await this.gitService.getStatus();
       const files = [...statusResult.modified, ...statusResult.untracked];
       if (!files.length) {
