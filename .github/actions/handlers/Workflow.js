@@ -79,11 +79,10 @@ class WorkflowHandler extends Action {
       // Check git status for memory.json specifically
       const gitStatus = await this.shellService.execute('git', ['status', '--porcelain', memoryJsonPath], { output: true, silent: false });
       this.logger.info(`Git status for ${memoryJsonPath}: '${gitStatus}'`);
-      // Check if file is ignored
-      const gitIgnoreCheck = await this.shellService.execute('git', ['check-ignore', memoryJsonPath], { output: true, silent: false, throwOnError: false });
-      this.logger.info(`Git ignore check for ${memoryJsonPath}: '${gitIgnoreCheck}'`);
+      const isModified = gitStatus.trim().startsWith('M ');
+      this.logger.info(`Memory file is modified: ${isModified}`);
       // DEBUG end
-      const files = updatedFiles.filter(file => file === '.claude/memory.json');
+      const files = isModified ? [memoryJsonPath] : [];
       if (!files.length) {
         this.logger.info('No memory configuration changes to commit');
         return;
