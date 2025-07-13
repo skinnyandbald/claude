@@ -77,11 +77,15 @@ class WorkflowHandler extends Action {
       // DEBUG start
       this.logger.info(`All updated files: ${JSON.stringify(updatedFiles, null, 2)}`);
       this.logger.info(`Looking for memory file: ${memoryPath}/memory.json`);
-      // Check if memory.json exists
-      const fs = require('fs');
-      const memoryJsonPath = `${memoryPath}/memory.json`;
-      const memoryFileExists = fs.existsSync(memoryJsonPath);
-      this.logger.info(`Memory file exists at ${memoryJsonPath}: ${memoryFileExists}`);
+      // Search for memory.json files on filesystem
+      const { execSync } = require('child_process');
+      try {
+        const findResult = execSync('find . -name "memory.json" -type f', { encoding: 'utf8' });
+        const foundFiles = findResult.trim().split('\n').filter(Boolean);
+        this.logger.info(`Found memory.json files on filesystem: ${JSON.stringify(foundFiles)}`);
+      } catch (error) {
+        this.logger.info(`Error searching for memory.json: ${error.message}`);
+      }
       // DEBUG end
       const files = updatedFiles.filter(file => file === `${memoryPath}/memory.json`);
       if (!files.length) {
