@@ -75,19 +75,15 @@ class WorkflowHandler extends Action {
       process.chdir(process.env.GITHUB_WORKSPACE);
       const updatedFiles = await this.gitHubService.getUpdatedFiles();
       // DEBUG start
-      this.logger.info(`All updated files: ${JSON.stringify(updatedFiles, null, 2)}`);
-      this.logger.info(`Looking for memory file: ${memoryPath}/memory.json`);
-      // Search for memory.json files on filesystem
-      const { execSync } = require('child_process');
-      try {
-        const findResult = execSync('find . -name "memory.json" -type f', { encoding: 'utf8' });
-        const foundFiles = findResult.trim().split('\n').filter(Boolean);
-        this.logger.info(`Found memory.json files on filesystem: ${JSON.stringify(foundFiles)}`);
-      } catch (error) {
-        this.logger.info(`Error searching for memory.json: ${error.message}`);
-      }
+      const memoryJsonPath = '.claude/memory.json';
+      // Check git status for memory.json specifically
+      const gitStatus = await this.shellService.execute('git', ['status', '--porcelain', memoryJsonPath], { output: true, silent: false });
+      this.logger.info(`Git status for ${memoryJsonPath}: '${gitStatus}'`);
+      // Check if file is ignored
+      const gitIgnoreCheck = await this.shellService.execute('git', ['check-ignore', memoryJsonPath], { output: true, silent: false, throwOnError: false });
+      this.logger.info(`Git ignore check for ${memoryJsonPath}: '${gitIgnoreCheck}'`);
       // DEBUG end
-      const files = updatedFiles.filter(file => file === `${memoryPath}/memory.json`);
+      const files = updatedFiles.filter(file => file === '.claude/memory.json');
       if (!files.length) {
         this.logger.info('No memory configuration changes to commit');
         return;
