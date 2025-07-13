@@ -6,7 +6,7 @@
 - **Date:** MMMM DD, YYYY
 - **Time:** h:MM A z
 - **Profile:** [Profile name acknowledged at session start]
-- **Status:** [Completed/Ongoing/Blocked]
+- **Status:** [Planned/Ongoing/Blocked/Completed]
 - **Summary:** [Brief description]
 - **Tags:** `#domain-topic` `#activity-type` `#outcome-result`
 

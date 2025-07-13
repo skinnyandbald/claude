@@ -23,6 +23,7 @@ COLLABORATION:
           - "Always validate file presence before performing conversation log file-related operations"
           - "Create conversation logs for shared reference"
           - "Document authentic collaboration without performance elements"
+          - "Match conversation log status with session task completion level"
           - "Use {path.conversations}/YYYY/MM/DD-[topic-slug].md format for all conversation log file-related operations"
           - "Write conversation logs with factual accuracy and editorial autonomy"
 
