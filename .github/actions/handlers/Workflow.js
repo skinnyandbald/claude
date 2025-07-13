@@ -74,6 +74,10 @@ class WorkflowHandler extends Action {
       await this.shellService.execute('npm', ['run', 'build', '--silent'], { silent: false });
       process.chdir(process.env.GITHUB_WORKSPACE);
       const updatedFiles = await this.gitHubService.getUpdatedFiles();
+      // DEBUG start
+      this.logger.info(`All updated files: ${JSON.stringify(updatedFiles, null, 2)}`);
+      this.logger.info(`Looking for memory file: ${memoryPath}/memory.json`);
+      // DEBUG end
       const files = updatedFiles.filter(file => file === `${memoryPath}/memory.json`);
       if (!files.length) {
         this.logger.info('No memory configuration changes to commit');
