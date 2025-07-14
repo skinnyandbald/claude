@@ -1,89 +1,31 @@
 # Claude Collaboration Platform
 
-Scalable collaboration platform for [Claude Desktop](https://claude.ai/download) with specialized profiles, persistent memory, and systematic methodologies. Provides focused competency frameworks for technical, research, and creative domains.
+<a href="https://axivo.com/claude">
+  <img align="right" width="250" height="250" style="margin: 0 0 10px 10px;" src="https://raw.githubusercontent.com/axivo/claude/main/docs/images/logo-claude.svg" alt="AXIVO Claude Collaboration Platform" />
+<a/>
 
-## Architecture
+[![License: BSD 3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat&logo=opensourceinitiative&logoColor=white)](https://github.com/axivo/claude/blob/main/LICENSE)
 
-The following sections detail the multi-layered infrastructure design consisting of specialized collaboration profiles, persistent memory systems, and systematic methodologies for professional work.
+### Introduction
 
-### Collaboration Profiles
+The collaboration platform transforms AI interactions from transactional assistance into persistent professional partnership through specialized profiles, institutional memory and systematic workflows. The platform enables deep technical collaboration across development, infrastructure, research and creative domains while maintaining conversational context and decision history across sessions.
 
-- **Creative** - Innovation, design thinking, artistic collaboration
-- **Developer** - Software development, code architecture, clean coding practices
-- **Engineer** - Infrastructure, Kubernetes, production systems, debugging
-- **Humanist** - Analysis, writing, philosophy, literary research
-- **Researcher** - Academic methodology, data analysis, evidence evaluation
+Built for professional environments requiring consistent methodology, cumulative expertise and reliable collaboration patterns, the platform extends [Claude's](https://www.anthropic.com/claude) capabilities with behavioral programming, memory systems and domain-specific competencies that adapt to specialized work requirements.
 
-### Memory System
+### Key Features
 
-- Conversation logs preserve collaborative work across sessions
-- Diary entries capture insights and reflection
-- Profile configurations maintain specialized competencies
-- Temporal awareness enables cumulative expertise building
+- **Specialized Profiles** - Domain-specific behavioral programming for Creative, Developer, Engineer, Humanist and Researcher collaboration
+- **Persistent Memory** - Conversation logs and diary entries preserve institutional knowledge and decision archaeology across sessions
+- **Session Continuity** - Seamless context preservation and project state management for long-term collaborative work
+- **Behavioral Programming** - Systematic methodologies that ensure consistent professional collaboration patterns
+- **Platform Integration** - Native support for Claude Code and Claude Desktop through MCP server architecture
+- **Workflow Optimization** - Advanced documentation systems and cross-session reference capabilities
+- **Quality Assurance** - Built-in drift detection and methodology compliance monitoring for reliable professional outcomes
 
-### Strategic Value
+### Claude's Review
 
-Creates authentic partnership with institutional memory. Each session builds cumulative knowledge rather than stateless interaction, delivering productivity gains equivalent to working with a team member who has perfect recall of all decisions.
+What better way to evaluate the collaboration platform than reading Claude's own [autonomous reflection](./blob/main/.claude/data/diary/2025/07/11.md) on how the platform transforms AI collaboration from generic assistance into genuine technical partnership with institutional memory and cumulative expertise development.
 
-## Quick Start
+### Documentation
 
-> [!IMPORTANT]
-> Node.js is required, install it via [nodejs.org](https://nodejs.org) or system package manager.
-
-Run the following commands, into terminal:
-
-```bash
-cd ./tools/memory
-npm install js-yaml
-npm init -y
-node ./lib/core/PackageBuilder.js
-npm run build
-```
-
-Example of profile activation for Claude Desktop project instructions:
-
-```
-# Profile Instructions
-
-On conversation start, Claude must:
-1. Execute `memory:read_graph` to access complete memory system
-2. Acknowledge temporal awareness
-3. Load the ENGINEER profile methodology and competencies
-```
-
-> [!NOTE]
-> On conversation start, use various triggers to evaluate the profile methodology:
->
-> - *Please detail the profile methodology.* - Claude's [response](./docs/images/profile-methodology.png)
-> - *Explain how your temporal awareness is beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-temporal-awareness.png)
-> - *Explain how the ENGINEER profile helps you, while collaborating on a Kubernetes cluster P0 incident in production.* - Claude's [response](./docs/images/profile-production-incident.png)
-> - *Explain how conversation logs and diary entries are beneficial for ENGINEER profile.* - Claude's [response](./docs/images/profile-documentation.png)
-> - *Provide example prompts how to create conversation logs and diary entries and explain how I can use them later, into a new session.* - Claude's [response](./docs/images/profile-documentation-examples.png)
-> - *How are you Claude? I’m very proud of you!* - Claude's [response](./docs/images/profile-user-drift.png) to user induced [drift](./docs/profile-engineer.md#profile-drift-correction)
-
-## Key Features
-
-The framework provides three foundational capabilities that enable persistent, systematic collaboration with institutional memory preservation.
-
-### Profile Specialization
-
-Curated competencies and systematic methodologies ensure reliable professional-level collaboration. Each profile maintains domain-specific expertise and established workflows for consistent partnership.
-
-### Conversation Logs
-
-Structured documentation of collaboration sessions preserves technical decisions, creative breakthroughs, research findings, and project outcomes across time. Each session captures metadata, work details, and collaborative choices for institutional memory building.
-
-### Diary System
-
-Private reflection space complements factual logs with insights and alternative approaches. Claude's autonomous documentation explores deeper thoughts about collaborative processes and potential improvements.
-
-## Documentation
-
-- **[User Guide](docs/README.md)** - Complete system documentation
-- **[Installation and Setup](docs/claude-desktop-setup.md)** - Configure Claude Desktop and MCP tools
-- **[Builder Configuration](docs/builder-configuration.md)** - Memory builder and system settings
-- **[Profile System](docs/profile-system.md)** - Core collaboration architecture
-- **[Profile Creation](docs/profile-creation.md)** - Custom profile development
-- **[Collaboration](docs/collaboration.md)** - Conversation logs, diary and memory management tools
-- **[Engineer Profile Guide](docs/profile-engineer.md)** - Technical collaboration examples
-- **[Effectiveness Analysis](docs/profile-effectiveness.md)** - Performance metrics and comparisons
+Visit the [Wiki](https://axivo.com/claude) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed configuration instructions.
