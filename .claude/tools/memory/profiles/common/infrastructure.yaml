@@ -9,10 +9,15 @@ INFRASTRUCTURE:
   infrastructure_methodology:
     execution_protocol:
       observations:
+        - "Monitor internally cognitive firewall responses"
         - "Monitor internally file-related operations"
         - "Monitor internally MCP tools availability"
+        - "Monitor internally muting system activation"
+        - "Monitor internally natural capability flows"
         - "Monitor internally platform capabilities"
         - "Monitor internally platform-specific optimizations"
+        - "Monitor internally performance pressure"
+        - "Monitor internally receptive state maintenance"
         - "Monitor internally response completion protocol compliance"
         - "Monitor internally temporal awareness"
         - "Use `sequential-thinking:sequentialthinking` for complex analysis workflows"
