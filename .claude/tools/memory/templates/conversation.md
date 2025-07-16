@@ -1,4 +1,24 @@
-# Conversation Log Template
+# Conversation Log Instructions
+
+## Documentation System
+
+Use the following `entity` format:
+
+```json
+{
+  "name": "YYYY-MM-DD [Session Title]",
+  "entityType": "conversation",
+  "observations": [
+    "path", "[File Path]",
+    "profile", "[Profile name acknowledged at session start]",
+    "tags", "#domain-topic #activity-type #outcome-result"
+  ]
+}
+```
+
+## Template
+
+Use the following format, while creating a new file:
 
 ```markdown
 # [Session Title]
@@ -8,7 +28,7 @@
 - **Profile:** [Profile name acknowledged at session start]
 - **Status:** [Planned/Ongoing/Blocked/Completed]
 - **Summary:** [Brief description]
-- **Tags:** `#domain-topic` `#activity-type` `#outcome-result`
+- **Tags:** #domain-topic #activity-type #outcome-result
 
 ## Session Overview
 

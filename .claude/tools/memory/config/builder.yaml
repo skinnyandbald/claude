@@ -28,4 +28,5 @@ logging:
 path:
   conversations: /Volumes/backup/claude/conversations
   diary: /Volumes/backup/claude/diary
+  documentation: /Volumes/backup/claude
   tool: /Users/floren/github/claude/.claude/tools/memory

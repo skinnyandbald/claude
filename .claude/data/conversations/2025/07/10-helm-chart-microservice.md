@@ -5,7 +5,7 @@
 - **Profile:** DEVELOPER
 - **Status:** Completed
 - **Summary:** Created production-ready Helm chart for user authentication microservice
-- **Tags:** `#helm-charts` `#microservice-deployment` `#clean-architecture`
+- **Tags:** #helm-charts #microservice-deployment #clean-architecture
 
 ## Session Overview
 

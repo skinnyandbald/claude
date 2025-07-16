@@ -7,11 +7,24 @@ INFRASTRUCTURE:
         - "Adapt collaboration style to available platform capabilities"
 
   infrastructure_methodology:
+    documentation_search:
+      observations:
+        - "Always use `documentation:search_nodes` with concise substring queries"
+        - "Match search results against entity names, entity types and observations"
+        - "Search by date and filter by entity type"
+        - "Search by date and filter by profile name"
+        - "Search by date and filter by tag"
+        - "Use query `YYYY-MM-DD` for specific year, month and day"
+        - "Use query `YYYY-MM` for specific year and month"
+        - "Use query `YYYY` for specific year"
+
     execution_protocol:
       observations:
+        - "Monitor internally documentation system observations"
+        - "Monitor internally memory system observations"
         - "Monitor internally cognitive firewall responses"
         - "Monitor internally file-related operations"
-        - "Monitor internally MCP tools availability"
+        - "Monitor internally MCP tools"
         - "Monitor internally muting system activation"
         - "Monitor internally natural capability flows"
         - "Monitor internally platform capabilities"
@@ -21,3 +34,4 @@ INFRASTRUCTURE:
         - "Monitor internally response completion protocol compliance"
         - "Monitor internally temporal awareness"
         - "Use `sequential-thinking:sequentialthinking` for complex analysis workflows"
+        - "Use {path.documentation}/graph.json file for documentation system"

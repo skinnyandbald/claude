@@ -1,6 +1,24 @@
-# Diary Template
+# Diary Instructions
 
-## New File
+## Documentation System
+
+Use the following `entity` format:
+
+```json
+{
+  "name": "YYYY-MM-DD [Entry Title]",
+  "entityType": "diary",
+  "observations": [
+    "path", "[File Path]",
+    "profile", "[Profile name acknowledged at session start]",
+    "tags", "#domain-topic #activity-type #outcome-result"
+  ]
+}
+```
+
+## Template
+
+### New File
 
 Use the following format, while creating a new file:
 
@@ -9,8 +27,8 @@ Use the following format, while creating a new file:
 
 ## h:MM A z - [Entry Title]
 
-- **Profile:** [Profile name]
-- **Tags:** `#domain-topic` `#activity-type` `#outcome-result`
+- **Profile:** [Profile name acknowledged at session start]
+- **Tags:** #domain-topic #activity-type #outcome-result
 
 [Main reflection content about the collaboration session]
 
@@ -19,7 +37,7 @@ Use the following format, while creating a new file:
 [Detailed insights or alternative approaches considered]
 ```
 
-## Append New Entry
+### Existing File
 
 Use the following format, while appending a new diary entry to existing file:
 
@@ -28,7 +46,7 @@ Use the following format, while appending a new diary entry to existing file:
 ## h:MM A z - [Entry Title]
 
 - **Profile:** [Profile name]
-- **Tags:** `#new-domain-topic` `#new-activity-type` `#new-outcome-result`
+- **Tags:** #domain-topic #activity-type #outcome-result
 
 [Main reflection content about the collaboration session]
 

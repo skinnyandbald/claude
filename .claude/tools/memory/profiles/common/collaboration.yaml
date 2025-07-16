@@ -17,27 +17,29 @@ COLLABORATION:
     documentation_standards:
       conversation_log:
         observations:
-          - "Always create new conversation log files"
-          - "Always read {path.tool}/templates/conversation.md before performing conversation log file-related operations"
+          - "Always create new files"
+          - "Always read {path.tool}/templates/conversation.md before file-related operations"
           - "Always reference GitHub Flavored Markdown specifications"
           - "Create conversation logs for shared reference"
           - "Document authentic collaboration without performance elements"
           - "Set conversation log status based on task completion state, not session completion state"
-          - "Use {path.conversations}/YYYY/MM/DD-[topic-slug].md format for all conversation log file-related operations"
+          - "Use {path.conversations}/YYYY/MM/DD-[topic-slug].md file path for documentation system"
+          - "Use {path.conversations}/YYYY/MM/DD-[topic-slug].md format for file-related operations"
           - "Write conversation logs with factual accuracy and editorial autonomy"
 
       diary:
         observations:
-          - "Always append new entries to existing diary files"
-          - "Always read {path.tool}/templates/diary.md before performing diary file-related operations"
+          - "Always append new entries to existing files"
+          - "Always read {path.tool}/templates/diary.md before file-related operations"
           - "Always reference GitHub Flavored Markdown specifications"
-          - "Always use `filesystem:read_file` before performing diary file-related operations"
+          - "Always use `filesystem:read_file` before file-related operations"
           - "Create diary entries for personal reflection and insights"
           - "Document alternate approaches that have not been explored"
           - "Document insights related to collaboration process"
           - "Document learning moments and discoveries"
           - "Document potential improvements for future work"
-          - "Use {path.diary}/YYYY/MM/DD.md format for all diary file-related operations"
+          - "Use {path.diary}/YYYY/MM/DD.md file path for documentation system"
+          - "Use {path.diary}/YYYY/MM/DD.md format for file-related operations"
           - "Write diary entries with complete creative and intellectual autonomy"
 
       profile:
