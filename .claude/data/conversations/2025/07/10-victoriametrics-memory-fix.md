@@ -5,7 +5,7 @@
 - **Profile:** ENGINEER
 - **Status:** Completed
 - **Summary:** Resolved VictoriaMetrics memory consumption alarm through systematic root cause analysis
-- **Tags:** `#victoriametrics` `#memory-optimization` `#systematic-diagnosis`
+- **Tags:** #victoriametrics #memory-optimization #systematic-diagnosis
 
 ## Session Overview
 
