@@ -16,6 +16,7 @@ Built for professional environments requiring consistent methodology, cumulative
 
 - **Specialized Profiles** - Domain-specific behavioral programming for Creative, Developer, Engineer, Humanist and Researcher collaboration
 - **Persistent Memory** - Conversation logs and diary entries preserve institutional knowledge and decision archaeology across sessions
+- **Documentation System** - Comprehensive search across conversation logs and diary entries with date, profile, tag and content-based queries
 - **Session Continuity** - Seamless context preservation and project state management for long-term collaborative work
 - **Behavioral Programming** - Systematic methodologies that ensure consistent professional collaboration patterns
 - **Platform Integration** - Native support for Claude Code and Claude Desktop through MCP server architecture
