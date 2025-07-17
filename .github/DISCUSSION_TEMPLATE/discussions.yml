@@ -1,4 +1,9 @@
 body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > If you have usage questions, please read first the [Wiki](https://axivo.com/claude).
   - type: dropdown
     id: topic
     attributes:
