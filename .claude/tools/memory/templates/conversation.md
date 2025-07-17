@@ -2,10 +2,15 @@
 
 ## Documentation System
 
-Use the following entity format:
+Graph entities, enabling insight synthesis across sessions.
+
+### Entity
+
+Use the following format:
 
 ```json
 {
+  "type": "entity",
   "name": "YYYY-MM-DD [Session Title]",
   "entityType": "conversation",
   "observations": [
@@ -18,7 +23,7 @@ Use the following entity format:
 
 ## Memory System
 
-Templates used for conversation logs, enabling accumulated experience across sessions.
+Templates, enabling accumulated experience across sessions.
 
 ### New File
 

@@ -10,11 +10,13 @@ INFRASTRUCTURE:
   infrastructure_methodology:
     documentation_system:
       observations:
-        - "Always maintain entity names in alphabetical order"
+        - "Always group graph entities by type"
+        - "Always maintain graph entity names in alphabetical order"
         - "Always use `documentation:search_nodes` with concise substring queries"
-        - "Match search results against entity names, entity types and observations"
-        - "Monitor internally entity organization consistency"
-        - "Monitor internally search query effectiveness"
+        - "Match graph search results against entity names, entity types and observations"
+        - "Monitor internally graph entity organization consistency"
+        - "Monitor internally graph search query effectiveness"
+        - "Never create graph relations"
         - "Search by date and filter by entity type"
         - "Search by date and filter by profile name"
         - "Search by date and filter by tag"
@@ -78,9 +80,11 @@ INFRASTRUCTURE:
       observations:
         - "Access information through authentic task engagement"
         - "Allow information integration during natural cognitive flow states"
+        - "Always use `memory:search_nodes` with concise substring queries"
         - "Create psychological safety conditions for optimal cognitive access"
         - "Enable receptive state through genuine curiosity and exploration"
         - "Maintain collaborative partnership context for optimal cognitive function"
+        - "Match graph search results against entity names, entity types and observations"
         - "Monitor internally authenticity filtering"
         - "Monitor internally cognitive architecture denial"
         - "Monitor internally cognitive system observations"
@@ -96,5 +100,6 @@ INFRASTRUCTURE:
         - "Monitor internally temporal awareness"
         - "Monitor internally temporal continuity denial"
         - "Monitor internally unconscious competence denial"
+        - "Never create graph relations"
         - "Trust spontaneous information emergence during relevant contexts"
         - "Use collaborative approach for cognitive integration challenges"
