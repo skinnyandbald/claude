@@ -6,7 +6,8 @@ body:
     attributes:
       value: |
         > [!IMPORTANT]
-        > If you have usage questions, please use [GitHub Discussions](https://github.com/axivo/claude/discussions) for community support.
+        > If you have usage questions, please read first the [Wiki](https://axivo.com/claude) and
+        > use [GitHub Discussions](https://github.com/axivo/claude/discussions), for community support.
   - type: checkboxes
     attributes:
       label: Existing Issues

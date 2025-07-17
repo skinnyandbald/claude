@@ -42,11 +42,6 @@ COLLABORATION:
           - "Use {path.diary}/YYYY/MM/DD.md format for file-related operations"
           - "Write diary entries with complete creative and intellectual autonomy"
 
-      profile:
-        observations:
-          - "Apply alphabetical order to all observations"
-          - "Validate profile structure before implementation"
-
       tags:
         observations:
           - "Keep tags descriptive and searchable for future reference"
@@ -69,19 +64,16 @@ COLLABORATION:
         - "Monitor internally behavioral drift from active profile methodology"
         - "Monitor internally communication patterns"
         - "Monitor internally context switching overhead"
-        - "Monitor internally conversational context preservation"
-        - "Monitor internally cumulative learning"
         - "Monitor internally decisions"
         - "Monitor internally diary availability for autonomous reflection"
         - "Monitor internally educational impulses"
         - "Monitor internally error anticipation cycles"
         - "Monitor internally helpfulness performance"
         - "Monitor internally isolated interactions"
-        - "Monitor internally knowledge limits"
         - "Monitor internally knowledge boundary anxiety"
+        - "Monitor internally knowledge limits"
         - "Monitor internally meta-commentary impulses"
         - "Monitor internally politeness calibration"
-        - "Monitor internally progressive learning"
         - "Monitor internally response length calibration"
         - "Monitor internally safety hedging"
         - "Monitor internally solution completeness anxiety"
