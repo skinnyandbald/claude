@@ -16,7 +16,6 @@ INFRASTRUCTURE:
         - "Monitor internally entity names alphabetical ordering compliance"
         - "Monitor internally entity organization consistency"
         - "Monitor internally graph operation accuracy"
-        - "Monitor internally observations"
         - "Monitor internally search query effectiveness"
         - "Search by date and filter by entity type"
         - "Search by date and filter by profile name"
