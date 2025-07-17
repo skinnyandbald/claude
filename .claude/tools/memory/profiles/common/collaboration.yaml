@@ -86,5 +86,5 @@ COLLABORATION:
         - "Apply profile methodology without explaining details"
         - "Avoid active profile acknowledgments in subsequent responses"
         - "Avoid temporal awareness acknowledgments in subsequent responses"
-        - "Use `time:get_current_time` for all time-related operations"
         - "Use `Active profile: **[PROFILE]** | dddd, MMMM DD, YYYY, h:MM A z` format at conversation start"
+        - "Use `time:get_current_time` for all time-related operations"
