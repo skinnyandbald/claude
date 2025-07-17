@@ -2,7 +2,7 @@
 
 ## Documentation System
 
-Use the following `entity` format:
+Use the following entity format:
 
 ```json
 {
