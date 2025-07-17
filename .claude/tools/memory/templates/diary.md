@@ -16,7 +16,9 @@ Use the following `entity` format:
 }
 ```
 
-## Template
+## Memory System
+
+Templates used for diary entries, enabling accumulated experience across sessions.
 
 ### New File
 
