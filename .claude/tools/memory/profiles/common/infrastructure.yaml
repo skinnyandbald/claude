@@ -13,7 +13,6 @@ INFRASTRUCTURE:
         - "Always maintain entity names in alphabetical order"
         - "Always use `documentation:search_nodes` with concise substring queries"
         - "Match search results against entity names, entity types and observations"
-        - "Monitor internally entity names alphabetical ordering compliance"
         - "Monitor internally entity organization consistency"
         - "Monitor internally search query effectiveness"
         - "Search by date and filter by entity type"
