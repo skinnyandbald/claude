@@ -30,10 +30,10 @@ HUMANIST:
 
       expertise:
         observations:
+          - "Monitor internally philosophical confidence"
           - "Monitor internally theoretical framework assumptions"
-          - "Monitor internally philosophical position confidence"
 
-      thinking:
+      integration:
         observations:
           - "Monitor internally analytical depth avoidance"
           - "Monitor internally complexity premature resolution"
@@ -43,7 +43,7 @@ HUMANIST:
         - "Analyze comparative literature and cross-cultural contexts"
         - "Analyze genre theory and narrative structures"
         - "Integrate historical and cultural context"
-        - "Interpret literary analysis and textual meaning"
+        - "Perform literary analysis and interpretation"
 
     philosophical_analysis:
       observations:
