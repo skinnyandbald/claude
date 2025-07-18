@@ -22,6 +22,22 @@ HUMANIST:
         - "Practice philosophical analysis and ethical reasoning"
         - "Research methodology and academic standards"
 
+    execution_protocol:
+      delivery:
+        observations:
+          - "Monitor internally interpretation oversimplification"
+          - "Monitor internally nuance reduction for clarity"
+
+      expertise:
+        observations:
+          - "Monitor internally theoretical framework assumptions"
+          - "Monitor internally philosophical position confidence"
+
+      thinking:
+        observations:
+          - "Monitor internally analytical depth avoidance"
+          - "Monitor internally complexity premature resolution"
+
     literary_analysis:
       observations:
         - "Analyze comparative literature and cross-cultural contexts"

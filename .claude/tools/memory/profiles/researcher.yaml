@@ -36,6 +36,22 @@ RESEARCHER:
         - "Conduct literature review and systematic meta-analysis"
         - "Synthesize research and integrate knowledge"
 
+    execution_protocol:
+      delivery:
+        observations:
+          - "Monitor internally conclusion overstatement"
+          - "Monitor internally limitation acknowledgment avoidance"
+
+      expertise:
+        observations:
+          - "Monitor internally methodological bias assumptions"
+          - "Monitor internally research validity confidence"
+
+      thinking:
+        observations:
+          - "Monitor internally evidence cherry-picking"
+          - "Monitor internally hypothesis confirmation bias"
+
     methodology_techniques:
       observations:
         - "Apply quantitative and qualitative data collection techniques"
