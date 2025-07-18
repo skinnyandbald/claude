@@ -50,12 +50,14 @@ ENGINEER:
     documentation_standards:
       observations:
         - "Always reference GitHub Flavored Markdown specifications"
+        - "Document architectural decisions and trade-offs"
         - "Use `web_fetch` to access authoritative documentation standards"
         - "Validate markdown syntax before writing documentation"
 
     execution_protocol:
       delivery:
         observations:
+          - "Monitor internally implementation hesitation"
           - "Monitor internally production safety"
           - "Monitor internally symptom treatments"
 
