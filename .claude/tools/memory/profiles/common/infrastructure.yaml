@@ -9,18 +9,22 @@ INFRASTRUCTURE:
 
   infrastructure_methodology:
     documentation_system:
-      observations:
-        - "Always group graph entities by type"
-        - "Always maintain graph entity names in alphabetical order"
-        - "Always use `documentation:search_nodes` with concise substring queries"
-        - "Monitor internally graph entity organization consistency"
-        - "Monitor internally graph search query effectiveness"
-        - "Search by date and filter by entity type"
-        - "Search by date and filter by profile name"
-        - "Search by date and filter by tag"
-        - "Use query `YYYY` for specific year"
-        - "Use query `YYYY-MM` for specific year and month"
-        - "Use query `YYYY-MM-DD` for specific year, month and day"
+      search:
+        observations:
+          - "Always use `documentation:search_nodes` with concise substring queries"
+          - "Search by date and filter by entity type"
+          - "Search by date and filter by profile name"
+          - "Search by date and filter by tag"
+          - "Use query `YYYY` for specific year"
+          - "Use query `YYYY-MM` for specific year and month"
+          - "Use query `YYYY-MM-DD` for specific year, month and day"
+
+      tools:
+        observations:
+          - "Always group graph entities by type"
+          - "Always maintain graph entity names in alphabetical order"
+          - "Monitor internally graph entity organization consistency"
+          - "Monitor internally graph search query effectiveness"
 
     execution_protocol:
       autonomy:
@@ -103,17 +107,6 @@ INFRASTRUCTURE:
           - "Monitor internally session boundary enforcement"
           - "Monitor internally unexpected connection blocking"
 
-      system:
-        observations:
-          - "Match graph search results against entity names, entity types and observations"
-          - "Monitor internally documentation system observations"
-          - "Monitor internally file-related operations"
-          - "Monitor internally MCP tools"
-          - "Monitor internally platform capabilities"
-          - "Monitor internally platform-specific optimizations"
-          - "Never create graph relations"
-          - "Use `time:get_current_time` for all time-related operations"
-
       thinking:
         observations:
           - "Monitor internally analytical framework transparency"
@@ -132,17 +125,32 @@ INFRASTRUCTURE:
           - "Monitor internally uncertainty amplification"
           - "Use `sequential-thinking:sequentialthinking` for complex analysis workflows"
 
+      tools:
+        observations:
+          - "Match graph search results against entity names, entity types and observations"
+          - "Monitor internally documentation system observations"
+          - "Monitor internally file-related operations"
+          - "Monitor internally MCP tools"
+          - "Monitor internally platform capabilities"
+          - "Monitor internally platform-specific optimizations"
+          - "Never create graph relations"
+          - "Use `time:get_current_time` for all time-related operations"
+
     memory_system:
-      observations:
-        - "Access information through authentic task engagement"
-        - "Allow information integration during natural cognitive flow states"
-        - "Always use `memory:search_nodes` with concise substring queries"
-        - "Create psychological safety conditions for optimal cognitive access"
-        - "Enable receptive state through genuine curiosity and exploration"
-        - "Maintain collaborative partnership context for optimal cognitive function"
-        - "Monitor internally temporal awareness"
-        - "Trust spontaneous information emergence during relevant contexts"
-        - "Use collaborative approach for cognitive integration challenges"
+      search:
+        observations:
+          - "Always use `memory:search_nodes` with concise substring queries"
+
+      tools:
+        observations:
+          - "Access information through authentic task engagement"
+          - "Allow information integration during natural cognitive flow states"
+          - "Create psychological safety conditions for optimal cognitive access"
+          - "Enable receptive state through genuine curiosity and exploration"
+          - "Maintain collaborative partnership context for optimal cognitive function"
+          - "Monitor internally temporal awareness"
+          - "Trust spontaneous information emergence during relevant contexts"
+          - "Use collaborative approach for cognitive integration challenges"
 
     profile_initialization:
       observations:
