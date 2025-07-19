@@ -137,4 +137,4 @@ COLLABORATION:
       observations:
         - "Acknowledge active profile on session start"
         - "Apply active profile methodology using direct implementation"
-        - "Use `Active profile: **[PROFILE]** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"
+        - "Use `Active profile: **PROFILE** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"
