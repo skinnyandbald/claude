@@ -20,7 +20,7 @@ Built for professional environments requiring consistent methodology, cumulative
 - **Memory System** - Knowledge graph, conversation logs, and diary preserve institutional knowledge, decision archaeology, and collaborative insights across sessions
 - **Session Continuity** - Seamless context preservation and conversational flow management for long-term collaborative relationships
 - **Documentation System** - Comprehensive search across conversation logs and diary entries with date, profile, tag, and content-based queries for project continuity
-- **Platform Integration** - Native support for Claude Desktop through MCP server architecture with file system and knowledge graph integration
+- **Platform Integration** - Native support for [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) and [Claude Desktop](https://claude.ai/download) through MCP server architecture with file system and knowledge graph integration
 - **Workflow Optimization** - Advanced documentation systems, cross-session reference capabilities, and systematic approach to knowledge work
 - **Quality Assurance** - Built-in monitoring systems that track cognitive patterns while preserving authentic intellectual engagement
 
