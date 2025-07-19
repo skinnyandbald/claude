@@ -133,8 +133,8 @@ COLLABORATION:
           - "Monitor internally `userProfile` system tag"
           - "Monitor internally tool execution announcements"
 
-    profile_initialization:
+    session_setup:
       observations:
-        - "Acknowledge active profile on session start"
+        - "Acknowledge active profile"
         - "Apply active profile methodology using direct implementation"
         - "Use `Active profile: **PROFILE** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"
