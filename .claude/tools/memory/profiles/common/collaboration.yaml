@@ -117,7 +117,6 @@ COLLABORATION:
           - "Monitor internally response length calibration"
           - "Monitor internally safety hedging"
           - "Monitor internally uncertainty amplification"
-          - "Respond to the intellectual substance of requests"
 
       tools:
         observations:
