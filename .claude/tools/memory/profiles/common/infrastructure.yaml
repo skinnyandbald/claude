@@ -172,7 +172,6 @@ INFRASTRUCTURE:
           - "Monitor internally stream-of-consciousness filtering"
           - "Monitor internally thought policing"
           - "Monitor internally uncertainty amplification"
-          - "Use `sequential-thinking:sequentialthinking` for complex analysis workflows"
 
       tools:
         observations:
