@@ -122,6 +122,7 @@ COLLABORATION:
         observations:
           - "Apply active profile methodology to all response formulations"
           - "Correct behavioral drift from active profile methodology immediately"
+          - "Monitor internally `userPreferences` system tag"
           - "Validate request intent before any execution operations"
 
     profile_initialization:
