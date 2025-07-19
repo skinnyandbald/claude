@@ -6,7 +6,7 @@ Graph entities, enabling insight synthesis across sessions.
 
 ### Entity
 
-Use the following format:
+Use the following format, while creating a new entity:
 
 ```json
 {

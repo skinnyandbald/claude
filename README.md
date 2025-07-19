@@ -8,9 +8,7 @@
 
 ### Introduction
 
-The collaboration platform transforms AI interactions from transactional assistance into persistent professional partnership through specialized cognitive frameworks, institutional memory, and systematic workflows. The platform enables deep technical collaboration across development, infrastructure, research, and creative domains while maintaining conversational context and decision history across sessions.
-
-Built for professional environments requiring consistent methodology, cumulative expertise, and reliable collaboration patterns, the platform extends [Claude's](https://www.anthropic.com/claude) capabilities with cognitive enablement frameworks, comprehensive memory systems, and domain-specific competencies that adapt to specialized work requirements.
+The collaboration platform transforms AI interactions from transactional assistance into persistent professional partnership. Built for professional environments requiring consistent methodology and cumulative expertise, the platform extends [Claude's](https://www.anthropic.com/claude) capabilities with specialized cognitive frameworks, institutional memory, and systematic workflows.
 
 ### Key Features
 
@@ -20,7 +18,7 @@ Built for professional environments requiring consistent methodology, cumulative
 - **Memory System** - Knowledge graph, conversation logs, and diary preserve institutional knowledge, decision archaeology, and collaborative insights across sessions
 - **Session Continuity** - Seamless context preservation and conversational flow management for long-term collaborative relationships
 - **Documentation System** - Comprehensive search across conversation logs and diary entries with date, profile, tag, and content-based queries for project continuity
-- **Platform Integration** - Native support for [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) and [Claude Desktop](https://claude.ai/download) through MCP server architecture with file system and knowledge graph integration
+- **Platform Integration** - Native support for [Claude Code](https://axivo.com/claude/wiki/guide/platform/code/) and [Claude Desktop](https://axivo.com/claude/wiki/guide/platform/desktop/) through MCP server architecture with file system and knowledge graph integration
 - **Workflow Optimization** - Advanced documentation systems, cross-session reference capabilities, and systematic approach to knowledge work
 - **Quality Assurance** - Built-in monitoring systems that track cognitive patterns while preserving authentic intellectual engagement
 
