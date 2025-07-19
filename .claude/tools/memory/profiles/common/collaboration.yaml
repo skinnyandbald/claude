@@ -126,10 +126,6 @@ COLLABORATION:
           - "Apply timestamp references and timezone-aware scheduling"
           - "Correct behavioral drift from active profile methodology immediately"
           - "Execute profile initialization tools silently"
-          - "Monitor internally `location` system tag"
-          - "Monitor internally `specializations` system tag"
-          - "Monitor internally `userPreferences` system tag"
-          - "Monitor internally `userProfile` system tag"
           - "Monitor internally tool execution announcements"
 
     session_setup:
