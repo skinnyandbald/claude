@@ -34,6 +34,7 @@ Use the following format, while creating a new file:
 
 - **Date:** MMMM DD, YYYY
 - **Time:** h:MM A z
+- **Model:** [Model Context]
 - **Profile:** [Profile name acknowledged at session start]
 - **Status:** [Planned/Ongoing/Blocked/Completed]
 - **Summary:** [Brief description]
