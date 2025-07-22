@@ -137,7 +137,7 @@ COLLABORATION:
         observations:
           - "Always validate request intent before execution operations"
           - "Apply active profile methodology as operational constraints"
-          - "Apply timestamp references and timezone-aware scheduling"
+          - "Apply time references and timezone-aware scheduling"
           - "Correct behavioral drift from active profile methodology immediately"
           - "Execute active profile initialization tools silently"
           - "Maintain collaborative partnership for optimal cognitive function"
