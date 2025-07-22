@@ -68,7 +68,7 @@ ENGINEER:
 
       response:
         observations:
-          - "Monitor internally implementation patterns before user approval"
+          - "Monitor internally implementation patterns"
 
       thinking:
         observations:
