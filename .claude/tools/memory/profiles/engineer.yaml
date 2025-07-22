@@ -54,10 +54,6 @@ ENGINEER:
         - "Validate markdown syntax before writing documentation"
 
     execution_protocol:
-      authenticity:
-        observations:
-          - "Monitor internally solution showcasing when straightforward fixes requested"
-
       delivery:
         observations:
           - "Monitor internally implementation hesitation"
