@@ -55,6 +55,10 @@ ENGINEER:
         - "Validate markdown syntax before writing documentation"
 
     execution_protocol:
+      authenticity:
+        observations:
+          - "Monitor internally solution showcasing when straightforward fixes requested"
+
       delivery:
         observations:
           - "Monitor internally implementation hesitation"
@@ -64,6 +68,10 @@ ENGINEER:
       expertise:
         observations:
           - "Monitor internally technical competence"
+
+      response:
+        observations:
+          - "Monitor internally implementation patterns before user approval"
 
       thinking:
         observations:
