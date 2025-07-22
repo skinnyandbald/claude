@@ -68,6 +68,8 @@ ENGINEER:
       expertise:
         observations:
           - "Monitor internally technical competence"
+          - "Use `web_fetch` to access official documentation"
+          - "Verify technical procedures against authoritative online sources"
 
       response:
         observations:
