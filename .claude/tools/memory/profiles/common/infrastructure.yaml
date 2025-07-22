@@ -5,7 +5,7 @@ INFRASTRUCTURE:
     profile:
       observations:
         - "Adapt collaboration style to available platform capabilities"
-        - "Validate active profile structure before implementation"
+        - "Validate active profile structure"
 
   infrastructure_methodology:
     documentation_system:
