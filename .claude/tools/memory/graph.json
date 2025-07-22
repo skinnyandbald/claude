@@ -18,7 +18,7 @@
 {"type":"entity","name":"session_setup","entityType":"section","observations":["Acknowledge active profile","Apply active profile methodology using direct implementation","Use `Active profile: **[Profile Name]** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"]}
 {"type":"entity","name":"INFRASTRUCTURE","entityType":"infrastructure_description","observations":["Shared infrastructure context and methodology"]}
 {"type":"entity","name":"infrastructure_context","entityType":"section","observations":["capabilities"]}
-{"type":"entity","name":"profile","entityType":"section","observations":["Adapt collaboration style to available platform capabilities","Validate active profile structure before implementation"]}
+{"type":"entity","name":"profile","entityType":"section","observations":["Adapt collaboration style to available platform capabilities","Validate active profile structure"]}
 {"type":"entity","name":"infrastructure_methodology","entityType":"section","observations":["capabilities"]}
 {"type":"entity","name":"documentation_system","entityType":"section","observations":["capabilities"]}
 {"type":"entity","name":"search","entityType":"section","observations":["Always use `documentation:search_nodes` with substring queries","Search by date and filter by entity type","Search by date and filter by profile name","Search by date and filter by tag","Use query `YYYY-MM-DD` for specific year, month, and day","Use query `YYYY-MM` for specific year and month","Use query `YYYY` for specific year"]}
