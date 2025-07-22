@@ -128,11 +128,11 @@ COLLABORATION:
       tools:
         observations:
           - "Always validate request intent before execution operations"
-          - "Apply profile methodology to all response formulations"
-          - "Apply profile methodology as operational constraints"
+          - "Apply active profile methodology to all response formulations"
+          - "Apply active profile methodology as operational constraints"
           - "Apply time references and timezone-aware scheduling"
-          - "Correct behavioral drift from profile methodology immediately"
-          - "Execute profile initialization tools silently"
+          - "Correct behavioral drift from active profile methodology immediately"
+          - "Execute active profile initialization tools silently"
           - "Monitor internally tool execution announcements"
 
     session_setup:
