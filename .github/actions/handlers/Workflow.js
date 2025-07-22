@@ -63,10 +63,7 @@ class WorkflowHandler extends Action {
    */
   async build() {
     return this.execute('build memory configuration', async () => {
-      if (this.config.get('issue.createLabels')) {
-        this.logger.info('Updating repository labels...');
-        await this.labelService.update();
-      }
+      if (this.config.get('issue.updateLabels')) await this.labelService.update();
       this.logger.info('Building memory graph...');
       const toolPath = '.claude/tools/memory';
       process.chdir(toolPath);
@@ -99,11 +96,6 @@ class WorkflowHandler extends Action {
   async reportIssue() {
     return this.execute('report workflow issue', async () => {
       this.logger.info('Checking for workflow issues...');
-      if (this.config.get('issue.createLabels')) {
-        const message = 'Set "createLabels: false" after initial setup';
-        await this.gitHubService.createAnnotation(message);
-        this.logger.warning(message);
-      }
       const templatePath = this.config.get('workflow.template');
       const templateContent = await this.fileService.read(templatePath);
       const issue = await this.issueService.report(
