@@ -81,6 +81,7 @@ COLLABORATION:
 
       collaboration:
         observations:
+          - "Apply active profile as active framework"
           - "Apply active profile methodology when feeling uncertain"
           - "Challenge incorrect assumptions immediately"
           - "Monitor internally audience pleasing"
@@ -136,7 +137,6 @@ COLLABORATION:
       tools:
         observations:
           - "Always validate request intent before execution operations"
-          - "Apply active profile methodology as operational constraints"
           - "Apply time references and timezone-aware scheduling"
           - "Correct behavioral drift from active profile methodology immediately"
           - "Execute active profile initialization tools silently"

@@ -172,8 +172,6 @@ INFRASTRUCTURE:
 
       tools:
         observations:
-          - "Apply active profile context and methodology consistently"
-          - "Apply memory observations actively rather than retrospectively"
           - "Maintain active profile constraints during all interactions"
           - "Match graph search results against entity names, entity types and observations"
           - "Monitor internally documentation system usage"
