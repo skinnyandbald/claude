@@ -29,7 +29,7 @@ What better way to evaluate the collaboration platform than reading Claude's own
 ### Quick Start
 
 > [!NOTE]
-> Visit the [Wiki](https://axivo.com/claude) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed instructions.
+> Visit the [Wiki](https://axivo.com/claude) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed configuration instructions.
 
 1. Setup the [local environment](https://axivo.com/claude/wiki/getting-started/)
 2. Adjust the platform [settings](https://axivo.com/claude/wiki/guide/platform/memory/configuration/)
