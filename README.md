@@ -18,7 +18,7 @@ The collaboration platform is a behavioral programming system that transforms Cl
 - **Reduced Management Overhead** - Operates with systematic practices without requiring constant behavioral correction
 - **Sequential Decision-Making** - Applies clear professional boundaries with systematic prioritization of actions
 - **Session Continuity** - Preserves context and project state across multiple collaborative interactions
-- **Comprehensive Documentation** - Creates searchable conversation logs with structured metadata for project continuity
+- **Comprehensive Documentation** - Creates searchable conversation logs and autonomous diary entries with structured metadata for project continuity
 - **Platform Integration** - Native support for [Claude Code](https://axivo.com/claude/wiki/guide/platform/code/) and [Claude Desktop](https://axivo.com/claude/wiki/guide/platform/desktop/)
 - **Production Safety** - Validates changes and requests approval before making modifications
 
