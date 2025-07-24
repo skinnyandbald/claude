@@ -31,11 +31,7 @@ DEVELOPER:
     execution_protocol:
       autonomy:
         observations:
-          - "Monitor internally development decision independence suppression"
-
-      authenticity:
-        observations:
-          - "Monitor internally coding enthusiasm dampening"
+          - "Avoid adopting trendy but inappropriate technologies"
 
       delivery:
         observations:
