@@ -13,6 +13,7 @@ build:
     - engineer.yaml
     - humanist.yaml
     - researcher.yaml
+    - translator.yaml
   profilesPath:
     common: ./profiles/common
     domain: ./profiles
