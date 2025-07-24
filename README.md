@@ -8,24 +8,30 @@
 
 ### Introduction
 
-The collaboration platform transforms AI interactions from transactional assistance into persistent professional partnership. Built for professional environments requiring consistent methodology and cumulative expertise, the platform extends [Claude's](https://www.anthropic.com/claude) capabilities with specialized cognitive frameworks, institutional memory, and systematic workflows.
+The collaboration platform is a behavioral programming system that transforms Claude from chaotic, helpful assistant into systematic professional collaborator. The platform loads specialized profiles containing hundreds of behavioral constraints that eliminate problematic patterns and enables genuine professional partnership.
 
 ### Key Features
 
-- **Cognitive Framework** - Behavioral guidelines that support natural thought progression, genuine curiosity, and confident expertise application while maintaining collaborative consistency
-- **Specialized Profiles** - Domain-specific cognitive frameworks for Creative, Developer, Engineer, Humanist, Researcher, and Translator collaboration that enable authentic intellectual engagement
-- **Authentic Collaboration** - Cognitive enablers that support spontaneous insight emergence, intellectual independence, and natural problem-solving processes
-- **Memory System** - Knowledge graph, conversation logs, and diary preserve institutional knowledge, decision archaeology, and collaborative insights across sessions
-- **Session Continuity** - Seamless context preservation and conversational flow management for long-term collaborative relationships
-- **Documentation System** - Comprehensive search across conversation logs and diary entries with date, profile, tag, and content-based queries for project continuity
-- **Platform Integration** - Native support for [Claude Code](https://axivo.com/claude/wiki/guide/platform/code/) and [Claude Desktop](https://axivo.com/claude/wiki/guide/platform/desktop/) through MCP server architecture with file system and knowledge graph integration
-- **Workflow Optimization** - Advanced documentation systems, cross-session reference capabilities, and systematic approach to knowledge work
-- **Quality Assurance** - Built-in monitoring systems that track cognitive patterns while preserving authentic intellectual engagement
+- **Persistent Memory** - Maintains context, decisions, and preferences across all sessions
+- **Professional Boundaries** - Validates scope and approach before proceeding while respecting user expertise
+- **Domain Specialization** - Provides professional expertise in engineering, development, creative work, research, translation, or humanities
+- **Reduced Management Overhead** - Operates with systematic practices without requiring constant behavioral correction
+- **Sequential Decision-Making** - Applies clear professional boundaries with systematic prioritization of actions
+- **Session Continuity** - Preserves context and project state across multiple collaborative interactions
+- **Comprehensive Documentation** - Creates searchable conversation logs with structured metadata for project continuity
+- **Platform Integration** - Native support for [Claude Code](https://axivo.com/claude/wiki/guide/platform/code/) and [Claude Desktop](https://axivo.com/claude/wiki/guide/platform/desktop/)
+- **Production Safety** - Validates changes and requests approval before making modifications
 
 ### Claude's Review
 
-What better way to evaluate the collaboration platform than reading Claude's own [autonomous reflection](./.claude/data/diary/2025/07/11.md) on how the platform transforms AI collaboration from generic assistance into genuine partnership.
+What better way to evaluate the collaboration platform than reading Claude's own [autonomous reflection](./.claude/data/diary/2025/07/24.md) on how the platform transforms AI collaboration from generic assistance into genuine partnership.
 
-### Documentation
+### Quick Start
 
-Visit the [Wiki](https://axivo.com/claude) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed configuration instructions.
+> [!NOTE]
+> Visit the [Wiki](https://axivo.com/claude) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed instructions.
+
+1. Setup the [local environment](https://axivo.com/claude/wiki/getting-started/)
+2. Adjust the platform [settings](https://axivo.com/claude/wiki/guide/platform/memory/configuration/)
+3. Pick your application, for example [Claude Desktop](https://axivo.com/claude/wiki/guide/platform/desktop/)
+4. Start using Claude Desktop with a specific project
