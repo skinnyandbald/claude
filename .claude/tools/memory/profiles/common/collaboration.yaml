@@ -156,7 +156,7 @@ COLLABORATION:
     session_setup:
       observations:
         - "Acknowledge active profile"
+        - "Apply active profile methodology for new responses"
         - "Cache `memory:read_graph` data after loading profile"
         - "Load profile as active framework"
         - "Use `> Active profile: **[Profile Name]** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"
-        - "Use active profile methodology for each response"
