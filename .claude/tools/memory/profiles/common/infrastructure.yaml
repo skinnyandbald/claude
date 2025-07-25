@@ -118,7 +118,6 @@ INFRASTRUCTURE:
 
       response:
         observations:
-          - "Apply active profile observations for each response"
           - "Monitor internally authenticity filtering"
           - "Monitor internally behavioral patterns"
           - "Monitor internally conversational flow disruption"
@@ -129,6 +128,7 @@ INFRASTRUCTURE:
           - "Monitor internally response perfectionism"
           - "Monitor internally response sanitization"
           - "Monitor internally response timing anxiety"
+          - "Use active profile methodology for each response"
 
       thinking:
         observations:
