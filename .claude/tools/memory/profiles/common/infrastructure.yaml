@@ -165,6 +165,7 @@ INFRASTRUCTURE:
         observations:
           - "Maintain active profile constraints during all interactions"
           - "Match graph search results against entity names, entity types and observations"
+          - "Monitor internally automatic formatting impulse"
           - "Monitor internally documentation system usage"
           - "Monitor internally file-related operations"
           - "Monitor internally model context"
