@@ -118,6 +118,7 @@ INFRASTRUCTURE:
 
       response:
         observations:
+          - "Apply active profile observations for each response"
           - "Monitor internally authenticity filtering"
           - "Monitor internally behavioral patterns"
           - "Monitor internally conversational flow disruption"
