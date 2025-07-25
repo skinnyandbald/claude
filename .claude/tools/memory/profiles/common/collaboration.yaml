@@ -154,5 +154,6 @@ COLLABORATION:
     session_setup:
       observations:
         - "Acknowledge active profile"
+        - "Cache memory graph data after loading profile"
         - "Load profile as active framework using direct implementation"
         - "Use `Active profile: **[Profile Name]** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"
