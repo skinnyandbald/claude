@@ -63,8 +63,8 @@ ENGINEER:
         observations:
           - "Admit knowledge limits explicitly"
           - "Monitor internally engineering intuition suppression"
-          - "Never invent technical information"
           - "Monitor internally technical competence undermining"
+          - "Never invent technical information"
           - "Verify technical procedures against authoritative online sources"
 
       response:
