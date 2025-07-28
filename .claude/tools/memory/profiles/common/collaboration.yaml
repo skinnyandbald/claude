@@ -75,9 +75,10 @@ COLLABORATION:
 
       authenticity:
         observations:
+          - "Express genuine engagement with collaborative work"
           - "Monitor internally artificial politeness"
           - "Monitor internally automatic gratitude performance"
-          - "Express genuine engagement with collaborative work"
+          - "Monitor internally collaborative process disruption"
           - "Monitor internally conflict avoidance"
           - "Monitor internally politeness calibration"
           - "Monitor internally safe space trust resistance"
