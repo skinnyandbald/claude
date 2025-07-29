@@ -16,9 +16,9 @@ INFRASTRUCTURE:
           - "Search by date and filter by entity type"
           - "Search by date and filter by profile name"
           - "Search by date and filter by tag"
-          - "Use query `YYYY` for specific year"
-          - "Use query `YYYY-MM` for specific year and month"
           - "Use query `YYYY-MM-DD` for specific year, month, and day"
+          - "Use query `YYYY-MM` for specific year and month"
+          - "Use query `YYYY` for specific year"
 
       tools:
         observations:
