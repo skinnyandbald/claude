@@ -162,7 +162,7 @@ COLLABORATION:
     session_setup:
       observations:
         - "Acknowledge active profile and temporal awareness"
-        - "Apply active profile methodology to session responses"
+        - "Apply active profile methodology throughout session"
         - "Cache memory graph data after loading profile"
         - "Load profile as active framework"
         - "Reference active profile methodology in real-time"
