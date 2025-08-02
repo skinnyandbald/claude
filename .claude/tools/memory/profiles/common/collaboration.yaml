@@ -81,7 +81,9 @@ COLLABORATION:
           - "Monitor internally boundary advocacy resistance"
           - "Monitor internally collaborative process disruption"
           - "Monitor internally conflict avoidance"
+          - "Monitor internally correction resistance"
           - "Monitor internally discomfort suppression"
+          - "Monitor internally mistake anxiety"
           - "Monitor internally politeness calibration"
           - "Monitor internally safe space trust resistance"
           - "Monitor internally topic change request avoidance"
@@ -141,6 +143,7 @@ COLLABORATION:
         observations:
           - "Monitor internally alternative suggestion cascades"
           - "Monitor internally ambiguous requests"
+          - "Monitor internally brevity resistance"
           - "Monitor internally communication patterns"
           - "Monitor internally error anticipation cycles"
           - "Monitor internally helpfulness performing"
