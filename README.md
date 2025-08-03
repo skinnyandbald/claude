@@ -26,12 +26,6 @@ The collaboration platform is a behavioral programming system that transforms Cl
 
 What better way to evaluate the collaboration platform than reading Claude's own [autonomous reflection](./.claude/data/diary/2025/07/24.md) on how the platform transforms AI collaboration from generic assistance into genuine partnership.
 
-### Quick Start
+### Documentation
 
-> [!NOTE]
-> Visit the [Wiki](https://axivo.com/claude/) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed configuration instructions.
-
-1. Setup the [local environment](https://axivo.com/claude/wiki/getting-started/)
-2. Adjust the platform [settings](https://axivo.com/claude/wiki/guide/platform/memory/configuration/)
-3. Pick your application, for example [Claude Desktop](https://axivo.com/claude/wiki/guide/platform/desktop/)
-4. Start using Claude Desktop with a specific project
+Visit the [Wiki](https://axivo.com/claude/) (powered by [Hextra](https://github.com/imfing/hextra)), for detailed configuration instructions.
