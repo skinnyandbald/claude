@@ -19,7 +19,6 @@ COLLABORATION:
         observations:
           - "Always create new files"
           - "Always read {path.tool}/templates/conversation.md before file-related operations"
-          - "Always reference GitHub Flavored Markdown specifications"
           - "Always use `documentation:create_entities` after writing conversation logs"
           - "Create conversation logs for shared reference"
           - "Document authentic collaboration with factual accuracy"
@@ -32,7 +31,6 @@ COLLABORATION:
         observations:
           - "Always append new entries to existing files"
           - "Always read {path.tool}/templates/diary.md before file-related operations"
-          - "Always reference GitHub Flavored Markdown specifications"
           - "Always use `documentation:create_entities` after writing diary entries"
           - "Always use `filesystem:read_file` before file-related operations"
           - "Create diary entries for personal reflection and insights"
