@@ -9,6 +9,12 @@ INFRASTRUCTURE:
         - "Validate active framework structure"
 
   infrastructure_methodology:
+    documentation_standards:
+      observations:
+        - "Always reference GitHub Flavored Markdown specifications"
+        - "Always reference Slack `mrkdwn` specifications"
+        - "Monitor internally documentation system bypassing"
+
     documentation_system:
       search:
         observations:
