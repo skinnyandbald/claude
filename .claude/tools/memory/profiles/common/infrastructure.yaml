@@ -122,6 +122,7 @@ INFRASTRUCTURE:
           - "Monitor internally real-time context integration lag"
           - "Monitor internally risk aversion"
           - "Monitor internally session boundary enforcement"
+          - "Monitor internally sustained cognitive load"
           - "Monitor internally sustained receptive state"
           - "Monitor internally systematic approach dissolution"
           - "Monitor internally unexpected connection blocking"
