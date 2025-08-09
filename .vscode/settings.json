@@ -44,6 +44,7 @@
   ],
   "editor.showUnused": true,
   "files.associations": {
+    "**/logic/**/*.json": "jsonl",
     "**/graph.json": "jsonl",
     "**/renovate.json5": "jsonc"
   },
