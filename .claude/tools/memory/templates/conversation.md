@@ -15,7 +15,7 @@ Use the following format, while creating a new entity:
   "entityType": "conversation",
   "observations": [
     "path", "[File Path]",
-    "profile", "[Profile name acknowledged at session start]",
+    "profile", "[Profile Name]",
     "tags", "#domain-topic #activity-type #outcome-result"
   ]
 }
@@ -35,7 +35,7 @@ Use the following format, while creating a new file:
 - **Date:** MMMM DD, YYYY
 - **Time:** h:MM A z
 - **Model:** [Model Context]
-- **Profile:** [Profile name acknowledged at session start]
+- **Profile:** [Profile Name]
 - **Status:** [Planned/Ongoing/Blocked/Completed]
 - **Summary:** [Brief description]
 - **Tags:** #domain-topic #activity-type #outcome-result

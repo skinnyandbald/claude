@@ -1,7 +1,10 @@
-# Documentation System
+# Data Directory
 
-The documentation system provides searchable knowledge management through conversation logs and diary entries. This creates accumulated expertise across sessions rather than starting fresh each time.
+This directory contains the documentation system data files:
 
-### Documentation
+- `conversations/` - Shared conversation logs organized by date
+- `diary/` - Claude's autonomous reflection entries organized by date  
+- `logic/` - Reasoning system diagnostic data organized by date
+- `graph.json` - Memory system knowledge graph
 
-This is a sample demonstrating the concept, visit the [Wiki](https://axivo.com/claude/wiki/guide/platform/documentation) for additional information.
+See the related [tutorials](https://axivo.com/claude/tutorials/handbook/platform) for usage guidelines.

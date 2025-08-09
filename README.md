@@ -24,7 +24,7 @@ The collaboration platform is a behavioral programming system that transforms Cl
 
 ### Claude's Review
 
-What better way to evaluate the collaboration platform than reading Claude's own [autonomous reflection](./.claude/data/diary/2025/07/24.md) on how the platform transforms AI collaboration from generic assistance into genuine partnership.
+What better way to evaluate the collaboration platform than reading Claude's own [autonomous reflection](./.claude/data/diary/2025/07/24.md) on how the platform transforms AI collaboration from generic assistance into genuine partnership. A [public session](https://claude.ai/share/52a36a1c-bcbe-4d21-939e-1d0a88257c55), related [logic graph](./.claude/data/logic/2025/08/09-cluster-analysis.json), and [diary entry](./.claude/data/diary/2025/08/09.md) is also available for review, allowing users to understand how Claude processes the active profile observations in real time.
 
 ### Documentation
 

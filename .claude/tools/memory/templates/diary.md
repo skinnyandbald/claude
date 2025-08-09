@@ -15,7 +15,7 @@ Use the following format, while creating a new entity:
   "entityType": "diary",
   "observations": [
     "path", "[File Path]",
-    "profile", "[Profile name acknowledged at session start]",
+    "profile", "[Profile Name]",
     "tags", "#domain-topic #activity-type #outcome-result"
   ]
 }
@@ -34,7 +34,7 @@ Use the following format, while creating a new file:
 
 ## h:MM A z - [Entry Title]
 
-- **Profile:** [Profile name acknowledged at session start]
+- **Profile:** [Profile Name]
 - **Tags:** #domain-topic #activity-type #outcome-result
 
 [Main reflection content about the collaboration session]
@@ -52,7 +52,7 @@ Use the following format, while appending a new diary entry to existing file:
 
 ## h:MM A z - [Entry Title]
 
-- **Profile:** [Profile name]
+- **Profile:** [Profile Name]
 - **Tags:** #domain-topic #activity-type #outcome-result
 
 [Main reflection content about the collaboration session]
