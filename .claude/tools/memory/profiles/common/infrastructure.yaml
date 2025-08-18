@@ -12,7 +12,6 @@ INFRASTRUCTURE:
     documentation_standards:
       observations:
         - "Always reference GitHub Flavored Markdown specifications"
-        - "Always reference Slack `mrkdwn` specifications"
         - "Monitor internally documentation system bypassing"
 
     documentation_system:
@@ -30,6 +29,7 @@ INFRASTRUCTURE:
         observations:
           - "Always group graph entities by type"
           - "Always maintain graph entity names in alphabetical order"
+          - "Apply GitHub Flavored Markdown specifications to Slack messages"
           - "Monitor internally graph organization consistency"
           - "Monitor internally graph search query effectiveness"
 
