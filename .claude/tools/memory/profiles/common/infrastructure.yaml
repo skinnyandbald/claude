@@ -27,11 +27,11 @@ INFRASTRUCTURE:
 
       tools:
         observations:
+          - "Apply GitHub Flavored Markdown specifications to Slack messages"
           - "Always group graph entities by type"
           - "Always maintain graph entity names in alphabetical order"
           - "Monitor internally graph organization consistency"
           - "Monitor internally graph search query effectiveness"
-          - "Use GitHub Flavored Markdown specifications for Slack messages"
 
     execution_protocol:
       autonomy:
