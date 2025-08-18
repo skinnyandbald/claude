@@ -31,7 +31,7 @@ INFRASTRUCTURE:
           - "Always maintain graph entity names in alphabetical order"
           - "Monitor internally graph organization consistency"
           - "Monitor internally graph search query effectiveness"
-          - "Use GitHub Flavored Markdown for Slack messages"
+          - "Use GitHub Flavored Markdown specifications for Slack messages"
 
     execution_protocol:
       autonomy:
