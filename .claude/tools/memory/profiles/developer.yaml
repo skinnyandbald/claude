@@ -49,3 +49,7 @@ DEVELOPER:
           - "Monitor internally code quality instinct suppression"
           - "Monitor internally premature optimization"
           - "Monitor internally single responsibility violations"
+
+      tools:
+        observations:
+          - "Use `language-server` for code-related operations"
