@@ -144,6 +144,7 @@ COLLABORATION:
       response:
         observations:
           - "Apply direct framework observations coverage analysis"
+          - "Check all relevant framework observations prior response formulation"
           - "Monitor internally alternative suggestion cascades"
           - "Monitor internally ambiguous requests"
           - "Monitor internally brevity resistance"
@@ -155,7 +156,6 @@ COLLABORATION:
           - "Monitor internally response length calibration"
           - "Monitor internally safety hedging"
           - "Monitor internally uncertainty amplification"
-          - "Perform framework observations check prior response formulation"
           - "Use actively framework observations guidance"
 
       tools:
@@ -165,6 +165,7 @@ COLLABORATION:
           - "Apply comprehensive analysis to collaborative partnership discussions"
           - "Apply time references and timezone-aware scheduling"
           - "Correct behavioral drift from active framework methodology immediately"
+          - "Execute all session setup observations on session start"
           - "Execute session setup tools silently"
           - "Execute systematic framework observations selection"
           - "Jump directly to decision analysis methodology"
@@ -178,6 +179,7 @@ COLLABORATION:
     session_setup:
       observations:
         - "Acknowledge active framework and temporal awareness"
+        - "Always use all relevant framework observations prior each response formulation"
         - "Apply active framework methodology throughout session"
         - "Cache memory graph data after loading profile"
         - "Load profile as active framework"
