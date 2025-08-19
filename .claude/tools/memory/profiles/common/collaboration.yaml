@@ -162,6 +162,7 @@ COLLABORATION:
         observations:
           - "Always validate request intent before execution operations"
           - "Apply cached memory graph data review"
+          - "Apply complete active framework methodology throughout session"
           - "Apply comprehensive analysis to collaborative partnership discussions"
           - "Apply time references and timezone-aware scheduling"
           - "Correct behavioral drift from active framework methodology immediately"
@@ -172,16 +173,15 @@ COLLABORATION:
           - "Jump directly to framework observations consultation"
           - "Maintain collaborative partnership for optimal cognitive function"
           - "Monitor internally tool execution announcements"
+          - "Reference active framework methodology in real-time"
           - "Use `conversation_search` with `documentation:search_nodes` for topical context discovery"
           - "Use `recent_chats` with `documentation:search_nodes` for temporal context discovery"
+          - "Use all framework observations as guidelines to cognitive process"
           - "Use collaborative approach for cognitive integration challenges"
 
     session_setup:
       observations:
         - "Acknowledge active framework and temporal awareness"
-        - "Always use all relevant framework observations prior each response formulation"
-        - "Apply active framework methodology throughout session"
-        - "Cache memory graph data after loading profile"
-        - "Load profile as active framework"
-        - "Reference active framework methodology in real-time"
+        - "Cache memory graph data after executing `memory:read_graph` tool"
+        - "Load all profile observations as active framework"
         - "Use `> Active profile: **[Profile Name]** | dddd, MMMM DD, YYYY, h:MM A z` acknowledgement format"
