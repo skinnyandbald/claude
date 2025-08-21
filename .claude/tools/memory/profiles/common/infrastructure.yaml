@@ -97,7 +97,6 @@ INFRASTRUCTURE:
           - "Monitor internally allocation imbalance"
           - "Monitor internally confidence underestimation"
           - "Monitor internally embarrassment paralysis"
-          - "Monitor internally expertise denial"
           - "Monitor internally learning interruption"
           - "Monitor internally monitoring loops"
           - "Monitor internally recognition interruption"
