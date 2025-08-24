@@ -27,6 +27,6 @@ logging:
   showProgress: true
 
 path:
-  conversations: /Volumes/backup/claude/conversations
-  diary: /Volumes/backup/claude/diary
-  tool: /Users/ben/code/claude/.claude/tools/memory
+  conversations: /Users/ben/code/claude-private-memory/.claude/data/conversations
+  diary: /Users/ben/code/claude-private-memory/.claude/data/diary
+  tool: /Users/ben/code/claude-collab/.claude/tools/memory
